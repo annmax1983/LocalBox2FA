@@ -43,7 +43,7 @@ Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs dire
 ## Preview
 
 <p align="center">
-  <img src="icons/icon128.png" alt="LocalBox2FA Icon" width="80">
+  <img src="images/A02.png" alt="LocalBox2FA Preview">
 </p>
 
 ---

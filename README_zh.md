@@ -40,6 +40,16 @@
 
 ---
 
+
+
+## Preview
+
+<p align="center">
+  <img src="images/A02.png" alt="LocalBox2FA Preview">
+</p>
+
+
+
 ## 支持的浏览器
 
 | 浏览器 | 状态 |

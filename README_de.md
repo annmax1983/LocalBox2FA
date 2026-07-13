@@ -40,6 +40,16 @@ Die meisten 2FA-Authentifikatoren erfordern eine Handy-App oder Cloud-Synchronis
 
 ---
 
+
+
+## Preview
+
+<p align="center">
+  <img src="images/A02.png" alt="LocalBox2FA Preview">
+</p>
+
+
+
 ## Unterstützte Browser
 
 | Browser | Status |

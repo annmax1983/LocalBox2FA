@@ -40,6 +40,16 @@ La plupart des authentificateurs 2FA nécessitent une application mobile ou une 
 
 ---
 
+
+
+## Preview
+
+<p align="center">
+  <img src="images/A02.png" alt="LocalBox2FA Preview">
+</p>
+
+
+
 ## Navigateurs Supportés
 
 | Navigateur | Statut |

@@ -40,6 +40,16 @@ La mayoría de autenticadores 2FA requieren una app móvil o sincronización en 
 
 ---
 
+
+
+## Preview
+
+<p align="center">
+  <img src="images/A02.png" alt="LocalBox2FA Preview">
+</p>
+
+
+
 ## Navegadores Compatibles
 
 | Navegador | Estado |
