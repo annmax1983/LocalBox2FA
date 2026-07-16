@@ -1,10 +1,9 @@
 # LocalBox2FA
-
-[English](README.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [日本語](README_ja.md) | Français
+[English](../README.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [日本語](README_ja.md) | Français
 
 Une extension légère de navigateur qui génère des codes de vérification TOTP 2FA localement — sans upload, entièrement hors ligne.
 
-> Basé sur Chromium · Manifest V3 · 100% Hors ligne · Confidentialité d'abord
+> Basé sur Chromium · Manifest V3 · Entièrement hors ligne · Confidentialité d'abord
 
 ---
 
@@ -14,7 +13,7 @@ La plupart des authentificateurs 2FA nécessitent une application mobile ou une 
 
 | Avantage | Détail |
 |----------|--------|
-| 🔒 **100% Local** | Tous les calculs TOTP s'effectuent dans votre navigateur via l'API Web Crypto. Aucun upload. |
+| 🔒 **Entièrement local** | Tous les calculs TOTP s'effectuent dans votre navigateur via l'API Web Crypto. Aucun upload. |
 | 📱 **Pas de Téléphone** | Générez des codes 2FA directement depuis la barre d'outils du navigateur |
 | 🚫 **Pas de Compte** | Sans inscription, sans synchronisation cloud, sans connexion. Installez et utilisez. |
 | ⚡ **Instantané** | Codes générés en moins de 10ms. Un clic pour copier. |
