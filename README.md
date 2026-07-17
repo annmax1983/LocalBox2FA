@@ -14,7 +14,7 @@ Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs dire
 
 | Advantage | Detail |
 |-----------|--------|
-| 🔒 **Fully Local** | All TOTP computation happens in your browser using Web Crypto API. Zero upload. |
+| 🔒 **Local Only** | All TOTP computation happens in your browser using Web Crypto API. No upload. |
 | 📱 **No Phone Needed** | Generate 2FA codes right from your browser toolbar — no mobile app required. |
 | 🚫 **No Account** | No registration, no cloud sync, no login. Just install and use. |
 | ⚡ **Instant** | Codes generate in under 10ms. One click to copy to clipboard. |
