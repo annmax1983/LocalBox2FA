@@ -89,6 +89,12 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 16px rgba(79,195,247,0.3);
     }
+    .disclaimer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #585b70;
+      line-height: 1.6;
+    }
     .footer {
       padding: 16px 32px;
       text-align: center;
@@ -121,6 +127,7 @@
       <a class="support-btn" href="https://ko-fi.com/annmax?ref=localbox2fa" target="_blank" rel="noopener">
         <img src="./assets/coffee.png" alt="" width="28" height="22" style="vertical-align:middle"> <span data-i18n="btnText"></span>
       </a>
+      <p class="disclaimer" data-i18n="disclaimer"></p>
     </div>
 
     <div class="footer">
@@ -152,6 +159,7 @@
         ],
         ctaHint: '点击下方按钮，跳转到支持页面',
         btnText: '支持作者',
+        disclaimer: '赞助为自愿行为，不影响任何功能使用。赞助与扩展功能无绑定关系，仅为用户自发支持。',
         privacyPolicy: '隐私条款'
       },
       en: {
@@ -173,6 +181,7 @@
         ],
         ctaHint: 'Click the button below to visit the support page',
         btnText: 'Support the Developer',
+        disclaimer: 'Sponsorship is voluntary and does not affect any functionality. It is not tied to extension features — purely a gesture of support.',
         privacyPolicy: 'Privacy Policy'
       },
       ja: {
@@ -194,6 +203,7 @@
         ],
         ctaHint: '下のボタンをクリックするとサポートページに移動します',
         btnText: '開発者を支援',
+        disclaimer: '支援は任意であり、機能に一切影響しません。拡張機能とは無関係です。純粋な応援としてお受けしています。',
         privacyPolicy: 'プライバシーポリシー'
       },
       de: {
@@ -215,6 +225,7 @@
         ],
         ctaHint: 'Klicken Sie auf die Schaltfläche unten, um zur Support-Seite zu gelangen',
         btnText: 'Entwickler unterstützen',
+        disclaimer: 'Die Unterstützung ist freiwillig und beeinflusst keine Funktionen. Sie ist nicht an Erweiterungsfunktionen gebunden — rein eine Geste der Unterstützung.',
         privacyPolicy: 'Datenschutzrichtlinie'
       },
       es: {
@@ -236,10 +247,11 @@
         ],
         ctaHint: 'Haz clic en el botón de abajo para visitar la página de soporte',
         btnText: 'Apoya al desarrollador',
+        disclaimer: 'El patrocinio es voluntario y no afecta ninguna función. No está vinculado a las características de la extensión — es simplemente un gesto de apoyo.',
         privacyPolicy: 'Política de Privacidad'
       },
       fr: {
-        tagline: 'Entièrement local · Aucun téléversement · Confidentialité d'abord
+        tagline: 'Entièrement local · Aucun téléversement · Confidentialité d\'abord',
         featuresTitle: '✨ Fonctionnalités',
         features: [
           'Génération locale de codes TOTP, compatible avec le format Google Authenticator',
@@ -257,6 +269,7 @@
         ],
         ctaHint: 'Cliquez sur le bouton ci-dessous pour accéder à la page de soutien',
         btnText: 'Soutenir le développeur',
+        disclaimer: 'Le soutien est volontaire et n\'affecte aucune fonctionnalité. Il n\'est pas lié aux fonctionnalités de l\'extension — c\'est simplement un geste de soutien.',
         privacyPolicy: 'Politique de Confidentialité'
       }
     };
