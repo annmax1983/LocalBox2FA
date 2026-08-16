@@ -1,9 +1,9 @@
 # LocalBox2FA
 [English](../README.md) | [中文](README_zh.md) | Español | [Deutsch](README_de.md) | [日本語](README_ja.md) | [Français](README_fr.md)
 
-Una extensión ligera del navegador que genera códigos TOTP 2FA localmente — sin subida de datos, completamente offline.
+Una extensión ligera del navegador que genera códigos TOTP 2FA localmente — sus secretos permanecen por completo en su dispositivo.
 
-> Basado en Chromium · Manifest V3 · Completamente sin conexión · Privacidad primero
+> Basado en Chromium · Manifest V3 · Procesamiento local · Privacidad primero
 
 ---
 
@@ -13,7 +13,7 @@ La mayoría de autenticadores 2FA requieren una app móvil o sincronización en 
 
 | Ventaja | Detalle |
 |---------|---------|
-| 🔒 **Completamente local** | Todo el cálculo TOTP ocurre en tu navegador con la API Web Crypto. Sin subida. |
+| 🔒 **Completamente local** | Todo el cálculo TOTP ocurre en tu navegador con la API Web Crypto. Los secretos nunca salen de tu dispositivo. |
 | 📱 **Sin Teléfono** | Genera códigos 2FA directamente desde la barra de herramientas |
 | 🚫 **Sin Cuenta** | Sin registro, sin sincronización, sin login. Instala y usa. |
 | ⚡ **Instantáneo** | Códigos generados en menos de 10ms. Un clic para copiar. |
@@ -24,6 +24,8 @@ La mayoría de autenticadores 2FA requieren una app móvil o sincronización en 
 
 ## Características
 
+### 🆓 Funciones Gratuitas
+
 | Característica | Descripción |
 |----------------|-------------|
 | 🔐 **Generación TOTP** | Compatible con RFC 6238 — funciona con Google Authenticator, Authy y todos los servicios TOTP |
@@ -31,11 +33,19 @@ La mayoría de autenticadores 2FA requieren una app móvil o sincronización en 
 | 📋 **Copia con Un Clic** | Copia el código de verificación al portapapeles instantáneamente |
 | 💾 **Guardar y Gestionar** | Guarda claves secretas con nombres personalizados |
 | 📋 **Historial en Vivo** | Todas las cuentas guardadas muestran códigos en tiempo real |
-| 📤 **Exportar** | Exporta todas las claves como archivo de texto (formato nombre:clave) |
-| 🗑️ **Eliminación Segura** | Diálogo de confirmación antes de eliminar registros |
+| 🗑️ **Eliminar Registro Individual** | Diálogo de confirmación antes de eliminar registros |
 | 🔒 **Anti-Duplicados** | Evita guardar la misma clave secreta dos veces |
 | 🌙 **Modo Oscuro** | Tema automático según la preferencia del sistema |
 | 🌍 **6 Idiomas** | Inglés, Chino, Japonés, Español, Alemán, Francés |
+
+### ⭐ Funciones Premium (Licencia Requerida)
+
+| Característica | Descripción |
+|----------------|-------------|
+| 📤 **Exportar Registros** | Exporta todas las claves como archivo de texto para respaldo |
+| 🗑️ **Limpiar Todos los Registros** | Eliminar todos los registros guardados a la vez |
+
+> 💡 Compra única, licencia vinculada al dispositivo. [Obtener Licencia →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
 ---
 
@@ -107,17 +117,16 @@ Genera código TOTP de 6 dígitos (RFC 6238)
 Un clic para copiar al portapapeles
 ```
 
-Todo el cálculo ocurre localmente usando la Web Crypto API del navegador. Sin solicitudes de red, sin subida de datos.
+Todo el cálculo ocurre localmente usando la Web Crypto API del navegador. Tus secretos nunca se envían a través de la red.
 
 ---
 
 ## Privacidad
 
-- ✅ **Sin subida de datos** — Todo el cálculo TOTP ocurre localmente
-- ✅ **Sin análisis** — Sin rastreo, sin telemetría
-- ✅ **Sin solicitudes de red** — La extensión funciona completamente offline
-- ✅ **Solo almacenamiento local** — Secretos guardados en localStorage del navegador
-- ✅ **Sin permisos** — El manifest no declara permisos
+- ✅ **Los secretos permanecen en tu dispositivo** — Todo el cálculo TOTP ocurre localmente; los secretos guardados nunca salen de tu navegador
+- ✅ **Sin análisis** — Sin rastreo, sin telemetría, sin cookies
+- ✅ **Red solo para la activación de licencia** — Si activas una licencia Premium, tu clave de licencia y un identificador de dispositivo mínimo se envían al servidor de licencias para su verificación. Las funciones gratuitas funcionan completamente sin conexión y no realizan ninguna solicitud de red
+- ✅ **Permisos mínimos** — `storage` (para recordar el estado de la licencia) y acceso solo al dominio del servidor de licencias
 
 ---
 

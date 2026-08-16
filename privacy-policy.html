@@ -34,6 +34,7 @@
     p, li { color: #bac2de; font-size: 15px; }
     ul { padding-left: 20px; margin-bottom: 16px; }
     li { margin-bottom: 6px; }
+    code { background: #313244; padding: 1px 6px; border-radius: 4px; font-size: 13px; color: #a6e3a1; }
     .footer {
       margin-top: 48px;
       padding-top: 24px;
@@ -48,36 +49,51 @@
 <body>
   <div class="container">
     <h1>Privacy Policy</h1>
-    <p class="updated">LocalBox2FA · Last updated: July 2026</p>
+    <p class="updated">LocalBox2FA · Last updated: August 2026</p>
 
     <div class="highlight">
-      <strong>TL;DR:</strong> LocalBox2FA does NOT collect, store, or transmit any of your personal data. All processing happens fully locally in your browser. Nothing is sent to any server. Ever.
+      <strong>TL;DR:</strong> Your 2FA secrets are generated and stored entirely on your device and are <strong>never transmitted anywhere</strong>. The only network communication is the optional Premium license activation: when you enter a license key, a minimal device identifier and your license key are sent to the license server to verify it. If you never activate a license, the extension never makes a network request.
     </div>
 
-    <h2>1. Data Collection</h2>
-    <p>LocalBox2FA does <strong>not</strong> collect any personal information, browsing data, or usage analytics. We do not use cookies, tracking, or telemetry of any kind.</p>
+    <h2>1. What Stays on Your Device</h2>
+    <p>All TOTP code generation happens locally using your browser's Web Crypto API (HMAC-SHA1). Your saved secret keys are stored in your browser's localStorage and never leave your device. We do not use cookies, analytics, or tracking of any kind, and we do not access your browsing activity.</p>
 
-    <h2>2. How It Works</h2>
+    <h2>2. License Activation</h2>
+    <p>Premium features (export and clear-all) are unlocked with an optional license key. Only when you enter a license key and click <strong>Activate</strong> does the extension contact the license server at <code>api.annmax1983.com</code> and transmit:</p>
+    <ul>
+      <li><strong>License key</strong> — the key you entered</li>
+      <li><strong>Device ID</strong> — a one-way hash derived from non-identifying device characteristics (operating system, CPU core count, device memory, touch support, screen color depth). It cannot be reversed to identify you.</li>
+      <li><strong>Browser metadata</strong> — browser name/version, language, and timezone</li>
+    </ul>
+    <p>This is the only network communication the extension performs, and it happens only when you activate a license. If you have no license, all features available to you work completely offline and nothing is ever sent.</p>
+
+    <h2>3. How It Works</h2>
     <ul>
       <li><strong>Input</strong> — You enter a TOTP secret key directly in the extension popup</li>
       <li><strong>Processing</strong> — TOTP codes are generated using the Web Crypto API (HMAC-SHA1) entirely in your browser</li>
       <li><strong>Storage</strong> — Saved secrets are stored in your browser's localStorage and never leave your device</li>
+      <li><strong>License state</strong> — After activation, your license key and device ID are stored in your browser's extension storage, used only to remember your activation</li>
       <li><strong>Export</strong> — Exported files are saved directly to your local downloads folder</li>
     </ul>
 
-    <h2>3. Permissions</h2>
-    <p>LocalBox2FA requests <strong>no special permissions</strong>. It does not access your browsing data, tabs, network, or any other browser API beyond the basic popup functionality.</p>
+    <h2>4. Permissions</h2>
+    <p>The extension requests only what it needs:</p>
+    <ul>
+      <li><strong>storage</strong> — to persist your license status and device ID locally</li>
+      <li><strong>https://api.annmax1983.com/*</strong> — to reach the license server during activation only</li>
+    </ul>
+    <p>It does not access your browsing history, tabs, or other website data.</p>
 
-    <h2>4. Third-Party Services</h2>
-    <p>LocalBox2FA does <strong>not</strong> connect to any third-party services, APIs, or external servers. The extension operates entirely offline.</p>
+    <h2>5. Third-Party Services</h2>
+    <p>The license server is operated by the LocalBox2FA developer. No data is shared with any other third party. The extension does not use advertising or analytics services.</p>
 
-    <h2>5. Data Sharing</h2>
-    <p>We do not share, sell, rent, or trade any data with third parties because we do not collect any data.</p>
+    <h2>6. Data Retention &amp; Removal</h2>
+    <p>License data is stored only in your browser's extension storage. You can remove it at any time by clicking <strong>Remove</strong> in the extension's Settings, or by uninstalling the extension.</p>
 
-    <h2>6. Changes</h2>
+    <h2>7. Changes</h2>
     <p>If we make changes to this policy, we will update the "Last updated" date above.</p>
 
-    <h2>7. Contact</h2>
+    <h2>8. Contact</h2>
     <p>Questions? Open an issue on our <a href="https://github.com/annmax1983/LocalBox2FA" target="_blank">repository</a>.</p>
 
     <div class="footer">

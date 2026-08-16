@@ -141,19 +141,19 @@
   <script>
     const I18N = {
       zh: {
-        tagline: '完全本地 · 无上传 · 隐私优先',
+        tagline: '完全本地 · 密钥不出本机 · 隐私优先',
         featuresTitle: '✨ 功能特色',
         features: [
           '本地 TOTP 验证码生成，支持 Google Authenticator 格式',
-          '完全离线处理，密钥永远不会离开浏览器',
+          '所有 TOTP 计算在本地完成，密钥永远不会离开浏览器',
           '支持保存多个账号，一键复制验证码',
-          '支持导出备份，数据完全由你掌控',
-          '零权限申请，不读取任何浏览数据',
+          '支持导出备份，数据完全由你掌控（付费功能，需许可证激活）',
+          '仅申请授权验证所需的最小权限，不读取任何浏览数据',
           '支持 6 种语言，自动匹配浏览器语言'
         ],
         thankTitle: '💌 想对你说',
         thank: [
-          '感谢你使用 LocalBox2FA。做这个工具是因为我想要一个真正安全的 2FA 验证器——不需要注册、不需要云同步、不会上传任何数据。',
+          '感谢你使用 LocalBox2FA。做这个工具是因为我想要一个真正安全的 2FA 验证器——不需要注册、不需要云同步、密钥不会上传。',
           '如果它也帮到了你，那对我来说就是最好的回报。',
           '当然，如果你愿意请我喝一杯咖啡 <span class="heart">☕</span>，我会非常开心——这会让我更有动力继续打磨它。'
         ],
@@ -163,19 +163,19 @@
         privacyPolicy: '隐私条款'
       },
       en: {
-        tagline: 'Fully Local · No Upload · Privacy First',
+        tagline: 'Fully Local · Keys Stay Local · Privacy First',
         featuresTitle: '✨ Features',
         features: [
           'Local TOTP code generation, supports Google Authenticator format',
-          'Fully offline processing — keys never leave your browser',
+          'All TOTP computation is local — keys never leave your browser',
           'Save multiple accounts, one-click copy verification codes',
-          'Export backups — your data is fully under your control',
-          'Zero permissions requested — no browsing data accessed',
+          'Export backups — your data is fully under your control (Premium, requires license)',
+          'Minimal permissions — only for license activation, no browsing data accessed',
           'Supports 6 languages, auto-detected from browser'
         ],
         thankTitle: '💌 A Note to You',
         thank: [
-          'Thank you for using LocalBox2FA. I built this tool because I wanted a truly secure 2FA authenticator — no registration, no cloud sync, no data uploaded.',
+          'Thank you for using LocalBox2FA. I built this tool because I wanted a truly secure 2FA authenticator — no registration, no cloud sync, no secrets uploaded.',
           'If it helps you too, that\'s already the best reward I could ask for.',
           'Of course, if you\'d like to <span class="heart">☕</span> buy me a coffee, it would truly make my day — and keep me motivated to make LocalBox2FA even better.'
         ],
@@ -185,19 +185,19 @@
         privacyPolicy: 'Privacy Policy'
       },
       ja: {
-        tagline: '完全ローカル · アップロードなし · プライバシー最優先',
+        tagline: '完全ローカル · 鍵はブラウザ内に保持 · プライバシー最優先',
         featuresTitle: '✨ 機能紹介',
         features: [
           'ローカルTOTP認証コード生成、Google Authenticator形式対応',
-          '完全オフライン処理、鍵はブラウザから外に出ません',
+          'すべてのTOTP計算はローカルで実行、鍵はブラウザから外に出ません',
           '複数アカウント保存、ワンクリックで認証コードコピー',
-          'バックアップエクスポート、データは完全にあなたが管理',
-          '権限要求ゼロ、閲覧データにアクセスしません',
+          'バックアップエクスポート、データは完全にあなたが管理（プレミアム、ライセンス認証が必要）',
+          'ライセンス認証に必要な最小限の権限のみ、閲覧データにはアクセスしません',
           '6言語対応、ブラウザの言語を自動検出'
         ],
         thankTitle: '💌 ご利用ありがとうございます',
         thank: [
-          'LocalBox2FAをご利用いただきありがとうございます。このツールは、本当に安全な2FA認証器が欲しくて作りました——登録不要、クラウド同期なし、データアップロードなし。',
+          'LocalBox2FAをご利用いただきありがとうございます。このツールは、本当に安全な2FA認証器が欲しくて作りました——登録不要、クラウド同期なし、シークレットのアップロードなし。',
           'もし皆様のお役にも立てているなら、それが何よりの喜びです。',
           'もしよろしければ、コーヒーを <span class="heart">☕</span> 一杯おごっていただけると、とても嬉しいです。より良いツールを作る励みになります。'
         ],
@@ -207,19 +207,19 @@
         privacyPolicy: 'プライバシーポリシー'
       },
       de: {
-        tagline: 'Vollständig lokal · Kein Upload · Datenschutz zuerst',
+        tagline: 'Vollständig lokal · Schlüssel bleiben lokal · Datenschutz zuerst',
         featuresTitle: '✨ Funktionen',
         features: [
           'Lokale TOTP-Code-Generierung, unterstützt Google Authenticator-Format',
-          'Vollständig Offline-Verarbeitung — Schlüssel verlassen nie den Browser',
+          'Alle TOTP-Berechnungen laufen lokal — Schlüssel verlassen nie den Browser',
           'Mehrere Konten speichern, Ein-Klick Kopie von Bestätigungscodes',
-          'Backup-Export — Ihre Daten unter Ihrer vollständigen Kontrolle',
-          'Keine Berechtigungen angefordert — keine Browserdaten ausgelesen',
+          'Backup-Export — Ihre Daten unter Ihrer vollständigen Kontrolle (Premium, Lizenzaktivierung erforderlich)',
+          'Minimale Berechtigungen — nur für die Lizenzaktivierung, keine Browserdaten ausgelesen',
           'Unterstützt 6 Sprachen, automatisch erkannt vom Browser'
         ],
         thankTitle: '💌 Ein paar Worte an Sie',
         thank: [
-          'Vielen Dank, dass Sie LocalBox2FA nutzen. Ich habe dieses Tool gebaut, weil ich einen wirklich sicheren 2FA-Authentifikator wollte — keine Registrierung, keine Cloud-Synchronisation, keine Daten hochgeladen.',
+          'Vielen Dank, dass Sie LocalBox2FA nutzen. Ich habe dieses Tool gebaut, weil ich einen wirklich sicheren 2FA-Authentifikator wollte — keine Registrierung, keine Cloud-Synchronisation, keine Schlüssel hochgeladen.',
           'Wenn es auch Ihnen hilft, ist das die beste Belohnung, die ich mir wünschen kann.',
           'Wenn Sie mir gerne einen <span class="heart">☕</span> Kaffee ausgeben möchten, würde mich das sehr freuen — und mich motivieren, LocalBox2FA noch besser zu machen.'
         ],
@@ -229,19 +229,19 @@
         privacyPolicy: 'Datenschutzrichtlinie'
       },
       es: {
-        tagline: 'Completamente local · Sin subida · Privacidad primero',
+        tagline: 'Completamente local · Las claves permanecen locales · Privacidad primero',
         featuresTitle: '✨ Características',
         features: [
           'Generación local de códigos TOTP, compatible con formato Google Authenticator',
-          'Procesamiento completamente offline — las claves nunca salen de tu navegador',
+          'Todo el cálculo TOTP ocurre localmente — las claves nunca salen de tu navegador',
           'Guarda múltiples cuentas, copia códigos con un clic',
-          'Exportación de respaldos — tus datos bajo tu control total',
-          'Cero permisos solicitados — sin acceso a datos de navegación',
+          'Exportación de respaldos — tus datos bajo tu control total (Premium, requiere activación de licencia)',
+          'Permisos mínimos — solo para activar la licencia, sin acceso a datos de navegación',
           'Soporta 6 idiomas, detectados automáticamente desde el navegador'
         ],
         thankTitle: '💌 Unas palabras para ti',
         thank: [
-          'Gracias por usar LocalBox2FA. Construí esta herramienta porque quería un autenticador 2FA realmente seguro — sin registro, sin sincronización en la nube, sin subir datos.',
+          'Gracias por usar LocalBox2FA. Construí esta herramienta porque quería un autenticador 2FA realmente seguro — sin registro, sin sincronización en la nube, sin subir tus claves.',
           'Si también te ayuda a ti, esa ya es la mejor recompensa que puedo pedir.',
           'Por supuesto, si quieres invitarme a un <span class="heart">☕</span> café, me haría muy feliz — y me motivaría a seguir mejorando LocalBox2FA.'
         ],
@@ -251,19 +251,19 @@
         privacyPolicy: 'Política de Privacidad'
       },
       fr: {
-        tagline: 'Entièrement local · Aucun téléversement · Confidentialité d\'abord',
+        tagline: 'Entièrement local · Les clés restent locales · Confidentialité d\'abord',
         featuresTitle: '✨ Fonctionnalités',
         features: [
           'Génération locale de codes TOTP, compatible avec le format Google Authenticator',
-          'Traitement entièrement hors ligne — les clés ne quittent jamais votre navigateur',
+          'Tout le calcul TOTP est local — les clés ne quittent jamais votre navigateur',
           'Enregistrez plusieurs comptes, copiez les codes en un clic',
-          'Export de sauvegarde — vos données entièrement sous votre contrôle',
-          'Aucune permission demandée — aucune donnée de navigation consultée',
+          'Export de sauvegarde — vos données entièrement sous votre contrôle (Premium, activation de licence requise)',
+          'Permissions minimales — uniquement pour l\'activation de la licence, aucune donnée de navigation consultée',
           'Prend en charge 6 langues, détectées automatiquement depuis le navigateur'
         ],
         thankTitle: '💌 Un petit mot pour vous',
         thank: [
-          'Merci d\'utiliser LocalBox2FA. J\'ai construit cet outil parce que je voulais un authentificateur 2FA vraiment sécurisé — sans inscription, sans synchronisation cloud, sans téléversement de données.',
+          'Merci d\'utiliser LocalBox2FA. J\'ai construit cet outil parce que je voulais un authentificateur 2FA vraiment sécurisé — sans inscription, sans synchronisation cloud, sans téléverser vos clés.',
           'S\'il vous aide aussi, c\'est déjà la plus belle récompense.',
           'Bien sûr, si vous souhaitez m\'offrir un <span class="heart">☕</span> café, cela me ferait très plaisir — et me motiverait à améliorer LocalBox2FA encore davantage.'
         ],

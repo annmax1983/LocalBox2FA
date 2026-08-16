@@ -1,9 +1,9 @@
 # LocalBox2FA
 [English](../README.md) | [中文](README_zh.md) | [Español](README_es.md) | Deutsch | [日本語](README_ja.md) | [Français](README_fr.md)
 
-Ein leichtgewichtiger Browsererweiterung zur lokalen Generierung von TOTP 2FA-Bestätigungscodes — ohne Upload, komplett offline.
+Eine leichtgewichtige Browsererweiterung zur lokalen Generierung von TOTP 2FA-Bestätigungscodes — Ihre Geheimnisse bleiben vollständig auf Ihrem Gerät.
 
-> Chromium-basiert · Manifest V3 · Vollständig offline · Datenschutz zuerst
+> Chromium-basiert · Manifest V3 · Lokale Verarbeitung · Datenschutz zuerst
 
 ---
 
@@ -13,7 +13,7 @@ Die meisten 2FA-Authentifikatoren erfordern eine Handy-App oder Cloud-Synchronis
 
 | Vorteil | Detail |
 |---------|--------|
-| 🔒 **Vollständig lokal** | Alle TOTP-Berechnungen erfolgen im Browser über die Web Crypto API. Kein Upload. |
+| 🔒 **Vollständig lokal** | Alle TOTP-Berechnungen erfolgen im Browser über die Web Crypto API. Geheimnisse verlassen nie Ihr Gerät. |
 | 📱 **Kein Handy nötig** | 2FA-Codes direkt in der Browser-Symbolleiste generieren |
 | 🚫 **Kein Konto** | Keine Registrierung, keine Cloud-Sync, kein Login. Installieren und nutzen. |
 | ⚡ **Sofort** | Codes in unter 10ms generiert. Ein Klick zum Kopieren. |
@@ -24,6 +24,8 @@ Die meisten 2FA-Authentifikatoren erfordern eine Handy-App oder Cloud-Synchronis
 
 ## Funktionen
 
+### 🆓 Kostenlose Funktionen
+
 | Funktion | Beschreibung |
 |----------|-------------|
 | 🔐 **TOTP-Code-Generierung** | RFC 6238-kompatibel — funktioniert mit Google Authenticator, Authy und allen TOTP-Diensten |
@@ -31,11 +33,19 @@ Die meisten 2FA-Authentifikatoren erfordern eine Handy-App oder Cloud-Synchronis
 | 📋 **Ein-Klick-Kopie** | Bestätigungscode sofort in die Zwischenablage kopieren |
 | 💾 **Speichern & Verwalten** | Secret-Keys mit benutzerdefinierten Namen speichern |
 | 📋 **Live-Verlauf** | Alle gespeicherten Konten zeigen Echtzeit-Codes und Countdown |
-| 📤 **Export** | Alle Secrets als Textdatei exportieren (Name:Secret Format) |
-| 🗑️ **Sicheres Löschen** | Bestätigungsdialog vor dem Löschen |
+| 🗑️ **Einzelnen Datensatz löschen** | Bestätigungsdialog vor dem Löschen |
 | 🔒 **Duplikat-Schutz** | Verhindert doppelte Speicherung desselben Secret-Keys |
 | 🌙 **Dark Mode** | Automatisches Dark/Light-Theme basierend auf Systemeinstellung |
 | 🌍 **6 Sprachen** | Englisch, Chinesisch, Japanisch, Spanisch, Deutsch, Französisch |
+
+### ⭐ Premium-Funktionen (Lizenz erforderlich)
+
+| Funktion | Beschreibung |
+|----------|-------------|
+| 📤 **Datensätze exportieren** | Alle Secrets als Textdatei exportieren (Backup) |
+| 🗑️ **Alle Datensätze löschen** | Alle gespeicherten Datensätze auf einmal löschen |
+
+> 💡 Einmaliger Kauf, gerätegebundene Lizenz. [Lizenz erwerben →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
 ---
 
@@ -107,17 +117,16 @@ Web Crypto API berechnet HMAC-SHA1
 Ein-Klick-Kopie in die Zwischenablage
 ```
 
-Alle Berechnungen erfolgen lokal über die Web Crypto API des Browsers. Keine Netzwerkanfragen, kein Daten-Upload.
+Alle Berechnungen erfolgen lokal über die Web Crypto API des Browsers. Ihre Geheimnisse werden nie über das Netzwerk gesendet.
 
 ---
 
 ## Datenschutz
 
-- ✅ **Kein Daten-Upload** — Alle TOTP-Berechnungen erfolgen lokal
-- ✅ **Keine Analysen** — Kein Tracking, keine Telemetrie
-- ✅ **Keine Netzwerkanfragen** — Erweiterung arbeitet komplett offline
-- ✅ **Nur lokale Speicherung** — Secrets im Browser-localStorage gespeichert
-- ✅ **Keine Berechtigungen** — Manifest erklärt keine Berechtigungen
+- ✅ **Geheimnisse bleiben auf Ihrem Gerät** — Alle TOTP-Berechnungen erfolgen lokal; gespeicherte Geheimnisse verlassen nie Ihren Browser
+- ✅ **Keine Analysen** — Kein Tracking, keine Telemetrie, keine Cookies
+- ✅ **Netzwerk nur zur Lizenzaktivierung** — Wenn Sie eine Premium-Lizenz aktivieren, werden Ihr Lizenzschlüssel und eine minimale Geräte-ID an den Lizenzserver gesendet. Kostenlose Funktionen arbeiten vollständig offline und senden keine Netzwerkanfragen
+- ✅ **Minimale Berechtigungen** — `storage` (zur Speicherung des Lizenzstatus) und Zugriff nur auf die Lizenzserver-Domain
 
 ---
 

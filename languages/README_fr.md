@@ -1,9 +1,9 @@
 # LocalBox2FA
 [English](../README.md) | [中文](README_zh.md) | [Español](README_es.md) | [Deutsch](README_de.md) | [日本語](README_ja.md) | Français
 
-Une extension légère de navigateur qui génère des codes de vérification TOTP 2FA localement — sans upload, entièrement hors ligne.
+Une extension légère de navigateur qui génère des codes de vérification TOTP 2FA localement — vos secrets restent entièrement sur votre appareil.
 
-> Basé sur Chromium · Manifest V3 · Entièrement hors ligne · Confidentialité d'abord
+> Basé sur Chromium · Manifest V3 · Traitement local · Confidentialité d'abord
 
 ---
 
@@ -13,7 +13,7 @@ La plupart des authentificateurs 2FA nécessitent une application mobile ou une 
 
 | Avantage | Détail |
 |----------|--------|
-| 🔒 **Entièrement local** | Tous les calculs TOTP s'effectuent dans votre navigateur via l'API Web Crypto. Aucun upload. |
+| 🔒 **Entièrement local** | Tous les calculs TOTP s'effectuent dans votre navigateur via l'API Web Crypto. Vos secrets ne quittent jamais votre appareil. |
 | 📱 **Pas de Téléphone** | Générez des codes 2FA directement depuis la barre d'outils du navigateur |
 | 🚫 **Pas de Compte** | Sans inscription, sans synchronisation cloud, sans connexion. Installez et utilisez. |
 | ⚡ **Instantané** | Codes générés en moins de 10ms. Un clic pour copier. |
@@ -24,6 +24,8 @@ La plupart des authentificateurs 2FA nécessitent une application mobile ou une 
 
 ## Fonctionnalités
 
+### 🆓 Fonctionnalités Gratuites
+
 | Fonctionnalité | Description |
 |----------------|-------------|
 | 🔐 **Génération TOTP** | Compatible RFC 6238 — fonctionne avec Google Authenticator, Authy et tous les services TOTP |
@@ -31,11 +33,19 @@ La plupart des authentificateurs 2FA nécessitent une application mobile ou une 
 | 📋 **Copie en Un Clic** | Copie le code de vérification dans le presse-papiers instantanément |
 | 💾 **Sauvegarder & Gérer** | Sauvegardez les clés secrètes avec des noms personnalisés |
 | 📋 **Historique en Direct** | Tous les comptes sauvegardés affichent les codes en temps réel |
-| 📤 **Exporter** | Exporte toutes les clés secrètes en fichier texte (format nom:clé) |
-| 🗑️ **Suppression Sécurisée** | Dialogue de confirmation avant la suppression |
+| 🗑️ **Supprimer un Enregistrement** | Dialogue de confirmation avant la suppression |
 | 🔒 **Anti-Dupliquats** | Empêche la sauvegarde de la même clé secrète deux fois |
 | 🌙 **Mode Sombre** | Thème automatique selon la préférence du système |
 | 🌍 **6 Langues** | Anglais, Chinois, Japonais, Espagnol, Allemand, Français |
+
+### ⭐ Fonctionnalités Premium (Licence Requise)
+
+| Fonctionnalité | Description |
+|----------------|-------------|
+| 📤 **Exporter les Enregistrements** | Exporte toutes les clés secrètes en fichier texte pour sauvegarde |
+| 🗑️ **Effacer Tous les Enregistrements** | Supprimer tous les enregistrements sauvegardés en une fois |
+
+> 💡 Achat unique, licence liée à l'appareil. [Obtenir une Licence →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
 ---
 
@@ -107,17 +117,16 @@ Génère un code TOTP à 6 chiffres (RFC 6238)
 Un clic pour copier dans le presse-papiers
 ```
 
-Tous les calculs s'effectuent localement via l'API Web Crypto du navigateur. Aucune requête réseau, aucun upload de données.
+Tous les calculs s'effectuent localement via l'API Web Crypto du navigateur. Vos secrets ne sont jamais envoyés sur le réseau.
 
 ---
 
 ## Confidentialité
 
-- ✅ **Aucun upload de données** — Tous les calculs TOTP s'effectuent localement
-- ✅ **Aucune analyse** — Pas de suivi, pas de télémétrie
-- ✅ **Aucune requête réseau** — L'extension fonctionne entièrement hors ligne
-- ✅ **Stockage local uniquement** — Secrets sauvegardés dans le localStorage du navigateur
-- ✅ **Aucune permission** — Le manifest ne déclare aucune permission
+- ✅ **Les secrets restent sur votre appareil** — Tous les calculs TOTP s'effectuent localement ; les secrets enregistrés ne quittent jamais votre navigateur
+- ✅ **Aucune analyse** — Pas de suivi, pas de télémétrie, pas de cookies
+- ✅ **Réseau uniquement pour l'activation de la licence** — Si vous activez une licence Premium, votre clé de licence et un identifiant d'appareil minimal sont envoyés au serveur de licence pour vérification. Les fonctions gratuites fonctionnent entièrement hors ligne et n'effectuent aucune requête réseau
+- ✅ **Permissions minimales** — `storage` (pour mémoriser l'état de la licence) et accès uniquement au domaine du serveur de licence
 
 ---
 
