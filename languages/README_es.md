@@ -18,7 +18,7 @@ La mayoría de autenticadores 2FA requieren una app móvil o sincronización en 
 | 🚫 **Sin Cuenta** | Sin registro, sin sincronización, sin login. Instala y usa. |
 | ⚡ **Instantáneo** | Códigos generados en menos de 10ms. Un clic para copiar. |
 | 🌙 **Modo Oscuro** | Sigue automáticamente la preferencia de modo oscuro del sistema |
-| 🎯 **Mínimo** | Menos de 50KB. Sin frameworks, sin dependencias |
+| 🎯 **Mínimo** | Sin frameworks, sin dependencias, sin peso extra. |
 
 ---
 

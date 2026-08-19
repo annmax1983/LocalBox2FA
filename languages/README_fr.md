@@ -18,7 +18,7 @@ La plupart des authentificateurs 2FA nécessitent une application mobile ou une 
 | 🚫 **Pas de Compte** | Sans inscription, sans synchronisation cloud, sans connexion. Installez et utilisez. |
 | ⚡ **Instantané** | Codes générés en moins de 10ms. Un clic pour copier. |
 | 🌙 **Mode Sombre** | Suit automatiquement la préférence du système |
-| 🎯 **Minimal** | Moins de 50 Ko. Sans frameworks, sans dépendances |
+| 🎯 **Minimal** | Sans frameworks, sans dépendances, pas de surcharge. |
 
 ---
 

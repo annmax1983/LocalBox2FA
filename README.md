@@ -19,7 +19,7 @@ Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs dire
 | 🚫 **No Account** | No registration, no cloud sync, no login. Just install and use. |
 | ⚡ **Instant** | Codes generate in under 10ms. One click to copy to clipboard. |
 | 🌙 **Dark Mode** | Automatically follows your system dark mode preference. |
-| 🎯 **Minimal** | Under 50KB. No frameworks, no dependencies, no bloat. |
+| 🎯 **Minimal** | No frameworks, no dependencies, no bloat. |
 
 ---
 

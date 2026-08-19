@@ -18,7 +18,7 @@ Die meisten 2FA-Authentifikatoren erfordern eine Handy-App oder Cloud-Synchronis
 | 🚫 **Kein Konto** | Keine Registrierung, keine Cloud-Sync, kein Login. Installieren und nutzen. |
 | ⚡ **Sofort** | Codes in unter 10ms generiert. Ein Klick zum Kopieren. |
 | 🌙 **Dark Mode** | Folgt automatisch der System-Dark-Mode-Einstellung |
-| 🎯 **Minimal** | Unter 50KB. Keine Frameworks, keine Abhängigkeiten |
+| 🎯 **Minimal** | Keine Frameworks, keine Abhängigkeiten, kein Ballast. |
 
 ---
 
