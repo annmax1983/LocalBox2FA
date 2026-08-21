@@ -130,6 +130,13 @@ Alle Berechnungen erfolgen lokal über die Web Crypto API des Browsers. Ihre Geh
 
 ---
 
+---
+
+## Hinweis zum Quellcode
+
+> ⚠️ **Dieses Repository veröffentlicht keinen Quellcode.** Es enthält nur Nutzerdokumentation, Versionshinweise und Support-Ressourcen. Die Erweiterung wird ausschließlich über den Chrome Web Store vertrieben. Es werden keine Offline-Installationspakete oder Quellcodes für Endbenutzer bereitgestellt.
+
+
 ## Lizenz
 
 Copyright © 2026 LocalBox2FA. Alle Rechte vorbehalten.

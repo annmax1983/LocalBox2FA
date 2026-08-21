@@ -154,6 +154,12 @@ LocalBox2FA is built with privacy as a core principle:
 
 ---
 
+## Source Code Notice
+
+> ⚠️ **This repository does not publish source code.** It contains only usage documentation, release notes, and support resources. The extension is distributed exclusively through the Chrome Web Store. No offline installation packages or end-user source code are provided.
+
+---
+
 ## License
 
 Copyright © 2026 LocalBox2FA. All rights reserved.

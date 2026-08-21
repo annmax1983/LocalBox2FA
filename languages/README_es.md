@@ -130,6 +130,13 @@ Todo el cálculo ocurre localmente usando la Web Crypto API del navegador. Tus s
 
 ---
 
+---
+
+## Aviso de código fuente
+
+> ⚠️ **Este repositorio no publica el código fuente.** Contiene únicamente documentación de uso, notas de versión y recursos de soporte. La extensión se distribuye exclusivamente a través de Chrome Web Store. No se proporcionan paquetes de instalación sin conexión ni código fuente para usuarios finales.
+
+
 ## Licencia
 
 Copyright © 2026 LocalBox2FA. Todos los derechos reservados.
