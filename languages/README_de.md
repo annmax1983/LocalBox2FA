@@ -34,6 +34,7 @@ Die meisten 2FA-Authentifikatoren benötigen eine Handy-App oder Cloud-Synchroni
 | 📋 **Ein-Klick-Kopie** | Bestätigungscode sofort in die Zwischenablage kopieren |
 | 💾 **Speichern & Verwalten** | Secret Keys mit benutzerdefinierten Namen speichern, jederzeit per Klick laden |
 | 📋 **Live-Verlauf** | Alle gespeicherten Konten zeigen Echtzeit-Codes und Countdown-Timer |
+| 🔎 **Suchen & Umbenennen** | Finde jedes Konto sofort, benenne Konten jederzeit um |
 | 🗑️ **Einzelnen Eintrag löschen** | Einzelne Einträge mit Bestätigungsdialog entfernen |
 | 🔒 **Duplikat-Schutz** | Verhindert das doppelte Speichern desselben Secret Keys |
 | 🌙 **Dark Mode** | Automatisches helles/dunkles Theme basierend auf Systemeinstellung |
@@ -45,6 +46,8 @@ Die meisten 2FA-Authentifikatoren benötigen eine Handy-App oder Cloud-Synchroni
 |----------|--------------|
 | 📤 **Einträge exportieren** | Alle Secrets als Textdatei (Name:Secret-Format) für Backup exportieren |
 | 🗑️ **Alle Einträge löschen** | Alle gespeicherten Einträge auf einmal massenhaft löschen |
+| 📥 **Einträge importieren** | Konten aus einer Text-Backup-Datei wiederherstellen |
+| 📱 **QR-Code anzeigen** | Scannbarer QR-Code zur Übertragung auf die Authenticator-App deines Smartphones |
 
 > 💡 Einmaliger Kauf, gerätegebundene Lizenz. [Lizenz erhalten →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -147,8 +150,8 @@ LocalBox2FA wurde mit Datenschutz als Grundprinzip entwickelt:
 
 **Bitte vor der Nutzung sorgfältig lesen:**
 
-- **🔑 Klartext-Speicherung** — Secret Keys werden im Browser-`localStorage` **ohne Verschlüsselung** gespeichert. Jeder mit Zugang zu deinem Browserprofil kann alle gespeicherten Schlüssel einsehen.
-- **💾 Daten löschen = Datenverlust** — Das Löschen des Browser-Caches oder der Seiten-Daten **löscht dauerhaft** alle gespeicherten Konten. Bitte exportiere vorher eine Backup-Datei.
+- **🔑 Klartext-Speicherung** — Secret Keys werden im Erweiterungs-Speicher des Browsers (`chrome.storage.local`) **ohne Verschlüsselung** gespeichert. Jeder mit Zugang zu deinem Browserprofil kann alle gespeicherten Schlüssel einsehen.
+- **💾 Extension entfernen = Datenverlust** — Das Entfernen der Extension oder das Löschen ihrer Daten **löscht dauerhaft** alle gespeicherten Konten. Bitte exportiere vorher eine Backup-Datei.
 - **📄 Export-Datei ist unverschlüsselt** — Die exportierte `.txt`-Backup-Datei enthält Klartext-Secret Keys. Bewahre sie sicher auf und vermeide öffentliche Weitergabe.
 - **🛡️ Best Practice** — Lösche gespeicherte Secrets aus der Erweiterung, nachdem du sie in eine dedizierte Authentifikator-App übertragen hast.
 

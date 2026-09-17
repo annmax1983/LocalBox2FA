@@ -34,6 +34,7 @@ La mayoría de aplicaciones de autenticación 2FA requieren una app en el móvil
 | 📋 **Copia con un clic** | Copia el código de verificación al portapapeles al instante |
 | 💾 **Guardar y gestionar** | Guarda claves secretas con nombres personalizados, haz clic para recargar en cualquier momento |
 | 📋 **Historial en vivo** | Todas las cuentas guardadas muestran códigos en tiempo real y temporizadores de cuenta atrás |
+| 🔎 **Buscar y renombrar** | Encuentra cualquier cuenta al instante, renómbralas cuando quieras |
 | 🗑️ **Eliminar registro individual** | Elimina registros individuales con diálogo de confirmación |
 | 🔒 **Protección contra duplicados** | Evita guardar la misma clave secreta dos veces |
 | 🌙 **Modo oscuro** | Tema oscuro/claro automático según la preferencia del sistema |
@@ -45,6 +46,8 @@ La mayoría de aplicaciones de autenticación 2FA requieren una app en el móvil
 |---------|-------------|
 | 📤 **Exportar registros** | Exporta todos los secretos como archivo de texto (formato nombre:secreto) para respaldo |
 | 🗑️ **Borrar todos los registros** | Elimina masivamente todos los registros guardados de una vez |
+| 📥 **Importar registros** | Restaura cuentas desde un archivo de texto de respaldo |
+| 📱 **Mostrar código QR** | Código QR escaneable para transferir cuentas a tu app de autenticación |
 
 > 💡 Compra única, licencia vinculada al dispositivo. [Obtener licencia →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -147,8 +150,8 @@ LocalBox2FA está construida con la privacidad como principio fundamental:
 
 **Por favor, lee atentamente antes de usar:**
 
-- **🔑 Almacenamiento en texto plano** — Las claves secretas se almacenan en el `localStorage` del navegador **sin cifrar**. Cualquiera con acceso a tu perfil de navegador puede ver todas las claves guardadas.
-- **💾 Borrar datos = pérdida de datos** — Borrar la caché del navegador o los datos del sitio **eliminará permanentemente** todas las cuentas guardadas. Por favor, exporta un archivo de respaldo con antelación.
+- **🔑 Almacenamiento en texto plano** — Las claves secretas se almacenan en el almacenamiento de la extensión (`chrome.storage.local`) **sin cifrar**. Cualquiera con acceso a tu perfil de navegador puede ver todas las claves guardadas.
+- **💾 Eliminar la extensión = pérdida de datos** — Desinstalar la extensión o borrar sus datos **eliminará permanentemente** todas las cuentas guardadas. Por favor, exporta un archivo de respaldo con antelación.
 - **📄 El archivo de exportación no está cifrado** — El archivo `.txt` de respaldo exportado contiene claves secretas en texto plano. Guárdalo de forma segura y evita compartirlo públicamente.
 - **🛡️ Mejores prácticas** — Elimina los secretos guardados de la extensión después de transferirlos a una aplicación de autenticación dedicada.
 

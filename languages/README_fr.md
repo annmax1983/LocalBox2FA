@@ -34,6 +34,7 @@ La plupart des applications d'authentification 2FA nécessitent une application 
 | 📋 **Copie en un clic** | Copiez le code de vérification dans le presse-papiers instantanément |
 | 💾 **Sauvegarde et gestion** | Enregistrez les clés secrètes avec des noms personnalisés, cliquez pour recharger à tout moment |
 | 📋 **Historique en direct** | Tous les comptes sauvegardés affichent les codes en temps réel et les comptes à rebours |
+| 🔎 **Rechercher & renommer** | Trouvez n'importe quel compte instantanément, renommez-les à tout moment |
 | 🗑️ **Suppression individuelle** | Supprimez des enregistrements individuels avec une boîte de dialogue de confirmation |
 | 🔒 **Anti-doublon** | Empêche l'enregistrement de la même clé secrète deux fois |
 | 🌙 **Mode sombre** | Thème sombre/clair automatique basé sur la préférence du système |
@@ -45,6 +46,8 @@ La plupart des applications d'authentification 2FA nécessitent une application 
 |---------|-------------|
 | 📤 **Exporter les enregistrements** | Exportez tous les secrets en fichier texte (format nom:secret) pour sauvegarde |
 | 🗑️ **Tout supprimer** | Supprimez en masse tous les enregistrements sauvegardés d'un coup |
+| 📥 **Importer des enregistrements** | Restaurez des comptes depuis un fichier texte de sauvegarde |
+| 📱 **Affichage QR code** | QR code scannable pour transférer vos comptes vers votre app d'authentification |
 
 > 💡 Achat unique, licence liée à l'appareil. [Obtenir une licence →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -147,8 +150,8 @@ LocalBox2FA a été conçu avec la confidentialité comme principe fondamental :
 
 **Veuillez lire attentivement avant utilisation :**
 
-- **🔑 Stockage en clair** — Les clés secrètes sont stockées dans le `localStorage` du navigateur **sans chiffrement**. Toute personne ayant accès à votre profil de navigateur peut consulter toutes les clés sauvegardées.
-- **💾 Effacer les données = perte de données** — L'effacement du cache ou des données de site du navigateur **supprimera définitivement** tous les comptes sauvegardés. Veuillez exporter un fichier de sauvegarde au préalable.
+- **🔑 Stockage en clair** — Les clés secrètes sont stockées dans le stockage de l'extension (`chrome.storage.local`) **sans chiffrement**. Toute personne ayant accès à votre profil de navigateur peut consulter toutes les clés sauvegardées.
+- **💾 Supprimer l'extension = perte de données** — La désinstallation de l'extension ou l'effacement de ses données **supprimera définitivement** tous les comptes sauvegardés. Veuillez exporter un fichier de sauvegarde au préalable.
 - **📄 Le fichier d'export est non chiffré** — Le fichier `.txt` exporté contient les clés secrètes en clair. Stockez-le de manière sécurisée et évitez le partage public.
 - **🛡️ Bonne pratique** — Supprimez les secrets sauvegardés de l'extension après les avoir transférés vers une application d'authentification dédiée.
 

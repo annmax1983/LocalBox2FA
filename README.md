@@ -34,6 +34,7 @@ Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs dire
 | 📋 **One-Click Copy** | Copy verification code to clipboard instantly |
 | 💾 **Save & Manage** | Save secret keys with custom names, click to reload anytime |
 | 📋 **Live History** | All saved accounts show real-time codes and countdown timers |
+| 🔎 **Search & Rename** | Instantly find any account, rename accounts anytime |
 | 🗑️ **Delete Single Record** | Remove individual records with confirmation dialog |
 | 🔒 **Duplicate Guard** | Prevents saving the same secret key twice |
 | 🌙 **Dark Mode** | Automatic dark/light theme based on system preference |
@@ -45,6 +46,8 @@ Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs dire
 |---------|-------------|
 | 📤 **Export Records** | Export all secrets as a text file (name:secret format) for backup |
 | 🗑️ **Clear All Records** | Bulk delete all saved records at once |
+| 📥 **Import Records** | Restore accounts from a backup text file |
+| 📱 **QR Code Display** | Scannable QR code to transfer accounts to your phone authenticator |
 
 > 💡 One-time purchase, device-bound license. [Get License →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -147,8 +150,8 @@ LocalBox2FA is built with privacy as a core principle:
 
 **Please read carefully before use:**
 
-- **🔑 Plaintext storage** — Secret keys are stored in browser `localStorage` **without encryption**. Anyone with access to your browser profile can view all saved keys.
-- **💾 Clearing data = data loss** — Clearing browser cache or site data will **permanently erase** all saved accounts. Please export a backup file in advance.
+- **🔑 Plaintext storage** — Secret keys are stored in the browser's extension storage (`chrome.storage.local`) **without encryption**. Anyone with access to your browser profile can view all saved keys.
+- **💾 Removing the extension = data loss** — Uninstalling the extension or clearing its data will **permanently erase** all saved accounts. Please export a backup file in advance.
 - **📄 Export file is unencrypted** — The exported `.txt` backup contains plaintext secret keys. Store it securely and avoid public sharing.
 - **🛡️ Best practice** — Delete saved secrets from the extension after transferring them to a dedicated authenticator app.
 
