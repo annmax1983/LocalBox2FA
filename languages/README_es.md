@@ -8,6 +8,18 @@ Una extensión ligera para el navegador que genera códigos de verificación TOT
 
 ---
 
+## Novedades de la versión 1.3.0
+
+| Cambio | Detalle |
+|--------|---------|
+| 🛡️ **Cifrado con contraseña maestra** | Cifrado AES-GCM de 256 bits opcional para los secretos guardados. La clave se deriva de tu contraseña con PBKDF2-SHA256 (600.000 iteraciones + sal aleatoria) y solo vive en memoria. Se pide cada vez que abres la ventana |
+| 🔓 **Exportar / importar / borrar todo ahora es gratis** | Respaldar, restaurar y borrar tus propios secretos es higiene de datos, no una función de pago. Premium queda solo para la transferencia por código QR |
+| 📄 **Política de privacidad corregida** | Ahora indica el medio de almacenamiento real (`chrome.storage.local`), los momentos reales de conexión (activación, una reverificación como máximo cada 24 h al abrir, desactivación) y la lista real de campos |
+
+**¿Actualizas desde v1.2.x? No hay nada que hacer.** Los registros guardados por versiones anteriores se mantienen en texto plano y funcionan igual que antes: la lista, los códigos, la cuenta atrás, exportar, importar y borrar no cambian, y la clave de almacenamiento es la misma, así que no se reescribe nada. Un registro solo se cifra cuando estableces una contraseña maestra, y desde entonces lleva el prefijo 🔐. Los registros en texto plano y los cifrados pueden convivir en la misma lista. Sin migración, sin reinicio, sin volver a introducir datos.
+
+---
+
 ## ¿Por qué LocalBox2FA?
 
 La mayoría de aplicaciones de autenticación 2FA requieren una app en el móvil o sincronización en la nube. LocalBox2FA se ejecuta directamente en tu navegador — sin necesidad de móvil, sin cuenta requerida y tus secretos nunca salen de tu máquina.
@@ -39,15 +51,13 @@ La mayoría de aplicaciones de autenticación 2FA requieren una app en el móvil
 | 🔒 **Protección contra duplicados** | Evita guardar la misma clave secreta dos veces |
 | 🌙 **Modo oscuro** | Tema oscuro/claro automático según la preferencia del sistema |
 | 🌍 **6 idiomas** | Inglés, chino, japonés, español, alemán y francés |
+| 🛡️ **Cifrado con contraseña maestra** | Cifrado AES-GCM 256 opcional de los secretos guardados; clave derivada con PBKDF2-SHA256 (600.000 iteraciones), se pide al abrir la ventana |
 
 ### ⭐ Premium (Requiere licencia)
 
-| Funcionalidad | Descripción |
+| Función | Descripción |
 |---------|-------------|
-| 📤 **Exportar registros** | Exporta todos los secretos como archivo de texto (formato nombre:secreto) para respaldo |
-| 🗑️ **Borrar todos los registros** | Elimina masivamente todos los registros guardados de una vez |
-| 📥 **Importar registros** | Restaura cuentas desde un archivo de texto de respaldo |
-| 📱 **Mostrar código QR** | Código QR escaneable para transferir cuentas a tu app de autenticación |
+| 📱 **Código QR** | Código QR escaneable para transferir cuentas al autenticador de tu móvil |
 
 > 💡 Compra única, licencia vinculada al dispositivo. [Obtener licencia →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -83,7 +93,7 @@ Esta extensión cumple con el estándar TOTP RFC 6238 y soporta claves secretas 
    - **Chrome**: `chrome://extensions/`
    - **Edge**: `edge://extensions/`
 2. Activa el **modo de desarrollador** (interruptor arriba a la derecha)
-3. Haz clic en **Cargar descomprimida** y selecciona la carpeta `local-box2-fa`
+3. Haz clic en **Cargar descomprimida** y selecciona la carpeta `LocalBox2FA`
 4. Haz clic en el icono 🔐 de LocalBox2FA en tu barra de herramientas para empezar
 
 ---
@@ -109,11 +119,25 @@ Esta extensión cumple con el estándar TOTP RFC 6238 y soporta claves secretas 
 - Haz clic en cualquier cuenta para cargar su código en la visualización principal
 - Los códigos se actualizan automáticamente cada 30 segundos
 
+### 🔒 Cifra tus secretos
+
+Abre **Ajustes (⚙) → Contraseña maestra** y pulsa **Activar cifrado**:
+
+1. Elige una contraseña maestra y confírmala
+2. Los secretos ya guardados se sellan de inmediato y pasan a mostrar el prefijo 🔐 en la lista
+3. La próxima vez que abras la ventana verás primero la pantalla de bloqueo; los códigos solo aparecen tras introducir la contraseña
+
+Notas:
+
+- La contraseña maestra **no se puede restablecer ni recuperar**. Si la olvidas, la única salida es borrar todo desde la pantalla de bloqueo y empezar de nuevo, así que conserva una copia exportada.
+- La clave derivada solo vive en memoria y desaparece al cerrar la ventana: por eso se pide la contraseña cada vez.
+- **Desactivar el cifrado** en el mismo panel descifra todos los registros de nuevo a texto plano.
+
 ### Exportar y respaldar
 
-- Haz clic en **Exportar** para descargar todos los secretos guardados como archivo `.txt`
-- Formato: `NombreCuenta:ClaveSecreta` (una por línea)
-- Guarda este archivo en un lugar seguro — contiene tus claves secretas
+- Pulsa **Exportar** para descargar todos los secretos guardados como archivo `.txt`
+- Formato: `NombreCuenta:ClaveSecreta` (una por línea); con dígitos/periodo/algoritmo no predeterminados, `NombreCuenta:otpauth://…`
+- Guarda este archivo en un lugar seguro — **está en texto plano** y no lo protege tu contraseña maestra
 
 ---
 
@@ -140,8 +164,9 @@ Todo el cálculo ocurre localmente usando la Web Crypto API del navegador. Tus s
 LocalBox2FA está construida con la privacidad como principio fundamental:
 
 - ✅ **Los secretos se quedan en tu dispositivo** — Todo el cálculo TOTP ocurre localmente; los secretos guardados nunca salen de tu navegador
+- ✅ **Cifrado en reposo opcional** — Sin contraseña maestra los secretos están en texto plano. Al activarla, cada secreto se sella con AES-GCM 256; la clave se deriva de tu contraseña (PBKDF2-SHA256, 600.000 iteraciones), solo vive en memoria y nunca se escribe
 - ✅ **Sin analíticas** — Sin rastreo, sin telemetría, sin cookies
-- ✅ **Red solo para activación de licencia** — Si activas una licencia Premium, tu clave de licencia y un identificador mínimo de dispositivo se envían al servidor de licencias para verificarla. Las funcionalidades gratuitas funcionan completamente sin conexión y nunca realizan solicitudes de red.
+- ⚠️ **Uso de red mínimo y declarado** — Las funciones gratuitas **no hacen ninguna petición de red**. Con licencia, la extensión contacta `api.annmax1983.com` para activarla, reverificarla (como máximo una vez cada 24 h al abrir la ventana) y liberarla. Esas peticiones incluyen tu clave de licencia, un identificador de dispositivo con sal aleatoria y metadatos del navegador (nombre/versión, lista de idiomas, zona horaria, User-Agent) — **nunca tus secretos ni los códigos generados**
 - ✅ **Permisos mínimos** — `storage` (para recordar el estado de tu licencia) y acceso al dominio del servidor de licencias únicamente
 
 ---
@@ -150,7 +175,8 @@ LocalBox2FA está construida con la privacidad como principio fundamental:
 
 **Por favor, lee atentamente antes de usar:**
 
-- **🔑 Almacenamiento en texto plano** — Las claves secretas se almacenan en el almacenamiento de la extensión (`chrome.storage.local`) **sin cifrar**. Cualquiera con acceso a tu perfil de navegador puede ver todas las claves guardadas.
+- **🔑 El cifrado es opcional** — De fábrica, los secretos se guardan **sin cifrar** en el almacenamiento de la extensión (`chrome.storage.local`), y cualquiera con acceso a tu perfil del navegador puede verlos. Activa la contraseña maestra en Ajustes.
+- **🚫 Sin recuperación de contraseña** — La contraseña maestra no se puede restablecer y los registros cifrados no se pueden recuperar sin ella. Si la olvidas, la única opción es borrar los registros desde la pantalla de bloqueo y empezar de nuevo. Exporta antes una copia — y guárdala bien, porque está en texto plano.
 - **💾 Eliminar la extensión = pérdida de datos** — Desinstalar la extensión o borrar sus datos **eliminará permanentemente** todas las cuentas guardadas. Por favor, exporta un archivo de respaldo con antelación.
 - **📄 El archivo de exportación no está cifrado** — El archivo `.txt` de respaldo exportado contiene claves secretas en texto plano. Guárdalo de forma segura y evita compartirlo públicamente.
 - **🛡️ Mejores prácticas** — Elimina los secretos guardados de la extensión después de transferirlos a una aplicación de autenticación dedicada.

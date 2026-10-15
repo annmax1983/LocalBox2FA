@@ -8,6 +8,19 @@ A lightweight browser extension that generates TOTP 2FA verification codes — y
 
 ---
 
+## What's New in v1.3.0
+
+| Change | Detail |
+|--------|--------|
+| 🛡️ **Master password encryption** | Optional AES-GCM 256-bit sealing for saved secrets. The key is derived from your password with PBKDF2-SHA256 (600,000 iterations + random salt) and never leaves memory. Requested every time the popup opens; can be turned off again in Settings. |
+| 🔓 **Export / Import / Clear-all are now free** | Backing up, restoring and erasing your own secrets is data hygiene, not a paid feature. Only QR-code transfer remains Premium. |
+| 📄 **Privacy policy corrected** | Now states the real storage medium (`chrome.storage.local`), the real network moments (activation, at most one re-check per 24 h, deactivation) and the real field list. |
+| 🌍 **6 languages updated** | New strings for the master-password UI were translated into all six supported locales. |
+
+**Upgrading from v1.2.x? Nothing to do.** Records saved by older versions stay plaintext and keep working exactly as before — the list, the codes, the countdown, export, import and delete are all untouched, and the storage key is unchanged, so nothing is rewritten on update. A record only becomes encrypted once you set a master password, and from then on it is marked with a 🔐 prefix. Plaintext and encrypted records can coexist in one list. No migration, no data reset, no re-entry.
+
+---
+
 ## Why LocalBox2FA?
 
 Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs directly in your browser — no phone needed, no account required, and your secrets never leave your machine.
@@ -37,16 +50,19 @@ Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs dire
 | 🔎 **Search & Rename** | Instantly find any account, rename accounts anytime |
 | 🗑️ **Delete Single Record** | Remove individual records with confirmation dialog |
 | 🔒 **Duplicate Guard** | Prevents saving the same secret key twice |
+| 🛡️ **Master Password Encryption** | Optional AES-GCM 256-bit encryption for saved secrets, key derived with PBKDF2-SHA256 (600k iterations). Requested every time the popup opens |
+| 📤 **Export Records** | Export all secrets as a text file (`name:secret` format) for backup |
+| 📥 **Import Records** | Restore accounts from a backup text file |
+| 🗑️ **Clear All Records** | Bulk delete all saved records at once |
 | 🌙 **Dark Mode** | Automatic dark/light theme based on system preference |
 | 🌍 **6 Languages** | English, Chinese, Japanese, Spanish, German, French |
+
+> 🔓 Export, import and clear-all are deliberately **free**. Backing up, restoring and erasing your own secrets is data hygiene, not a paid feature.
 
 ### ⭐ Premium (License Required)
 
 | Feature | Description |
 |---------|-------------|
-| 📤 **Export Records** | Export all secrets as a text file (name:secret format) for backup |
-| 🗑️ **Clear All Records** | Bulk delete all saved records at once |
-| 📥 **Import Records** | Restore accounts from a backup text file |
 | 📱 **QR Code Display** | Scannable QR code to transfer accounts to your phone authenticator |
 
 > 💡 One-time purchase, device-bound license. [Get License →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
@@ -83,7 +99,7 @@ This extension complies with RFC 6238 TOTP standard and supports secret keys gen
    - **Chrome**: `chrome://extensions/`
    - **Edge**: `edge://extensions/`
 2. Enable **Developer mode** (top-right toggle)
-3. Click **Load unpacked** and select the `local-box2-fa` folder
+3. Click **Load unpacked** and select the `LocalBox2FA` folder
 4. Click the 🔐 LocalBox2FA icon in your toolbar to start
 
 ---
@@ -109,11 +125,26 @@ This extension complies with RFC 6238 TOTP standard and supports secret keys gen
 - Click any account to load its code into the main display
 - Codes auto-refresh every 30 seconds
 
+### 🔒 Encrypt Your Secrets
+
+Open **Settings (⚙) → Master password** and click **Enable encryption**:
+
+1. Choose a master password and confirm it
+2. Every already-saved secret is sealed immediately — records that were saved earlier keep only their name, digits, period and algorithm in the clear
+3. From the next popup open, the lock screen asks for the password before any code is shown
+
+Notes:
+
+- The password **cannot be reset or recovered**. If you forget it, the lock screen offers to erase everything and start over — so keep an exported backup.
+- The derived key lives in memory only and dies when the popup closes, which is why the password is asked for on every open.
+- **Turn off encryption** in the same panel decrypts every record back to plaintext.
+- Sealed records show a 🔐 prefix in the list; their codes read 🔐 until the vault is unlocked.
+
 ### Export & Backup
 
 - Click **Export** to download all saved secrets as a `.txt` file
-- Format: `AccountName:SecretKey` (one per line)
-- Keep this file safe — it contains your secret keys
+- Format: `AccountName:SecretKey` (one per line), or `AccountName:otpauth://…` for accounts with non-default digits / period / algorithm
+- Keep this file safe — **it is plaintext** and is not protected by your master password
 
 ---
 
@@ -139,10 +170,14 @@ All computation happens locally using the browser's Web Crypto API. Your secrets
 
 LocalBox2FA is built with privacy as a core principle:
 
-- ✅ **Secrets stay on your device** — All TOTP computation happens locally; saved secrets never leave your browser
-- ✅ **No analytics** — No tracking, no telemetry, no cookies
-- ✅ **Network only for license activation** — If you activate a Premium license, your license key and a minimal device identifier are sent to the license server to verify it. Free features work fully offline and never make a network request.
-- ✅ **Minimal permissions** — `storage` (to remember your license status) and access to the license server domain only
+- ✅ **Secrets stay on your device** — All TOTP computation happens locally; saved secrets are stored in `chrome.storage.local` and never leave your browser
+- ✅ **Optional encryption at rest** — Without a master password, saved secrets are plaintext. Once enabled, every secret is sealed with AES-GCM 256; the key is derived from your password (PBKDF2-SHA256, 600k iterations) and kept in memory only, never written to storage
+- ✅ **No analytics** — No tracking, no telemetry, no cookies, no third-party scripts
+- ✅ **No page access** — No content scripts, no host permissions beyond the license server, no access to history, tabs or bookmarks
+- ⚠️ **Minimal, disclosed networking** — Free features make **no network request at all**. With a license, the extension contacts `api.annmax1983.com` to activate it, to re-verify it (at most once per 24 hours when you open the popup) and to release it. Those requests carry your license key, a random-salted device identifier and browser metadata (browser name/version, language list, time zone, User-Agent). Your secrets and generated codes are never included
+- ✅ **Minimal permissions** — `storage` (records, license status, device identifier) and access to the license server domain only
+
+See [privacy-policy.html](privacy-policy.html) for the full field-by-field breakdown.
 
 ---
 
@@ -150,8 +185,9 @@ LocalBox2FA is built with privacy as a core principle:
 
 **Please read carefully before use:**
 
-- **🔑 Plaintext storage** — Secret keys are stored in the browser's extension storage (`chrome.storage.local`) **without encryption**. Anyone with access to your browser profile can view all saved keys.
-- **💾 Removing the extension = data loss** — Uninstalling the extension or clearing its data will **permanently erase** all saved accounts. Please export a backup file in advance.
+- **🔑 Encryption is opt-in** — Out of the box, secret keys are stored in the browser's extension storage (`chrome.storage.local`) **without encryption**. Anyone with access to your browser profile can view all saved keys. Turn on the master password in Settings to encrypt them.
+- **🚫 No password recovery** — The master password cannot be reset, and encrypted records cannot be recovered without it. If you forget it, the only option is to erase the records from the lock screen and start over. Keep an exported backup — and keep that backup safe, since it is plaintext.
+- **💾 Removing the extension = data loss** — Uninstalling the extension or clearing its data will **permanently erase** all saved accounts, encrypted or not. Please export a backup file in advance.
 - **📄 Export file is unencrypted** — The exported `.txt` backup contains plaintext secret keys. Store it securely and avoid public sharing.
 - **🛡️ Best practice** — Delete saved secrets from the extension after transferring them to a dedicated authenticator app.
 

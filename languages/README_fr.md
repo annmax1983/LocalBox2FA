@@ -8,6 +8,18 @@ Une extension légère qui génère des codes de vérification TOTP 2FA — vos 
 
 ---
 
+## Nouveautés de la version 1.3.0
+
+| Changement | Détail |
+|-----------|--------|
+| 🛡️ **Chiffrement par mot de passe maître** | Chiffrement AES-GCM 256 bits facultatif des secrets enregistrés. La clé est dérivée de votre mot de passe par PBKDF2-SHA256 (600 000 itérations + sel aléatoire) et ne réside qu'en mémoire. Demandée à chaque ouverture de la fenêtre |
+| 🔓 **Export / import / tout effacer désormais gratuit** | Sauvegarder, restaurer et effacer ses propres secrets relève de la gestion de ses données, pas d'une fonction payante. Seul le transfert par QR code reste Premium |
+| 📄 **Politique de confidentialité corrigée** | Elle indique désormais le vrai support de stockage (`chrome.storage.local`), les vrais moments de connexion (activation, au plus une revérification toutes les 24 h à l'ouverture, désactivation) et la vraie liste des champs |
+
+**Mise à jour depuis la v1.2.x ? Rien à faire.** Les enregistrements créés par les versions précédentes restent en clair et fonctionnent exactement comme avant : liste, codes, compte à rebours, export, import et suppression ne changent pas, et la clé de stockage est identique — rien n'est réécrit lors de la mise à jour. Un enregistrement n'est chiffré qu'à partir du moment où vous définissez un mot de passe maître, et il porte alors le préfixe 🔐. Enregistrements en clair et chiffrés peuvent coexister dans une même liste. Aucune migration, aucune réinitialisation, aucune ressaisie.
+
+---
+
 ## Pourquoi LocalBox2FA ?
 
 La plupart des applications d'authentification 2FA nécessitent une application mobile ou une synchronisation cloud. LocalBox2FA fonctionne directement dans votre navigateur — pas besoin de téléphone, pas de compte requis, et vos secrets ne quittent jamais votre machine.
@@ -39,15 +51,13 @@ La plupart des applications d'authentification 2FA nécessitent une application 
 | 🔒 **Anti-doublon** | Empêche l'enregistrement de la même clé secrète deux fois |
 | 🌙 **Mode sombre** | Thème sombre/clair automatique basé sur la préférence du système |
 | 🌍 **6 langues** | English, 中文, 日本語, Español, Deutsch, Français |
+| 🛡️ **Chiffrement par mot de passe maître** | Chiffrement AES-GCM 256 facultatif des secrets enregistrés ; clé dérivée par PBKDF2-SHA256 (600 000 itérations), demandée à chaque ouverture |
 
 ### ⭐ Premium (licence requise)
 
 | Fonctionnalité | Description |
 |---------|-------------|
-| 📤 **Exporter les enregistrements** | Exportez tous les secrets en fichier texte (format nom:secret) pour sauvegarde |
-| 🗑️ **Tout supprimer** | Supprimez en masse tous les enregistrements sauvegardés d'un coup |
-| 📥 **Importer des enregistrements** | Restaurez des comptes depuis un fichier texte de sauvegarde |
-| 📱 **Affichage QR code** | QR code scannable pour transférer vos comptes vers votre app d'authentification |
+| 📱 **Affichage QR code** | QR code scannable pour transférer vos comptes vers l'authentificateur de votre téléphone |
 
 > 💡 Achat unique, licence liée à l'appareil. [Obtenir une licence →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -83,7 +93,7 @@ Cette extension est conforme au standard TOTP RFC 6238 et prend en charge les cl
    - **Chrome** : `chrome://extensions/`
    - **Edge** : `edge://extensions/`
 2. Activez le **mode Développeur** (bouton en haut à droite)
-3. Cliquez sur **Charger le package décompressé** et sélectionnez le dossier `local-box2-fa`
+3. Cliquez sur **Charger le package décompressé** et sélectionnez le dossier `LocalBox2FA`
 4. Cliquez sur l'icône 🔐 LocalBox2FA dans votre barre d'outils pour commencer
 
 ---
@@ -109,11 +119,25 @@ Cette extension est conforme au standard TOTP RFC 6238 et prend en charge les cl
 - Cliquez sur un compte pour charger son code dans l'affichage principal
 - Les codes se rafraîchissent automatiquement toutes les 30 secondes
 
+### 🔒 Chiffrer vos secrets
+
+Ouvrez **Paramètres (⚙) → Mot de passe maître** et cliquez sur **Activer le chiffrement** :
+
+1. Choisissez et confirmez un mot de passe maître
+2. Les secrets déjà enregistrés sont scellés immédiatement et portent désormais le préfixe 🔐 dans la liste
+3. À la prochaine ouverture, l'écran de verrouillage apparaît d'abord ; les codes ne s'affichent qu'après saisie du mot de passe
+
+Remarques :
+
+- Le mot de passe maître **ne peut être ni réinitialisé ni récupéré**. Si vous l'oubliez, la seule issue est d'effacer le contenu depuis l'écran de verrouillage et de recommencer — conservez donc une sauvegarde exportée.
+- La clé dérivée ne réside qu'en mémoire et disparaît à la fermeture de la fenêtre : c'est pourquoi le mot de passe est demandé à chaque ouverture.
+- **Désactiver le chiffrement** dans le même panneau déchiffre tous les enregistrements en clair.
+
 ### Exporter et sauvegarder
 
-- Cliquez sur **Exporter** pour télécharger tous les secrets sauvegardés en fichier `.txt`
-- Format : `NomDuCompte:CléSecrète` (un par ligne)
-- Conservez ce fichier en lieu sûr — il contient vos clés secrètes
+- Cliquez sur **Exporter** pour télécharger tous les secrets enregistrés dans un fichier `.txt`
+- Format : `NomDuCompte:CléSecrète` (une par ligne) ; avec des chiffres/période/algorithme non standard, `NomDuCompte:otpauth://…`
+- Conservez ce fichier en lieu sûr — **il est en clair** et n'est pas protégé par votre mot de passe maître
 
 ---
 
@@ -140,8 +164,9 @@ Tous les calculs se font en local via le Web Crypto API du navigateur. Vos secre
 LocalBox2FA a été conçu avec la confidentialité comme principe fondamental :
 
 - ✅ **Les secrets restent sur votre appareil** — Tout le calcul TOTP se fait en local ; les secrets sauvegardés ne quittent jamais votre navigateur
+- ✅ **Chiffrement au repos facultatif** — Sans mot de passe maître, les secrets sont en clair. Une fois activé, chaque secret est scellé en AES-GCM 256 ; la clé est dérivée de votre mot de passe (PBKDF2-SHA256, 600 000 itérations), ne réside qu'en mémoire et n'est jamais écrite
 - ✅ **Pas d'analytics** — Aucun suivi, aucune télémétrie, aucun cookie
-- ✅ **Réseau uniquement pour l'activation de la licence** — Si vous activez une licence Premium, votre clé de licence et un identifiant minimal de l'appareil sont envoyés au serveur de licences pour vérification. Les fonctionnalités gratuites fonctionnent entièrement hors ligne et ne font jamais de requête réseau.
+- ⚠️ **Réseau minimal et documenté** — Les fonctions gratuites n'émettent **aucune requête réseau**. Avec une licence, l'extension contacte `api.annmax1983.com` pour l'activer, la revérifier (au plus une fois toutes les 24 h à l'ouverture) et la libérer. Ces requêtes contiennent votre clé de licence, un identifiant d'appareil salé aléatoirement et des métadonnées navigateur (nom/version, liste des langues, fuseau horaire, User-Agent) — **jamais vos secrets ni les codes générés**
 - ✅ **Permissions minimales** — `storage` (pour mémoriser l'état de votre licence) et accès au domaine du serveur de licences uniquement
 
 ---
@@ -150,7 +175,8 @@ LocalBox2FA a été conçu avec la confidentialité comme principe fondamental :
 
 **Veuillez lire attentivement avant utilisation :**
 
-- **🔑 Stockage en clair** — Les clés secrètes sont stockées dans le stockage de l'extension (`chrome.storage.local`) **sans chiffrement**. Toute personne ayant accès à votre profil de navigateur peut consulter toutes les clés sauvegardées.
+- **🔑 Le chiffrement est facultatif** — Par défaut, les secrets sont stockés **sans chiffrement** dans le stockage de l'extension (`chrome.storage.local`) ; toute personne ayant accès à votre profil de navigateur peut les lire. Activez le mot de passe maître dans les Paramètres.
+- **🚫 Aucune récupération de mot de passe** — Le mot de passe maître ne peut pas être réinitialisé et les enregistrements chiffrés sont irrécupérables sans lui. Si vous l'oubliez, la seule option est d'effacer les enregistrements depuis l'écran de verrouillage et de recommencer. Exportez d'abord une sauvegarde — et conservez-la en lieu sûr, car elle est en clair.
 - **💾 Supprimer l'extension = perte de données** — La désinstallation de l'extension ou l'effacement de ses données **supprimera définitivement** tous les comptes sauvegardés. Veuillez exporter un fichier de sauvegarde au préalable.
 - **📄 Le fichier d'export est non chiffré** — Le fichier `.txt` exporté contient les clés secrètes en clair. Stockez-le de manière sécurisée et évitez le partage public.
 - **🛡️ Bonne pratique** — Supprimez les secrets sauvegardés de l'extension après les avoir transférés vers une application d'authentification dédiée.

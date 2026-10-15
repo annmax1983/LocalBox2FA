@@ -31,10 +31,14 @@
     }
     .highlight strong { color: #4fc3f7; }
     h2 { font-size: 20px; color: #a6e3a1; margin: 32px 0 16px; }
+    h3 { font-size: 15px; color: #cdd6f4; margin: 20px 0 8px; }
     p, li { color: #bac2de; font-size: 15px; }
     ul { padding-left: 20px; margin-bottom: 16px; }
     li { margin-bottom: 6px; }
     code { background: #313244; padding: 1px 6px; border-radius: 4px; font-size: 13px; color: #a6e3a1; }
+    .table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 14px; }
+    .table th, .table td { border: 1px solid #313244; padding: 8px 10px; text-align: left; vertical-align: top; }
+    .table th { background: #1e1e2e; color: #a6e3a1; font-weight: 600; }
     .footer {
       margin-top: 48px;
       padding-top: 24px;
@@ -49,51 +53,113 @@
 <body>
   <div class="container">
     <h1>Privacy Policy</h1>
-    <p class="updated">LocalBox2FA · Last updated: August 2026</p>
+    <p class="updated">LocalBox2FA · Last updated: October 2026</p>
 
     <div class="highlight">
-      <strong>TL;DR:</strong> Your 2FA secrets are generated and stored entirely on your device and are <strong>never transmitted anywhere</strong>. The only network communication is the optional Premium license activation: when you enter a license key, a minimal device identifier and your license key are sent to the license server to verify it. If you never activate a license, the extension never makes a network request.
+      <strong>TL;DR:</strong> Your 2FA secrets are generated on your device and are never transmitted anywhere.
+      Saved secrets go into the extension's own storage (<code>chrome.storage.local</code>) — stored in plaintext
+      by default, or encrypted with AES-GCM once you enable a master password.
+      The extension makes <strong>network requests only when a Premium licence is involved</strong>:
+      activating it, re-verifying it on open (at most once every 24 hours), or releasing it.
+      Without a licence it never contacts any server.
     </div>
 
     <h2>1. What Stays on Your Device</h2>
-    <p>All TOTP code generation happens locally using your browser's Web Crypto API (HMAC-SHA1). Your saved secret keys are stored in your browser's localStorage and never leave your device. We do not use cookies, analytics, or tracking of any kind, and we do not access your browsing activity.</p>
+    <p>All TOTP code generation happens locally using your browser's Web Crypto API (HMAC). Saved secret keys
+      and their settings are stored in the extension's storage area (<code>chrome.storage.local</code>) and
+      are never sent to us or anyone else. We do not use cookies, analytics, telemetry or advertising SDKs,
+      and we do not read your browsing activity.</p>
 
-    <h2>2. License Activation</h2>
-    <p>Premium features (export and clear-all) are unlocked with an optional license key. Only when you enter a license key and click <strong>Activate</strong> does the extension contact the license server at <code>api.annmax1983.com</code> and transmit:</p>
+    <h3>Encryption at rest (optional)</h3>
+    <p>By default, saved secret keys are stored <strong>unencrypted</strong>. You can enable a master password
+      in the extension settings, after which every <code>secret</code> field is sealed with
+      <strong>AES-GCM (256-bit)</strong>. The encryption key is derived from your password with
+      <strong>PBKDF2-HMAC-SHA256, 600,000 iterations</strong> and a random 16-byte salt.</p>
     <ul>
-      <li><strong>License key</strong> — the key you entered</li>
-      <li><strong>Device ID</strong> — a one-way hash derived from non-identifying device characteristics (operating system, CPU core count, device memory, touch support, screen color depth). It cannot be reversed to identify you.</li>
-      <li><strong>Browser metadata</strong> — browser name/version, language, and timezone</li>
+      <li>Only the secret key is encrypted. Account names, digit count, period and algorithm remain readable so
+        the list can still be browsed (and searched or renamed) while locked. No codes can be computed while locked.</li>
+      <li>Neither the master password nor the derived key is ever written to storage or transmitted anywhere.
+        The key lives in the popup's memory only and is destroyed when the popup closes, so the password is
+        required every time the popup is opened.</li>
+      <li>The master password cannot be recovered. If you forget it, the only way forward is to erase the saved
+        records from the lock screen and start again (an exported backup can be re-imported).</li>
     </ul>
-    <p>This is the only network communication the extension performs, and it happens only when you activate a license. If you have no license, all features available to you work completely offline and nothing is ever sent.</p>
 
-    <h2>3. How It Works</h2>
+    <h2>2. When the Extension Uses the Network</h2>
+    <p>Without a Premium licence, the extension performs <strong>no network requests at all</strong>.</p>
+    <p>With a licence, the extension contacts the licence server at <code>api.annmax1983.com</code> in exactly
+      three situations:</p>
+    <table class="table">
+      <tr><th>Situation</th><th>Request</th><th>When</th></tr>
+      <tr><td>You click <strong>Activate</strong></td><td>POST <code>/activate</code></td><td>Once, when a licence key is submitted</td></tr>
+      <tr><td>You open the popup</td><td>POST <code>/validate</code></td><td>At most once per 24 hours (throttled); skipped entirely if a check ran within the last 24 hours</td></tr>
+      <tr><td>You click <strong>Remove</strong></td><td>POST <code>/deactivate</code></td><td>Once, to release the device slot; retried on a later popup open if the server was unreachable</td></tr>
+    </table>
+    <p>If the server cannot be reached, the extension keeps working for a 7-day offline grace period.</p>
+
+    <h2>3. What Is Transmitted (Licence Requests Only)</h2>
+    <table class="table">
+      <tr><th>Field</th><th>Detail</th></tr>
+      <tr>
+        <td><strong>Licence key</strong></td>
+        <td>The key you entered.</td>
+      </tr>
+      <tr>
+        <td><strong>Device identifier</strong></td>
+        <td>A value of the form <code>vkt_chrome_&lt;16 hex chars&gt;</code>, computed as the SHA-256 of your
+          platform, CPU core count, device memory, touch-point count <em>and 16 bytes of random data generated
+          when the identifier is first created</em>. Because the random component is mixed in, this is
+          <strong>not a device fingerprint</strong>: it cannot be reversed to identify your device, and it is
+          not shared between browsers or machines, so the same person cannot be tracked across them.</td>
+      </tr>
+      <tr>
+        <td><strong>Browser metadata</strong></td>
+        <td>Browser name and major version, interface language, the language preference list, your time zone,
+          and the full User-Agent string.</td>
+      </tr>
+      <tr>
+        <td><strong>Plugin identifier</strong></td>
+        <td>The constant string <code>localbox2fa</code>, used by the shared licence server to tell products apart.</td>
+      </tr>
+    </table>
+    <p><strong>Your TOTP secrets and generated codes are never part of any request.</strong></p>
+
+    <h2>4. What We Do Not Do</h2>
     <ul>
-      <li><strong>Input</strong> — You enter a TOTP secret key directly in the extension popup</li>
-      <li><strong>Processing</strong> — TOTP codes are generated using the Web Crypto API (HMAC-SHA1) entirely in your browser</li>
-      <li><strong>Storage</strong> — Saved secrets are stored in your browser's localStorage and never leave your device</li>
-      <li><strong>License state</strong> — After activation, your license key and device ID are stored in your browser's extension storage, used only to remember your activation</li>
-      <li><strong>Export</strong> — Exported files are saved directly to your local downloads folder</li>
+      <li>No cookies, analytics, telemetry, crash reporting or advertising.</li>
+      <li>No access to browsing history, tabs, bookmarks, downloads or the content of any website — the extension
+        does not request those permissions.</li>
+      <li>No injection into pages: the extension has no content scripts and runs only in its own popup.</li>
+      <li>No data sharing with third parties. The licence server is operated by the extension's developer.</li>
     </ul>
 
-    <h2>4. Permissions</h2>
-    <p>The extension requests only what it needs:</p>
+    <h2>5. Permissions</h2>
     <ul>
-      <li><strong>storage</strong> — to persist your license status and device ID locally</li>
-      <li><strong>https://api.annmax1983.com/*</strong> — to reach the license server during activation only</li>
+      <li><strong>storage</strong> — to keep your saved records, your licence status and the device identifier
+        in the extension's local storage area.</li>
+      <li><strong>https://api.annmax1983.com/*</strong> — to reach the licence server, and only for the
+        licence requests described in section 2.</li>
     </ul>
-    <p>It does not access your browsing history, tabs, or other website data.</p>
+    <p>Nothing else is requested.</p>
 
-    <h2>5. Third-Party Services</h2>
-    <p>The license server is operated by the LocalBox2FA developer. No data is shared with any other third party. The extension does not use advertising or analytics services.</p>
+    <h2>6. Export Files</h2>
+    <p><strong>Export</strong> writes a plain-text file containing your secret keys in the clear. It is created
+      by your browser and saved straight to your downloads folder — it is never uploaded anywhere. Store it
+      securely: anyone who obtains that file can generate your codes.</p>
 
-    <h2>6. Data Retention &amp; Removal</h2>
-    <p>License data is stored only in your browser's extension storage. You can remove it at any time by clicking <strong>Remove</strong> in the extension's Settings, or by uninstalling the extension.</p>
+    <h2>7. Data Retention &amp; Removal</h2>
+    <ul>
+      <li>Licence data (licence key, device identifier, last verification time) is kept in the extension's local
+        storage. Click <strong>Remove</strong> in Settings to clear it, or uninstall the extension.</li>
+      <li><strong>Uninstalling the extension or clearing its data permanently erases every saved account.</strong>
+        Export a backup first if you need one.</li>
+      <li>Removing the master password (Settings → Turn off encryption) decrypts the records back to plaintext.</li>
+    </ul>
 
-    <h2>7. Changes</h2>
+    <h2>8. Changes</h2>
     <p>If we make changes to this policy, we will update the "Last updated" date above.</p>
 
-    <h2>8. Contact</h2>
+    <h2>9. Contact</h2>
     <p>Questions? Open an issue on our <a href="https://github.com/annmax1983/LocalBox2FA" target="_blank">repository</a>.</p>
 
     <div class="footer">

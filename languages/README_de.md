@@ -8,6 +8,18 @@ Eine schlanke Browser-Erweiterung zur Generierung von TOTP-2FA-Bestätigungscode
 
 ---
 
+## Neu in v1.3.0
+
+| Änderung | Details |
+|----------|---------|
+| 🛡️ **Master-Passwort-Verschlüsselung** | Optional aktivierbare AES-GCM-256-Verschlüsselung für gespeicherte Secrets. Der Schlüssel wird per PBKDF2-SHA256 (600.000 Iterationen + zufälligem Salt) aus Ihrem Passwort abgeleitet und liegt nur im Speicher. Das Passwort wird bei jedem Öffnen des Popups abgefragt |
+| 🔓 **Export / Import / Alles löschen jetzt kostenlos** | Die eigenen Secrets zu sichern, wiederherzustellen und zu löschen ist Datenpflege, keine Bezahlfunktion. Premium bleibt nur die QR-Code-Übertragung |
+| 📄 **Datenschutzerklärung korrigiert** | Jetzt mit dem tatsächlichen Speicherort (`chrome.storage.local`), den tatsächlichen Netzwerkzeitpunkten (Aktivierung, höchstens eine Nachprüfung pro 24 h beim Öffnen, Deaktivierung) und der tatsächlichen Feldliste |
+
+**Upgrade von v1.2.x? Nichts zu tun.** Von älteren Versionen gespeicherte Einträge bleiben im Klartext und funktionieren unverändert — Liste, Codes, Countdown, Export, Import und Löschen sind nicht betroffen, und der Storage-Key ist unverändert, es wird also nichts neu geschrieben. Ein Eintrag wird erst verschlüsselt, wenn Sie ein Master-Passwort setzen; danach trägt er das Präfix 🔐. Klartext- und verschlüsselte Einträge können in einer Liste koexistieren. Keine Migration, kein Reset, keine Neueingabe.
+
+---
+
 ## Warum LocalBox2FA?
 
 Die meisten 2FA-Authentifikatoren benötigen eine Handy-App oder Cloud-Synchronisierung. LocalBox2FA läuft direkt in deinem Browser — kein Handy nötig, kein Konto erforderlich, und deine Secrets verlassen nie deinen Rechner.
@@ -39,15 +51,13 @@ Die meisten 2FA-Authentifikatoren benötigen eine Handy-App oder Cloud-Synchroni
 | 🔒 **Duplikat-Schutz** | Verhindert das doppelte Speichern desselben Secret Keys |
 | 🌙 **Dark Mode** | Automatisches helles/dunkles Theme basierend auf Systemeinstellung |
 | 🌍 **6 Sprachen** | Englisch, Chinesisch, Japanisch, Spanisch, Deutsch, Französisch |
+| 🛡️ **Master-Passwort-Verschlüsselung** | Optionale AES-GCM-256-Verschlüsselung der gespeicherten Secrets; Schlüssel per PBKDF2-SHA256 (600.000 Iterationen) abgeleitet, Abfrage bei jedem Öffnen des Popups |
 
 ### ⭐ Premium (Lizenz erforderlich)
 
 | Funktion | Beschreibung |
-|----------|--------------|
-| 📤 **Einträge exportieren** | Alle Secrets als Textdatei (Name:Secret-Format) für Backup exportieren |
-| 🗑️ **Alle Einträge löschen** | Alle gespeicherten Einträge auf einmal massenhaft löschen |
-| 📥 **Einträge importieren** | Konten aus einer Text-Backup-Datei wiederherstellen |
-| 📱 **QR-Code anzeigen** | Scannbarer QR-Code zur Übertragung auf die Authenticator-App deines Smartphones |
+|---------|-------------|
+| 📱 **QR-Code-Anzeige** | Scanbarer QR-Code, um Konten auf den Authentifikator Ihres Smartphones zu übertragen |
 
 > 💡 Einmaliger Kauf, gerätegebundene Lizenz. [Lizenz erhalten →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -83,7 +93,7 @@ Diese Erweiterung entspricht dem RFC 6238 TOTP-Standard und unterstützt Secret 
    - **Chrome**: `chrome://extensions/`
    - **Edge**: `edge://extensions/`
 2. Aktiviere den **Entwicklermodus** (Schalter oben rechts)
-3. Klicke auf **Entpackte Erweiterung laden** und wähle den Ordner `local-box2-fa`
+3. Klicke auf **Entpackte Erweiterung laden** und wähle den Ordner `LocalBox2FA`
 4. Klicke auf das 🔐 LocalBox2FA-Symbol in deiner Toolbar zum Starten
 
 ---
@@ -109,11 +119,25 @@ Diese Erweiterung entspricht dem RFC 6238 TOTP-Standard und unterstützt Secret 
 - Klicke auf ein beliebiges Konto, um seinen Code in die Hauptanzeige zu laden
 - Codes werden alle 30 Sekunden automatisch aktualisiert
 
+### 🔒 Secrets verschlüsseln
+
+Öffnen Sie **Einstellungen (⚙) → Master-Passwort** und klicken Sie auf **Verschlüsselung aktivieren**:
+
+1. Vergeben und bestätigen Sie ein Master-Passwort
+2. Alle bereits gespeicherten Secrets werden sofort versiegelt; sie tragen dann das Präfix 🔐 in der Liste
+3. Beim nächsten Öffnen des Popups erscheint zuerst der Sperrbildschirm — Codes werden erst nach Eingabe des Passworts angezeigt
+
+Hinweise:
+
+- Das Master-Passwort kann **nicht zurückgesetzt oder wiederhergestellt** werden. Wenn Sie es vergessen, bleibt nur, im Sperrbildschirm alles zu löschen und neu zu beginnen — halten Sie deshalb ein exportiertes Backup bereit.
+- Der abgeleitete Schlüssel liegt nur im Speicher und verschwindet mit dem Schließen des Popups — deshalb wird das Passwort bei jedem Öffnen abgefragt.
+- **Verschlüsselung deaktivieren** im selben Bereich entschlüsselt alle Einträge wieder zu Klartext.
+
 ### Exportieren & Sichern
 
-- Klicke auf **Exportieren**, um alle gespeicherten Secrets als `.txt`-Datei herunterzuladen
-- Format: `Kontoname:SecretKey` (einer pro Zeile)
-- Bewahre diese Datei sicher auf — sie enthält deine Secret Keys
+- Klicken Sie auf **Export**, um alle gespeicherten Secrets als `.txt`-Datei herunterzuladen
+- Format: `Kontoname:Secret` (eine Zeile pro Eintrag); bei abweichenden Stellen/Periode/Algorithmus `Kontoname:otpauth://…`
+- Bewahren Sie die Datei sicher auf — **sie ist unverschlüsselt** und wird nicht durch das Master-Passwort geschützt
 
 ---
 
@@ -140,8 +164,9 @@ Die gesamte Berechnung passiert lokal über die Web Crypto API des Browsers. Dei
 LocalBox2FA wurde mit Datenschutz als Grundprinzip entwickelt:
 
 - ✅ **Secrets bleiben auf deinem Gerät** — Die gesamte TOTP-Berechnung passiert lokal; gespeicherte Secrets verlassen nie deinen Browser
+- ✅ **Optionale Verschlüsselung im Ruhezustand** — Ohne Master-Passwort liegen Secrets im Klartext. Nach dem Einschalten wird jedes Secret mit AES-GCM 256 versiegelt; der Schlüssel wird aus Ihrem Passwort abgeleitet (PBKDF2-SHA256, 600.000 Iterationen), liegt nur im Speicher und wird nie geschrieben
 - ✅ **Keine Analytik** — Kein Tracking, keine Telemetrie, keine Cookies
-- ✅ **Netzwerk nur für Lizenzaktivierung** — Bei Aktivierung einer Premium-Lizenz werden dein Lizenzschlüssel und eine minimale Geräteidentifikation an den Lizenzserver gesendet, um sie zu verifizieren. Kostenlose Funktionen funktionieren vollständig offline und lösen nie eine Netzwerkanfrage aus.
+- ⚠️ **Minimale, offengelegte Netzwerknutzung** — Kostenlose Funktionen senden **überhaupt keine Netzwerkanfrage**. Mit einer Lizenz kontaktiert die Erweiterung `api.annmax1983.com` zum Aktivieren, zum Nachprüfen (höchstens einmal pro 24 h beim Öffnen des Popups) und zum Freigeben. Diese Anfragen enthalten den Lizenzschlüssel, eine zufallsgesalzene Gerätekennung und Browser-Metadaten (Browsername/-version, Sprachliste, Zeitzone, User-Agent) — **niemals Ihre Secrets oder erzeugten Codes**
 - ✅ **Minimale Berechtigungen** — `storage` (zum Speichern deines Lizenzstatus) und Zugriff auf die Lizenzserver-Domain
 
 ---
@@ -150,7 +175,8 @@ LocalBox2FA wurde mit Datenschutz als Grundprinzip entwickelt:
 
 **Bitte vor der Nutzung sorgfältig lesen:**
 
-- **🔑 Klartext-Speicherung** — Secret Keys werden im Erweiterungs-Speicher des Browsers (`chrome.storage.local`) **ohne Verschlüsselung** gespeichert. Jeder mit Zugang zu deinem Browserprofil kann alle gespeicherten Schlüssel einsehen.
+- **🔑 Verschlüsselung ist optional** — Standardmäßig liegen Secrets **unverschlüsselt** im Erweiterungsspeicher (`chrome.storage.local`); jeder mit Zugriff auf Ihr Browserprofil kann sie lesen. Aktivieren Sie das Master-Passwort in den Einstellungen.
+- **🚫 Keine Passwortwiederherstellung** — Das Master-Passwort kann nicht zurückgesetzt werden, und verschlüsselte Einträge sind ohne es nicht wiederherstellbar. Wenn Sie es vergessen, bleibt nur, die Einträge im Sperrbildschirm zu löschen und neu zu beginnen. Exportieren Sie vorher ein Backup — und bewahren Sie es sicher auf, denn es ist unverschlüsselt.
 - **💾 Extension entfernen = Datenverlust** — Das Entfernen der Extension oder das Löschen ihrer Daten **löscht dauerhaft** alle gespeicherten Konten. Bitte exportiere vorher eine Backup-Datei.
 - **📄 Export-Datei ist unverschlüsselt** — Die exportierte `.txt`-Backup-Datei enthält Klartext-Secret Keys. Bewahre sie sicher auf und vermeide öffentliche Weitergabe.
 - **🛡️ Best Practice** — Lösche gespeicherte Secrets aus der Erweiterung, nachdem du sie in eine dedizierte Authentifikator-App übertragen hast.
