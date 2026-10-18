@@ -14,7 +14,7 @@ Une extension légère qui génère des codes de vérification TOTP 2FA — vos 
 |-----------|--------|
 | 🛡️ **Chiffrement par mot de passe maître** | Chiffrement AES-GCM 256 bits facultatif des secrets enregistrés. La clé est dérivée de votre mot de passe par PBKDF2-SHA256 (600 000 itérations + sel aléatoire) et ne réside qu'en mémoire. Demandée à chaque ouverture de la fenêtre |
 | 🔓 **Export / import / tout effacer désormais gratuit** | Sauvegarder, restaurer et effacer ses propres secrets relève de la gestion de ses données, pas d'une fonction payante. Seul le transfert par QR code reste Premium |
-| 📄 **Politique de confidentialité corrigée** | Elle indique désormais le vrai support de stockage (`chrome.storage.local`), les vrais moments de connexion (activation, au plus une revérification toutes les 24 h à l'ouverture, désactivation) et la vraie liste des champs |
+| 📄 **Politique de confidentialité corrigée** | Elle indique désormais le vrai support de stockage (`chrome.storage.local`), les vrais moments de connexion (activation, au plus une revérification toutes les 2 h à l'ouverture, désactivation) et la vraie liste des champs |
 
 **Mise à jour depuis la v1.2.x ? Rien à faire.** Les enregistrements créés par les versions précédentes restent en clair et fonctionnent exactement comme avant : liste, codes, compte à rebours, export, import et suppression ne changent pas, et la clé de stockage est identique — rien n'est réécrit lors de la mise à jour. Un enregistrement n'est chiffré qu'à partir du moment où vous définissez un mot de passe maître, et il porte alors le préfixe 🔐. Enregistrements en clair et chiffrés peuvent coexister dans une même liste. Aucune migration, aucune réinitialisation, aucune ressaisie.
 
@@ -59,7 +59,7 @@ La plupart des applications d'authentification 2FA nécessitent une application 
 |---------|-------------|
 | 📱 **Affichage QR code** | QR code scannable pour transférer vos comptes vers l'authentificateur de votre téléphone |
 
-> 💡 Achat unique, licence liée à l'appareil. [Obtenir une licence →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
+> 💡 Achat unique, licence à vie — 2 activations par plugin. Chaque environnement de navigateur compte pour une ; désactivez à tout moment pour libérer une place. [Obtenir une licence →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
 ---
 
@@ -166,7 +166,7 @@ LocalBox2FA a été conçu avec la confidentialité comme principe fondamental :
 - ✅ **Les secrets restent sur votre appareil** — Tout le calcul TOTP se fait en local ; les secrets sauvegardés ne quittent jamais votre navigateur
 - ✅ **Chiffrement au repos facultatif** — Sans mot de passe maître, les secrets sont en clair. Une fois activé, chaque secret est scellé en AES-GCM 256 ; la clé est dérivée de votre mot de passe (PBKDF2-SHA256, 600 000 itérations), ne réside qu'en mémoire et n'est jamais écrite
 - ✅ **Pas d'analytics** — Aucun suivi, aucune télémétrie, aucun cookie
-- ⚠️ **Réseau minimal et documenté** — Les fonctions gratuites n'émettent **aucune requête réseau**. Avec une licence, l'extension contacte `api.annmax1983.com` pour l'activer, la revérifier (au plus une fois toutes les 24 h à l'ouverture) et la libérer. Ces requêtes contiennent votre clé de licence, un identifiant d'appareil salé aléatoirement et des métadonnées navigateur (nom/version, liste des langues, fuseau horaire, User-Agent) — **jamais vos secrets ni les codes générés**
+- ⚠️ **Réseau minimal et documenté** — Les fonctions gratuites n'émettent **aucune requête réseau**. Avec une licence, l'extension contacte `api.annmax1983.com` pour l'activer, la revérifier (au plus une fois toutes les 2 h à l'ouverture) et la libérer. Ces requêtes contiennent votre clé de licence, un identifiant d'installation aléatoire et des métadonnées navigateur (nom/version, liste des langues, fuseau horaire, User-Agent) — **jamais vos secrets ni les codes générés**
 - ✅ **Permissions minimales** — `storage` (pour mémoriser l'état de votre licence) et accès au domaine du serveur de licences uniquement
 
 ---

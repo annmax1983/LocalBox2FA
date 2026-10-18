@@ -60,7 +60,7 @@
       Saved secrets go into the extension's own storage (<code>chrome.storage.local</code>) — stored in plaintext
       by default, or encrypted with AES-GCM once you enable a master password.
       The extension makes <strong>network requests only when a Premium licence is involved</strong>:
-      activating it, re-verifying it on open (at most once every 24 hours), or releasing it.
+      activating it, re-verifying it on open (at most once every 2 hours), or releasing it.
       Without a licence it never contacts any server.
     </div>
 
@@ -92,10 +92,10 @@
     <table class="table">
       <tr><th>Situation</th><th>Request</th><th>When</th></tr>
       <tr><td>You click <strong>Activate</strong></td><td>POST <code>/activate</code></td><td>Once, when a licence key is submitted</td></tr>
-      <tr><td>You open the popup</td><td>POST <code>/validate</code></td><td>At most once per 24 hours (throttled); skipped entirely if a check ran within the last 24 hours</td></tr>
-      <tr><td>You click <strong>Remove</strong></td><td>POST <code>/deactivate</code></td><td>Once, to release the device slot; retried on a later popup open if the server was unreachable</td></tr>
+      <tr><td>You open the popup</td><td>POST <code>/validate</code></td><td>At most once per 2 hours (throttled); skipped entirely if a check ran within the last 2 hours</td></tr>
+      <tr><td>You click <strong>Remove</strong></td><td>POST <code>/deactivate</code></td><td>Once, to release the activation slot; retried on a later popup open if the server was unreachable</td></tr>
     </table>
-    <p>If the server cannot be reached, the extension keeps working for a 7-day offline grace period.</p>
+    <p>If the server cannot be reached, the cached licence keeps working until the next successful check.</p>
 
     <h2>3. What Is Transmitted (Licence Requests Only)</h2>
     <table class="table">
@@ -105,12 +105,11 @@
         <td>The key you entered.</td>
       </tr>
       <tr>
-        <td><strong>Device identifier</strong></td>
-        <td>A value of the form <code>vkt_chrome_&lt;16 hex chars&gt;</code>, computed as the SHA-256 of your
-          platform, CPU core count, device memory, touch-point count <em>and 16 bytes of random data generated
-          when the identifier is first created</em>. Because the random component is mixed in, this is
-          <strong>not a device fingerprint</strong>: it cannot be reversed to identify your device, and it is
-          not shared between browsers or machines, so the same person cannot be tracked across them.</td>
+        <td><strong>Install identifier</strong></td>
+        <td>A value of the form <code>vkt_inst_&lt;32 hex chars&gt;</code>, generated randomly the first time a
+          licence is activated and then reused. It contains <strong>no device information</strong>: nothing
+          about your hardware or software is read or hashed to create it, and it is not shared between browsers,
+          machines or installations, so the same person cannot be tracked across them.</td>
       </tr>
       <tr>
         <td><strong>Browser metadata</strong></td>
@@ -123,6 +122,7 @@
       </tr>
     </table>
     <p><strong>Your TOTP secrets and generated codes are never part of any request.</strong></p>
+    <p>Our license server records the IP address of these requests solely for rate limiting and abuse prevention — never for profiling, advertising, or sharing with third parties.</p>
 
     <h2>4. What We Do Not Do</h2>
     <ul>
@@ -135,7 +135,7 @@
 
     <h2>5. Permissions</h2>
     <ul>
-      <li><strong>storage</strong> — to keep your saved records, your licence status and the device identifier
+      <li><strong>storage</strong> — to keep your saved records, your licence status and the install identifier
         in the extension's local storage area.</li>
       <li><strong>https://api.annmax1983.com/*</strong> — to reach the licence server, and only for the
         licence requests described in section 2.</li>
@@ -149,7 +149,7 @@
 
     <h2>7. Data Retention &amp; Removal</h2>
     <ul>
-      <li>Licence data (licence key, device identifier, last verification time) is kept in the extension's local
+      <li>Licence data (licence key, install identifier, last verification time) is kept in the extension's local
         storage. Click <strong>Remove</strong> in Settings to clear it, or uninstall the extension.</li>
       <li><strong>Uninstalling the extension or clearing its data permanently erases every saved account.</strong>
         Export a backup first if you need one.</li>

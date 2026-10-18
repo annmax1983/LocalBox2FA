@@ -14,7 +14,7 @@ A lightweight browser extension that generates TOTP 2FA verification codes — y
 |--------|--------|
 | 🛡️ **Master password encryption** | Optional AES-GCM 256-bit sealing for saved secrets. The key is derived from your password with PBKDF2-SHA256 (600,000 iterations + random salt) and never leaves memory. Requested every time the popup opens; can be turned off again in Settings. |
 | 🔓 **Export / Import / Clear-all are now free** | Backing up, restoring and erasing your own secrets is data hygiene, not a paid feature. Only QR-code transfer remains Premium. |
-| 📄 **Privacy policy corrected** | Now states the real storage medium (`chrome.storage.local`), the real network moments (activation, at most one re-check per 24 h, deactivation) and the real field list. |
+| 📄 **Privacy policy corrected** | Now states the real storage medium (`chrome.storage.local`), the real network moments (activation, at most one re-check per 2 h, deactivation) and the real field list. |
 | 🌍 **6 languages updated** | New strings for the master-password UI were translated into all six supported locales. |
 
 **Upgrading from v1.2.x? Nothing to do.** Records saved by older versions stay plaintext and keep working exactly as before — the list, the codes, the countdown, export, import and delete are all untouched, and the storage key is unchanged, so nothing is rewritten on update. A record only becomes encrypted once you set a master password, and from then on it is marked with a 🔐 prefix. Plaintext and encrypted records can coexist in one list. No migration, no data reset, no re-entry.
@@ -65,7 +65,7 @@ Most 2FA authenticators require a phone app or cloud sync. LocalBox2FA runs dire
 |---------|-------------|
 | 📱 **QR Code Display** | Scannable QR code to transfer accounts to your phone authenticator |
 
-> 💡 One-time purchase, device-bound license. [Get License →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
+> 💡 One-time purchase, lifetime license — 2 activations per plugin. Each browser environment counts as one; deactivate anytime to free a slot. [Get License →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
 ---
 
@@ -174,8 +174,8 @@ LocalBox2FA is built with privacy as a core principle:
 - ✅ **Optional encryption at rest** — Without a master password, saved secrets are plaintext. Once enabled, every secret is sealed with AES-GCM 256; the key is derived from your password (PBKDF2-SHA256, 600k iterations) and kept in memory only, never written to storage
 - ✅ **No analytics** — No tracking, no telemetry, no cookies, no third-party scripts
 - ✅ **No page access** — No content scripts, no host permissions beyond the license server, no access to history, tabs or bookmarks
-- ⚠️ **Minimal, disclosed networking** — Free features make **no network request at all**. With a license, the extension contacts `api.annmax1983.com` to activate it, to re-verify it (at most once per 24 hours when you open the popup) and to release it. Those requests carry your license key, a random-salted device identifier and browser metadata (browser name/version, language list, time zone, User-Agent). Your secrets and generated codes are never included
-- ✅ **Minimal permissions** — `storage` (records, license status, device identifier) and access to the license server domain only
+- ⚠️ **Minimal, disclosed networking** — Free features make **no network request at all**. With a license, the extension contacts `api.annmax1983.com` to activate it, to re-verify it (at most once per 2 hours when you open the popup) and to release it. Those requests carry your license key, a random install identifier and browser metadata (browser name/version, language list, time zone, User-Agent). Your secrets and generated codes are never included
+- ✅ **Minimal permissions** — `storage` (records, license status, install identifier) and access to the license server domain only
 
 See [privacy-policy.html](privacy-policy.html) for the full field-by-field breakdown.
 

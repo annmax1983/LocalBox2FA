@@ -14,7 +14,7 @@ Eine schlanke Browser-Erweiterung zur Generierung von TOTP-2FA-Bestätigungscode
 |----------|---------|
 | 🛡️ **Master-Passwort-Verschlüsselung** | Optional aktivierbare AES-GCM-256-Verschlüsselung für gespeicherte Secrets. Der Schlüssel wird per PBKDF2-SHA256 (600.000 Iterationen + zufälligem Salt) aus Ihrem Passwort abgeleitet und liegt nur im Speicher. Das Passwort wird bei jedem Öffnen des Popups abgefragt |
 | 🔓 **Export / Import / Alles löschen jetzt kostenlos** | Die eigenen Secrets zu sichern, wiederherzustellen und zu löschen ist Datenpflege, keine Bezahlfunktion. Premium bleibt nur die QR-Code-Übertragung |
-| 📄 **Datenschutzerklärung korrigiert** | Jetzt mit dem tatsächlichen Speicherort (`chrome.storage.local`), den tatsächlichen Netzwerkzeitpunkten (Aktivierung, höchstens eine Nachprüfung pro 24 h beim Öffnen, Deaktivierung) und der tatsächlichen Feldliste |
+| 📄 **Datenschutzerklärung korrigiert** | Jetzt mit dem tatsächlichen Speicherort (`chrome.storage.local`), den tatsächlichen Netzwerkzeitpunkten (Aktivierung, höchstens eine Nachprüfung pro 2 h beim Öffnen, Deaktivierung) und der tatsächlichen Feldliste |
 
 **Upgrade von v1.2.x? Nichts zu tun.** Von älteren Versionen gespeicherte Einträge bleiben im Klartext und funktionieren unverändert — Liste, Codes, Countdown, Export, Import und Löschen sind nicht betroffen, und der Storage-Key ist unverändert, es wird also nichts neu geschrieben. Ein Eintrag wird erst verschlüsselt, wenn Sie ein Master-Passwort setzen; danach trägt er das Präfix 🔐. Klartext- und verschlüsselte Einträge können in einer Liste koexistieren. Keine Migration, kein Reset, keine Neueingabe.
 
@@ -59,7 +59,7 @@ Die meisten 2FA-Authentifikatoren benötigen eine Handy-App oder Cloud-Synchroni
 |---------|-------------|
 | 📱 **QR-Code-Anzeige** | Scanbarer QR-Code, um Konten auf den Authentifikator Ihres Smartphones zu übertragen |
 
-> 💡 Einmaliger Kauf, gerätegebundene Lizenz. [Lizenz erhalten →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
+> 💡 Einmaliger Kauf, lebenslange Lizenz — 2 Aktivierungen pro Plugin. Jede Browserumgebung zählt als eine; jederzeit deaktivierbar, um einen Platz freizugeben. [Lizenz erhalten →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
 ---
 
@@ -166,7 +166,7 @@ LocalBox2FA wurde mit Datenschutz als Grundprinzip entwickelt:
 - ✅ **Secrets bleiben auf deinem Gerät** — Die gesamte TOTP-Berechnung passiert lokal; gespeicherte Secrets verlassen nie deinen Browser
 - ✅ **Optionale Verschlüsselung im Ruhezustand** — Ohne Master-Passwort liegen Secrets im Klartext. Nach dem Einschalten wird jedes Secret mit AES-GCM 256 versiegelt; der Schlüssel wird aus Ihrem Passwort abgeleitet (PBKDF2-SHA256, 600.000 Iterationen), liegt nur im Speicher und wird nie geschrieben
 - ✅ **Keine Analytik** — Kein Tracking, keine Telemetrie, keine Cookies
-- ⚠️ **Minimale, offengelegte Netzwerknutzung** — Kostenlose Funktionen senden **überhaupt keine Netzwerkanfrage**. Mit einer Lizenz kontaktiert die Erweiterung `api.annmax1983.com` zum Aktivieren, zum Nachprüfen (höchstens einmal pro 24 h beim Öffnen des Popups) und zum Freigeben. Diese Anfragen enthalten den Lizenzschlüssel, eine zufallsgesalzene Gerätekennung und Browser-Metadaten (Browsername/-version, Sprachliste, Zeitzone, User-Agent) — **niemals Ihre Secrets oder erzeugten Codes**
+- ⚠️ **Minimale, offengelegte Netzwerknutzung** — Kostenlose Funktionen senden **überhaupt keine Netzwerkanfrage**. Mit einer Lizenz kontaktiert die Erweiterung `api.annmax1983.com` zum Aktivieren, zum Nachprüfen (höchstens einmal pro 2 h beim Öffnen des Popups) und zum Freigeben. Diese Anfragen enthalten den Lizenzschlüssel, eine zufällige Installationskennung und Browser-Metadaten (Browsername/-version, Sprachliste, Zeitzone, User-Agent) — **niemals Ihre Secrets oder erzeugten Codes**
 - ✅ **Minimale Berechtigungen** — `storage` (zum Speichern deines Lizenzstatus) und Zugriff auf die Lizenzserver-Domain
 
 ---
