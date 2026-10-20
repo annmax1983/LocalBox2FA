@@ -56,19 +56,20 @@
     <p class="updated">LocalBox2FA · Last updated: October 2026</p>
 
     <div class="highlight">
-      <strong>TL;DR:</strong> Your 2FA secrets are generated on your device and are never transmitted anywhere.
-      Saved secrets go into the extension's own storage (<code>chrome.storage.local</code>) — stored in plaintext
-      by default, or encrypted with AES-GCM once you enable a master password.
-      The extension makes <strong>network requests only when a Premium licence is involved</strong>:
-      activating it, re-verifying it on open (at most once every 2 hours), or releasing it.
-      Without a licence it never contacts any server.
+      <strong>TL;DR:</strong> Your 2FA codes are generated on your device. Saved secrets go into the
+      extension's own storage (<code>chrome.storage.local</code>) — stored in plaintext by default, or encrypted
+      with AES-GCM once you enable a master password. Cross-device sync is optional, off by default, and Premium:
+      when you enable it, sealed records and their metadata are written to <code>chrome.storage.sync</code> and
+      carried by your browser account; the master password is never uploaded. The extension contacts our licence
+      server only when a Premium licence is involved: activating it, re-verifying it on open (at most once every
+      2 hours), or releasing it.
     </div>
 
     <h2>1. What Stays on Your Device</h2>
     <p>All TOTP code generation happens locally using your browser's Web Crypto API (HMAC). Saved secret keys
       and their settings are stored in the extension's storage area (<code>chrome.storage.local</code>) and
-      are never sent to us or anyone else. We do not use cookies, analytics, telemetry or advertising SDKs,
-      and we do not read your browsing activity.</p>
+      are never sent to us, except when you explicitly enable cross-device sync (see below). We do not use
+      cookies, analytics, telemetry or advertising SDKs, and we do not read your browsing activity.</p>
 
     <h3>Encryption at rest (optional)</h3>
     <p>By default, saved secret keys are stored <strong>unencrypted</strong>. You can enable a master password
@@ -85,8 +86,33 @@
         records from the lock screen and start again (an exported backup can be re-imported).</li>
     </ul>
 
+    <h3>Cross-device sync (optional, Premium)</h3>
+    <p>Sync is <strong>off by default</strong> and is only available with a Premium licence. When you turn it on,
+      the extension writes to <code>chrome.storage.sync</code>, which your browser vendor (Google, or Microsoft
+      for Edge) replicates to other computers signed in to the same browser account.
+      <strong>We operate no sync server and never receive this data.</strong></p>
+    <ul>
+      <li>What is synced: each record's encrypted <code>secret</code>, its account name, digit count, period,
+        algorithm and timestamps; small markers for deleted records so that a deletion propagates instead of being
+        undone by another device; and the vault metadata (salt, iteration count and an encrypted verifier) that
+        lets a second device check the master password.</li>
+      <li>What is never synced: the master password, the derived encryption key, the licence key and generated
+        codes. The verifier only lets a device confirm that a password is correct; it does not reveal it.</li>
+      <li>Sync requires a master password. Without one it cannot be turned on, so secrets never leave the device
+        in plaintext.</li>
+      <li>Account names, digit count, period and algorithm travel unencrypted, because they stay readable in the
+        list (so it can be browsed, searched and renamed while locked).</li>
+      <li>To protect the transfer itself as well, enable your browser's own sync passphrase; otherwise the data is
+        held by your browser vendor under its terms. Sync is not a backup and is not a substitute for an exported
+        backup file.</li>
+    </ul>
+
     <h2>2. When the Extension Uses the Network</h2>
-    <p>Without a Premium licence, the extension performs <strong>no network requests at all</strong>.</p>
+    <p>Without a Premium licence, the extension performs <strong>no network requests at all</strong> — neither
+      activation nor sync is possible, and no license server is contacted.</p>
+    <p>Cross-device sync is outside this count. The extension writes to <code>chrome.storage.sync</code> and your
+      browser vendor's own sync service carries the data; the extension makes no direct network request for sync
+      and sends nothing to us.</p>
     <p>With a licence, the extension contacts the licence server at <code>api.annmax1983.com</code> in exactly
       three situations:</p>
     <table class="table">
@@ -131,12 +157,16 @@
         does not request those permissions.</li>
       <li>No injection into pages: the extension has no content scripts and runs only in its own popup.</li>
       <li>No data sharing with third parties. The licence server is operated by the extension's developer.</li>
+      <li>The one exception is cross-device sync, and only if you turn it on: sealed records are carried by your
+        browser vendor's account sync service (Google or Microsoft). We are not a party to that transfer and
+        cannot decrypt the sealed secrets.</li>
     </ul>
 
     <h2>5. Permissions</h2>
     <ul>
       <li><strong>storage</strong> — to keep your saved records, your licence status and the install identifier
-        in the extension's local storage area.</li>
+        in the extension's local storage area, and, if you enable sync, to write sealed records to the browser's
+        synced storage area.</li>
       <li><strong>https://api.annmax1983.com/*</strong> — to reach the licence server, and only for the
         licence requests described in section 2.</li>
     </ul>
@@ -151,9 +181,16 @@
     <ul>
       <li>Licence data (licence key, install identifier, last verification time) is kept in the extension's local
         storage. Click <strong>Remove</strong> in Settings to clear it, or uninstall the extension.</li>
-      <li><strong>Uninstalling the extension or clearing its data permanently erases every saved account.</strong>
-        Export a backup first if you need one.</li>
-      <li>Removing the master password (Settings → Turn off encryption) decrypts the records back to plaintext.</li>
+      <li><strong>Uninstalling the extension or clearing its local data permanently erases every account stored
+        on this device.</strong> If cross-device sync is on, a copy remains in your browser account and can be
+        restored by reinstalling the extension and entering the same master password. Export a backup anyway.</li>
+      <li><strong>Synced data</strong> lives in your browser account. Turning sync off stops further syncing but
+        leaves the existing copy in the cloud; use <strong>Delete synced data</strong> in Settings to remove every
+        synced record, which also turns sync off on this device. Other devices keep the copies already in their
+        local storage and turn sync off once they see that the cloud copy is gone. Uninstalling the extension
+        does not by itself remove the synced copy, so delete it first if that is what you want.</li>
+      <li>Removing the master password (Settings → Turn off encryption) decrypts the records back to plaintext.
+        This is not possible while sync is turned on.</li>
     </ul>
 
     <h2>8. Changes</h2>

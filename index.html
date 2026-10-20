@@ -141,20 +141,21 @@
   <script>
     const I18N = {
       zh: {
-        tagline: '完全本地 · 密钥不出本机 · 隐私优先',
+        tagline: '默认本地 · 密钥加密 · 隐私优先',
         featuresTitle: '✨ 功能特色',
         features: [
           '本地 TOTP 验证码生成，支持 Google Authenticator 格式',
-          '所有 TOTP 计算在本地完成，密钥永远不会离开浏览器',
+          '所有 TOTP 计算在本地完成，密钥只保存在本机；只有你主动开启加密同步时，才会经浏览器账号传输密文',
           '支持保存多个账号，一键复制验证码',
           '导出 / 导入备份、一键清空记录，全部免费，数据完全由你掌控',
           '可选主密码加密：已保存的密钥用 AES-GCM 256 封存，密码只存在内存中',
-          '仅申请授权验证所需的最小权限，不读取任何浏览数据',
-          '支持 6 种语言，自动匹配浏览器语言'
+          '仅申请存储与授权验证所需的最小权限，不读取任何浏览数据',
+          '支持 6 种语言，自动匹配浏览器语言',
+          '可选加密跨设备同步（高级版）——借助浏览器账号同步，密文记录自动合并'
         ],
         thankTitle: '💌 想对你说',
         thank: [
-          '感谢你使用 LocalBox2FA。做这个工具是因为我想要一个真正安全的 2FA 验证器——不需要注册、不需要云同步、密钥不会上传。',
+          '感谢你使用 LocalBox2FA。做这个工具是因为我想要一个真正安全的 2FA 验证器——不需要注册，默认完全本地；即使开启可选的加密同步，也只有密封后的密文会离开设备，主密码从不上传。',
           '如果它也帮到了你，那对我来说就是最好的回报。',
           '当然，如果你愿意请我喝一杯咖啡 <span class="heart">☕</span>，我会非常开心——这会让我更有动力继续打磨它。'
         ],
@@ -164,20 +165,21 @@
         privacyPolicy: '隐私条款'
       },
       en: {
-        tagline: 'Fully Local · Keys Stay Local · Privacy First',
+        tagline: 'Local by Default · Encrypted Secrets · Privacy First',
         featuresTitle: '✨ Features',
         features: [
           'Local TOTP code generation, supports Google Authenticator format',
-          'All TOTP computation is local — keys never leave your browser',
+          'All TOTP computation is local — keys stay on your device unless you enable optional encrypted sync',
           'Save multiple accounts, one-click copy verification codes',
           'Export / import backups and one-click clear — all free, your data fully under your control',
           'Optional master password — saved secrets sealed with AES-GCM 256, password never stored',
-          'Minimal permissions — only for license activation, no browsing data accessed',
-          'Supports 6 languages, auto-detected from browser'
+          'Minimal permissions — storage and license activation only, no browsing data accessed',
+          'Supports 6 languages, auto-detected from browser',
+          'Optional encrypted cross-device sync (Premium) via your browser account, with automatic merge'
         ],
         thankTitle: '💌 A Note to You',
         thank: [
-          'Thank you for using LocalBox2FA. I built this tool because I wanted a truly secure 2FA authenticator — no registration, no cloud sync, no secrets uploaded.',
+          'Thank you for using LocalBox2FA. I built this tool because I wanted a truly secure 2FA authenticator — no registration, local by default, and even optional sync only ever uploads sealed secrets; your master password never leaves the device.',
           'If it helps you too, that\'s already the best reward I could ask for.',
           'Of course, if you\'d like to <span class="heart">☕</span> buy me a coffee, it would truly make my day — and keep me motivated to make LocalBox2FA even better.'
         ],
@@ -187,20 +189,21 @@
         privacyPolicy: 'Privacy Policy'
       },
       ja: {
-        tagline: '完全ローカル · 鍵はブラウザ内に保持 · プライバシー最優先',
+        tagline: '既定でローカル · 鍵は暗号化 · プライバシー最優先',
         featuresTitle: '✨ 機能紹介',
         features: [
           'ローカルTOTP認証コード生成、Google Authenticator形式対応',
-          'すべてのTOTP計算はローカルで実行、鍵はブラウザから外に出ません',
+          'すべてのTOTP計算はローカルで実行。鍵は端末内に保持され、任意の暗号化同期を有効にした場合のみブラウザアカウント経由で暗号文が転送されます',
           '複数アカウント保存、ワンクリックで認証コードコピー',
           'バックアップのエクスポート / インポート、一括削除はすべて無料。データは完全にあなたが管理',
           '任意のマスターパスワード — 保存済みシークレットを AES-GCM 256 で暗号化、パスワードは保存しません',
-          'ライセンス認証に必要な最小限の権限のみ、閲覧データにはアクセスしません',
-          '6言語対応、ブラウザの言語を自動検出'
+          'ストレージとライセンス認証に必要な最小限の権限のみ、閲覧データにはアクセスしません',
+          '6言語対応、ブラウザの言語を自動検出',
+          '任意の暗号化クロスデバイス同期（Premium）— ブラウザアカウント経由で自動マージ'
         ],
         thankTitle: '💌 ご利用ありがとうございます',
         thank: [
-          'LocalBox2FAをご利用いただきありがとうございます。このツールは、本当に安全な2FA認証器が欲しくて作りました——登録不要、クラウド同期なし、シークレットのアップロードなし。',
+          'LocalBox2FAをご利用いただきありがとうございます。このツールは、本当に安全な2FA認証器が欲しくて作りました——登録不要、既定は完全ローカル。任意の同期を使う場合も封印済みの暗号文のみが送られ、マスターパスワードがアップロードされることはありません。',
           'もし皆様のお役にも立てているなら、それが何よりの喜びです。',
           'もしよろしければ、コーヒーを <span class="heart">☕</span> 一杯おごっていただけると、とても嬉しいです。より良いツールを作る励みになります。'
         ],
@@ -210,20 +213,21 @@
         privacyPolicy: 'プライバシーポリシー'
       },
       de: {
-        tagline: 'Vollständig lokal · Schlüssel bleiben lokal · Datenschutz zuerst',
+        tagline: 'Standardmäßig lokal · Verschlüsselte Secrets · Datenschutz zuerst',
         featuresTitle: '✨ Funktionen',
         features: [
           'Lokale TOTP-Code-Generierung, unterstützt Google Authenticator-Format',
-          'Alle TOTP-Berechnungen laufen lokal — Schlüssel verlassen nie den Browser',
+          'Alle TOTP-Berechnungen laufen lokal — Schlüssel bleiben auf Ihrem Gerät, außer Sie aktivieren die optionale verschlüsselte Synchronisierung',
           'Mehrere Konten speichern, Ein-Klick Kopie von Bestätigungscodes',
           'Backup exportieren / importieren und alles löschen — kostenlos, Ihre Daten unter Ihrer Kontrolle',
           'Optionales Master-Passwort — gespeicherte Secrets mit AES-GCM 256 versiegelt, Passwort wird nie gespeichert',
-          'Minimale Berechtigungen — nur für die Lizenzaktivierung, keine Browserdaten ausgelesen',
-          'Unterstützt 6 Sprachen, automatisch erkannt vom Browser'
+          'Minimale Berechtigungen — nur Speicher und Lizenzaktivierung, keine Browserdaten ausgelesen',
+          'Unterstützt 6 Sprachen, automatisch erkannt vom Browser',
+          'Optionale verschlüsselte geräteübergreifende Synchronisierung (Premium) über Ihr Browserkonto, mit automatischer Zusammenführung'
         ],
         thankTitle: '💌 Ein paar Worte an Sie',
         thank: [
-          'Vielen Dank, dass Sie LocalBox2FA nutzen. Ich habe dieses Tool gebaut, weil ich einen wirklich sicheren 2FA-Authentifikator wollte — keine Registrierung, keine Cloud-Synchronisation, keine Schlüssel hochgeladen.',
+          'Vielen Dank, dass Sie LocalBox2FA nutzen. Ich habe dieses Tool gebaut, weil ich einen wirklich sicheren 2FA-Authentifikator wollte — keine Registrierung, standardmäßig lokal; selbst die optionale Synchronisierung überträgt nur versiegelte Secrets, und das Master-Passwort verlässt das Gerät nie.',
           'Wenn es auch Ihnen hilft, ist das die beste Belohnung, die ich mir wünschen kann.',
           'Wenn Sie mir gerne einen <span class="heart">☕</span> Kaffee ausgeben möchten, würde mich das sehr freuen — und mich motivieren, LocalBox2FA noch besser zu machen.'
         ],
@@ -233,20 +237,21 @@
         privacyPolicy: 'Datenschutzrichtlinie'
       },
       es: {
-        tagline: 'Completamente local · Las claves permanecen locales · Privacidad primero',
+        tagline: 'Local por defecto · Secretos cifrados · Privacidad primero',
         featuresTitle: '✨ Características',
         features: [
           'Generación local de códigos TOTP, compatible con formato Google Authenticator',
-          'Todo el cálculo TOTP ocurre localmente — las claves nunca salen de tu navegador',
+          'Todo el cálculo TOTP ocurre localmente — las claves permanecen en tu dispositivo salvo que actives la sincronización cifrada opcional',
           'Guarda múltiples cuentas, copia códigos con un clic',
           'Exportar / importar copias y borrado total — todo gratis, tus datos bajo tu control',
           'Contraseña maestra opcional — secretos sellados con AES-GCM 256, la contraseña nunca se guarda',
-          'Permisos mínimos — solo para activar la licencia, sin acceso a datos de navegación',
-          'Soporta 6 idiomas, detectados automáticamente desde el navegador'
+          'Permisos mínimos — solo almacenamiento y activación de licencia, sin acceso a datos de navegación',
+          'Soporta 6 idiomas, detectados automáticamente desde el navegador',
+          'Sincronización cifrada opcional entre dispositivos (Premium) mediante tu cuenta del navegador, con fusión automática'
         ],
         thankTitle: '💌 Unas palabras para ti',
         thank: [
-          'Gracias por usar LocalBox2FA. Construí esta herramienta porque quería un autenticador 2FA realmente seguro — sin registro, sin sincronización en la nube, sin subir tus claves.',
+          'Gracias por usar LocalBox2FA. Construí esta herramienta porque quería un autenticador 2FA realmente seguro — sin registro, local por defecto; incluso la sincronización opcional solo sube secretos sellados y tu contraseña maestra nunca sale del dispositivo.',
           'Si también te ayuda a ti, esa ya es la mejor recompensa que puedo pedir.',
           'Por supuesto, si quieres invitarme a un <span class="heart">☕</span> café, me haría muy feliz — y me motivaría a seguir mejorando LocalBox2FA.'
         ],
@@ -256,20 +261,21 @@
         privacyPolicy: 'Política de Privacidad'
       },
       fr: {
-        tagline: 'Entièrement local · Les clés restent locales · Confidentialité d\'abord',
+        tagline: 'Local par défaut · Secrets chiffrés · Confidentialité d\'abord',
         featuresTitle: '✨ Fonctionnalités',
         features: [
           'Génération locale de codes TOTP, compatible avec le format Google Authenticator',
-          'Tout le calcul TOTP est local — les clés ne quittent jamais votre navigateur',
+          'Tout le calcul TOTP est local — les clés restent sur votre appareil, sauf si vous activez la synchronisation chiffrée facultative',
           'Enregistrez plusieurs comptes, copiez les codes en un clic',
           'Exporter / importer des sauvegardes et tout effacer — gratuit, vos données sous votre contrôle',
           'Mot de passe maître en option — secrets scellés en AES-GCM 256, mot de passe jamais stocké',
-          'Permissions minimales — uniquement pour l\'activation de la licence, aucune donnée de navigation consultée',
-          'Prend en charge 6 langues, détectées automatiquement depuis le navigateur'
+          'Permissions minimales — stockage et activation de licence uniquement, aucune donnée de navigation consultée',
+          'Prend en charge 6 langues, détectées automatiquement depuis le navigateur',
+          'Synchronisation chiffrée facultative entre appareils (Premium) via votre compte navigateur, avec fusion automatique'
         ],
         thankTitle: '💌 Un petit mot pour vous',
         thank: [
-          'Merci d\'utiliser LocalBox2FA. J\'ai construit cet outil parce que je voulais un authentificateur 2FA vraiment sécurisé — sans inscription, sans synchronisation cloud, sans téléverser vos clés.',
+          'Merci d\'utiliser LocalBox2FA. J\'ai construit cet outil parce que je voulais un authentificateur 2FA vraiment sécurisé — sans inscription, local par défaut ; même la synchronisation facultative n\'envoie que des secrets scellés, et votre mot de passe maître ne quitte jamais l\'appareil.',
           'S\'il vous aide aussi, c\'est déjà la plus belle récompense.',
           'Bien sûr, si vous souhaitez m\'offrir un <span class="heart">☕</span> café, cela me ferait très plaisir — et me motiverait à améliorer LocalBox2FA encore davantage.'
         ],
