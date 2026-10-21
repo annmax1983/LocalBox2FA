@@ -16,24 +16,26 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 |----------|-------------|
 | 🔐 **Codes TOTP** | RFC 6238. Collez un secret Base32 ou un lien `otpauth://totp/...` complet. Prend en charge 6 à 8 chiffres, une période personnalisée et SHA-1 / SHA-256 / SHA-512 (par défaut : 6 chiffres, 30 s, SHA-1). HOTP n'est pas pris en charge. |
 | ⏱️ **Compte à rebours en direct** | Chaque compte enregistré affiche son code et son compte à rebours, recalculés à chaque changement de période |
-| 📋 **Copie en un clic** | Cliquez sur une ligne ou sur « Copier » pour placer le code courant dans le presse-papiers |
+| 📋 **Copie en un clic** | Cliquez sur une ligne ou sur « Copier » pour placer le code courant dans le presse-papiers. Le presse-papiers est vidé 30 secondes après la copie tant que la fenêtre reste ouverte, ou immédiatement lorsque le verrouillage automatique s'active |
 | 💾 **Enregistrer et gérer** | Donnez un nom à l'enregistrement, recherchez dans la liste, renommez ou supprimez une entrée |
 | 🔒 **Détection des doublons** | Un même secret ne peut pas être enregistré deux fois : casse, espaces et remplissage sont normalisés avant comparaison |
-| 📱 **Transfert par QR** | Affiche un QR code scannable pour transférer un compte vers une application d'authentification mobile |
+| 📱 **Transfert par QR** | Cliquez sur **Afficher le QR code** pour révéler un code scannable permettant de transférer un compte vers une application d'authentification mobile. Le QR reste masqué par défaut pour éviter les regards indiscrets |
 | 🗑️ **Tout effacer** | Supprime tous les comptes enregistrés d'un coup, après confirmation |
 | 🛡️ **Mot de passe maître** | Chiffrement AES-GCM 256 facultatif des secrets enregistrés. La clé est dérivée avec PBKDF2-SHA256 (600 000 itérations), reste en mémoire et est demandée à chaque ouverture de la fenêtre |
-| 📤 **Exporter** | Télécharge tous les secrets dans un fichier `.txt` en clair |
-| 📥 **Importer** | Restaure les comptes depuis ce fichier, un par ligne |
+| 🔁 **Changement de mot de passe** | Re-scellez tous les secrets enregistrés avec un nouveau mot de passe maître à tout moment ; les comptes sont conservés et un coffre synchronisé est également re-chiffré |
+| ⏲️ **Verrouillage automatique** | Une fois le chiffrement activé, verrouillez le coffre après 1, 5 ou 15 minutes d'inactivité (par défaut : 5). Fermer la fenêtre efface toujours la clé de la mémoire |
+| 📤 **Exporter** | Télécharge tous les secrets dans un fichier `.txt` en clair, ou créez une sauvegarde `.lb2fa` chiffrée par un mot de passe indépendant de votre mot de passe maître |
+| 📥 **Importer** | Restaure depuis des fichiers en clair, des sauvegardes `.lb2fa` chiffrées, des liens `otpauth://`, des QR codes de migration Google Authenticator ou des images de QR code. Les entrées en double et non prises en charge sont ignorées |
 | 🌙 **Mode sombre** | Suit la préférence claire/sombre du système |
 | 🌍 **6 langues** | Anglais, chinois, japonais, espagnol, allemand, français |
 
-> Exporter, importer, tout effacer et afficher le QR code sont gratuits. Sauvegarder, restaurer, effacer et transférer ses propres secrets relève de la gestion de données, pas d'une fonction payante.
+> Exporter (en clair ou chiffré), importer, tout effacer et afficher le QR code sont gratuits. Sauvegarder, restaurer, effacer et transférer ses propres secrets relève de la gestion de données, pas d'une fonction payante.
 
 ### ⭐ Premium (licence requise)
 
 | Fonction | Description |
 |----------|-------------|
-| 🔄 **Synchronisation entre appareils** | Synchronisation facultative des comptes enregistrés entre appareils connectés au même compte de navigateur. Les secrets voyagent scellés avec votre mot de passe maître ; la synchronisation s'exécute tant que la fenêtre est ouverte et seuls les vrais conflits vous demandent de choisir |
+| 🔄 **Synchronisation entre appareils** | Synchronisation facultative des comptes enregistrés entre appareils connectés au même compte de navigateur. Les secrets voyagent scellés avec votre mot de passe maître ; la synchronisation s'exécute tant que la fenêtre est ouverte et seuls les vrais conflits vous demandent de choisir. Un panneau d'état affiche l'heure de la dernière synchronisation, le nombre de comptes locaux et synchronisés, l'utilisation du stockage, les conflits en attente et tout état en pause |
 
 > Achat unique, licence à vie — 2 activations par extension. Chaque environnement de navigateur compte pour une ; désactivez à tout moment pour libérer une place. [Obtenir une licence →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
 
@@ -94,7 +96,7 @@ Un secret Base32 seul utilise les valeurs par défaut (6 chiffres, 30 s, SHA-1).
 
 ### Transférer un compte sur mobile
 
-Cliquez sur l'icône ▣ d'un compte enregistré pour afficher un QR code contenant son lien `otpauth://`. Scannez-le avec une application d'authentification mobile pour y importer le compte.
+Cliquez sur l'icône ▣ d'un compte enregistré, puis sur **Afficher le QR code**. Le QR reste masqué jusqu'à ce que vous le demandiez, pour ne pas être exposé lorsque la fenêtre s'ouvre sur un écran partagé. Scannez-le avec une application d'authentification mobile pour y importer le compte ; le QR est abandonné à la fermeture de la boîte de dialogue.
 
 ### Chiffrer vos secrets
 
@@ -111,6 +113,11 @@ Remarques :
 - Chaque secret scellé est lié à son enregistrement : un texte chiffré copié sur un autre compte ne peut pas être ouvert, une copie synchronisée falsifiée ne peut donc pas faire pointer un nom familier vers un autre secret.
 - **Désactiver le chiffrement** déchiffre tous les enregistrements en clair. Si un seul enregistrement ne peut pas être déchiffré, l'opération est refusée, les comptes concernés sont listés et rien n'est modifié : supprimez-les d'abord et réessayez.
 - Les enregistrements scellés portent le préfixe 🔐 dans la liste ; un enregistrement indéchiffrable affiche aussi 🔐 à la place d'un code.
+- **Verrouillage automatique** est disponible dès que le chiffrement est actif. Choisissez **Désactivé**, **1 minute**, **5 minutes** (par défaut) ou **15 minutes** dans **Paramètres → Sécurité** ; après ce délai d'inactivité, le coffre se verrouille, les boîtes de dialogue sensibles se ferment et le presse-papiers est vidé.
+
+**Changer le mot de passe maître**
+
+Ouvrez **Paramètres (⚙) → Mot de passe maître → Changer le mot de passe maître**, saisissez le mot de passe actuel, puis deux fois le nouveau. Tous les secrets enregistrés sont re-chiffrés sur cet appareil ; les comptes sont conservés. Si la synchronisation est active, la copie cloud est également re-scellée. Les autres appareils signalent alors une incohérence de coffre : ils peuvent adopter la copie cloud en saisissant le nouveau mot de passe (leurs comptes locaux sont d'abord effacés) ou remplacer la copie cloud par leur propre coffre avec l'ancien mot de passe. Aucun des deux choix ne se fait automatiquement. Le changement est refusé tant qu'un conflit de synchronisation existe ou qu'un re-scellement est encore en attente. Un re-scellement interrompu est retenté lors d'une synchronisation ultérieure ; tant qu'il n'est pas terminé, aucun autre changement de mot de passe n'est possible.
 
 ### Synchroniser entre appareils (Premium)
 
@@ -136,11 +143,12 @@ L'extension ne synchronise jamais le mot de passe ni une clé dérivée. Le seco
 - Avant d'écraser un enregistrement, l'extension relit la dernière copie du cloud ; si un autre appareil l'a modifié ou supprimé entre-temps, l'envoi est reporté et l'écart est signalé comme un vrai conflit
 - Une comparaison à trois voies (dernier état synchronisé / local / distant) applique automatiquement les changements sans conflit
 - Si le même compte a réellement été modifié sur deux appareils, une boîte de dialogue vous demande de garder **cet appareil**, **l'autre appareil** ou **les deux** : rien n'est écrasé sans votre choix
-- Un appareil doté d'un **mot de passe maître différent** ne peut jamais écraser le coffre synchronisé ; il signale une incohérence de coffre
+- Lors d'une fusion, un appareil doté d'un **mot de passe maître différent** n'écrase jamais le coffre synchronisé ; il signale une incohérence de coffre et attend un choix explicite
 - Gardez tous les appareils partageant un coffre sur la même version de l'extension ; une version antérieure peut ne pas reconnaître le format scellé actuel et remplacer des enregistrements par des copies plus anciennes
 
 **Remarques**
 
+- Le panneau de synchronisation affiche la dernière synchronisation réussie, le nombre de comptes locaux et synchronisés, une barre d'utilisation du quota de synchronisation du navigateur (octets et nombre d'éléments), les conflits en attente et tout état en pause ou en erreur. Un badge de pause signifie que la synchronisation ne progressera pas tant que vous n'aurez pas traité le message affiché en dessous.
 - La synchronisation s'exécute à l'ouverture de la fenêtre (après déverrouillage) et lorsqu'un autre appareil modifie les données ; il n'y a pas de bouton « Synchroniser maintenant »
 - La désactiver conserve la copie cloud pour vos autres appareils. Utilisez **Supprimer les données synchronisées** dans le même panneau pour la retirer du compte du navigateur ; les autres appareils conservent leurs comptes locaux et désactivent la synchronisation dès qu'ils constatent la disparition de la copie cloud
 - Le chiffrement ne peut pas être désactivé tant que la synchronisation est active, car les enregistrements en clair ne sont jamais envoyés
@@ -150,10 +158,22 @@ L'extension ne synchronise jamais le mot de passe ni une clé dérivée. Le seco
 
 ### Exporter et importer
 
-- Cliquez sur **Exporter** pour télécharger tous les secrets enregistrés dans un fichier `.txt`
-- Chaque ligne est `NomDuCompte:Secret`, ou `NomDuCompte:otpauth://…` pour les comptes aux chiffres, période ou algorithme non standard
-- Cliquez sur **Importer** et choisissez ce fichier pour restaurer les comptes ; les lignes déjà enregistrées sont ignorées
-- Le fichier exporté est **en clair** et n'est pas protégé par votre mot de passe maître
+**Exporter**
+
+Cliquez sur **Exporter** et choisissez l'un des deux formats :
+
+- **Sauvegarde chiffrée** — télécharge un fichier `.lb2fa` chiffré en AES-GCM 256. Vous choisissez ici un mot de passe de sauvegarde ; il est indépendant de votre mot de passe maître et constitue le seul moyen de restaurer le fichier. L'enveloppe est autonome et restaure aussi les comptes après un changement ou un oubli du mot de passe du coffre.
+- **Texte en clair** — télécharge un fichier `.txt` avec une ligne `NomDuCompte:Secret` par compte, ou `NomDuCompte:otpauth://…` lorsque les chiffres, la période ou l'algorithme ne sont pas ceux par défaut. Quiconque l'ouvre peut le lire ; il n'est pas protégé par votre mot de passe maître.
+
+**Importer**
+
+Cliquez sur **Importer** et choisissez l'une des sources suivantes :
+
+- une sauvegarde `.txt` en clair ;
+- une sauvegarde `.lb2fa` chiffrée — l'extension détecte le format et demande le mot de passe de sauvegarde ;
+- un fichier ou une image contenant un QR code `otpauth://`, un QR code de migration Google Authenticator (`otpauth-migration://offline?data=…`), ou une ligne de texte avec un secret Base32 ou un lien `otpauth://`.
+
+Les secrets déjà enregistrés sont ignorés. Les entrées HOTP ou non prises en charge sont ignorées et comptées. Pour une exportation Google Authenticator en plusieurs parties, importez chaque image QR séparément ; les comptes déjà importés sont ignorés.
 
 ---
 
@@ -183,7 +203,7 @@ Tous les calculs sont effectués localement via l'API Web Crypto du navigateur. 
 - **Aucune analyse** — pas de pistage, de télémétrie, de cookies ni de scripts tiers
 - **Aucun accès aux pages** — pas de content scripts, pas d'accès à l'historique, aux onglets ou aux favoris
 - **Réseau minimal** — sans licence, l'extension n'effectue aucune requête réseau, hormis la nouvelle tentative de libération d'une licence mise en file hors ligne. Avec une licence, elle contacte `api.annmax1983.com` pour l'activer, la revérifier (au plus une fois toutes les 2 heures à l'ouverture de la fenêtre) et la libérer. Ces requêtes contiennent la clé de licence, un identifiant d'installation aléatoire et des métadonnées de navigateur (nom/version, langues, fuseau horaire, User-Agent) ; les secrets et les codes générés n'y figurent jamais
-- **Autorisations minimales** — uniquement `storage`, plus l'accès au domaine du serveur de licences. La synchronisation n'ajoute aucune autorisation et n'utilise aucun serveur de notre part
+- **Autorisations minimales** — `storage` et `clipboardWrite`, plus l'accès au domaine du serveur de licences. `clipboardWrite` permet à la fenêtre de copier un code puis de l'effacer ; elle ne peut pas lire le presse-papiers et n'obtient aucun accès aux pages. La synchronisation n'ajoute aucune autorisation et n'utilise aucun serveur de notre part
 
 Le détail champ par champ figure dans [privacy-policy.html](../privacy-policy.html).
 
@@ -192,11 +212,12 @@ Le détail champ par champ figure dans [privacy-policy.html](../privacy-policy.h
 ## ⚠️ Notes de sécurité
 
 - **Le chiffrement est facultatif** — par défaut, les secrets sont stockés sans chiffrement dans le stockage local de l'extension. Quiconque a accès à votre profil de navigateur peut les lire. Activez le mot de passe maître pour les sceller.
-- **Aucune récupération de mot de passe** — le mot de passe maître ne peut pas être réinitialisé et les enregistrements scellés sont irrécupérables sans lui. Si vous l'oubliez, la seule option est de tout effacer depuis l'écran de verrouillage. Gardez une sauvegarde exportée, et conservez-la en sécurité car elle est en clair.
+- **Aucune récupération de mot de passe** — le mot de passe maître ne peut pas être réinitialisé et les enregistrements scellés sont irrécupérables sans lui. Si vous l'oubliez, la seule option est de tout effacer depuis l'écran de verrouillage. Gardez une sauvegarde exportée ; choisissez le format chiffré et conservez son mot de passe de sauvegarde séparément, car ce mot de passe non plus ne peut pas être récupéré.
 - **Retirer l'extension efface les données locales** — la désinstallation ou l'effacement du stockage local supprime définitivement tous les comptes de cet appareil. Si la synchronisation est active, une copie reste dans votre compte de navigateur et peut être restaurée en réactivant la licence et en rejoignant la synchronisation existante avec le même mot de passe maître ; utilisez d'abord **Supprimer les données synchronisées** si vous voulez qu'elle disparaisse.
 - **La synchronisation n'est pas une sauvegarde** — les suppressions se propagent : supprimer un compte sur un appareil le supprime sur les autres. Gardez une sauvegarde exportée de tout ce que vous ne pouvez pas recréer.
 - **Confiance dans le compte du navigateur** — les données synchronisées sont transportées par le service de synchronisation de votre fournisseur de navigateur. Les secrets sont scellés avec votre mot de passe maître, mais pas les noms de compte ni les réglages TOTP. Quiconque a accès à votre compte de navigateur *et* à votre mot de passe maître peut lire les secrets ; activez la phrase secrète de synchronisation pour chiffrer aussi le transport.
-- **Les fichiers exportés ne sont pas chiffrés** — traitez le `.txt` comme un secret et ne le partagez pas.
+- **Le format d'export compte** — une sauvegarde `.txt` en clair est lisible par quiconque l'ouvre ; traitez-la comme un secret et ne la partagez pas. Une sauvegarde `.lb2fa` chiffrée est scellée avec le mot de passe choisi au moment de l'export, indépendant du mot de passe maître.
+- **Les écrans et les presse-papiers fuient** — les QR codes restent masqués jusqu'à ce que vous cliquiez sur **Afficher le QR code**, les codes copiés sont effacés du presse-papiers 30 secondes après la copie (ou lorsque le verrouillage automatique s'active), et le verrouillage automatique limite la durée pendant laquelle un coffre déverrouillé reste à l'écran. La fermeture de la fenêtre détruit la clé dérivée, mais un code copié juste avant reste dans le presse-papiers du système comme n'importe quelle autre copie. Rien de tout cela ne protège un ordinateur compromis.
 - **Bonne pratique** — supprimez un secret de l'extension une fois qu'il est dans une application d'authentification dédiée.
 
 ---
