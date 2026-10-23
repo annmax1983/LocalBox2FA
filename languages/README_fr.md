@@ -44,7 +44,7 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 ## Aperçu
 
 <p align="center">
-  <img src="../images/A02.png" alt="Aperçu de LocalBox2FA">
+  <img src="../screenshots/A02.png" alt="Aperçu de LocalBox2FA">
 </p>
 
 ---
@@ -61,12 +61,12 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 
 ## Installation
 
-1. Ouvrez la page des extensions de votre navigateur :
-   - **Chrome** : `chrome://extensions/`
-   - **Edge** : `edge://extensions/`
-2. Activez le **mode développeur** (interrupteur en haut à droite)
-3. Cliquez sur **Charger l'extension non empaquetée** et choisissez le dossier `LocalBox2FA`
-4. Cliquez sur l'icône 🔐 LocalBox2FA dans la barre d'outils
+| Store | Lien |
+|---|---|
+| Chrome Web Store | [Installer dans Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
+| Microsoft Edge Add-ons | [Installer dans Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+
+> Installez uniquement depuis les boutiques officielles ci-dessus — évitez les sites de téléchargement tiers.
 
 ---
 
@@ -179,17 +179,10 @@ Les secrets déjà enregistrés sont ignorés. Les entrées HOTP ou non prises e
 
 ## Fonctionnement
 
-```
-Saisie d'un secret Base32 ou d'un lien otpauth://
-       ↓
-L'API Web Crypto calcule le HMAC (SHA-1 par défaut)
-       ↓
-Code TOTP de 6 à 8 chiffres (RFC 6238)
-       ↓
-Compte à rebours avec rafraîchissement automatique
-       ↓
-Copie dans le presse-papiers en un clic
-```
+1. Saisissez une clé de configuration ou collez un lien otpauth:// complet.
+2. Le code est généré sur votre appareil avec le chiffrement intégré au navigateur.
+3. Un code de 6 à 8 chiffres s'affiche avec son compte à rebours et se renouvelle de lui-même.
+4. Un seul clic le copie dans votre presse-papiers.
 
 Tous les calculs sont effectués localement via l'API Web Crypto du navigateur. Générer un code ne déclenche aucune requête réseau. Les données enregistrées ne quittent l'appareil que si vous activez explicitement la synchronisation chiffrée.
 

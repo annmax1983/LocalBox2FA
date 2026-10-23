@@ -44,7 +44,7 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 ## Vorschau
 
 <p align="center">
-  <img src="../images/A02.png" alt="LocalBox2FA Vorschau">
+  <img src="../screenshots/A02.png" alt="LocalBox2FA Vorschau">
 </p>
 
 ---
@@ -61,12 +61,12 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 
 ## Installation
 
-1. Öffne die Erweiterungsseite deines Browsers:
-   - **Chrome**: `chrome://extensions/`
-   - **Edge**: `edge://extensions/`
-2. Aktiviere den **Entwicklermodus** (Schalter oben rechts)
-3. Klicke auf **Entpackte Erweiterung laden** und wähle den Ordner `LocalBox2FA`
-4. Klicke auf das 🔐-Symbol in der Symbolleiste
+| Store | Link |
+|---|---|
+| Chrome Web Store | [In Chrome installieren](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
+| Microsoft Edge Add-ons | [In Edge installieren](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+
+> Installieren Sie nur über die offiziellen Stores oben – meiden Sie Download-Seiten Dritter.
 
 ---
 
@@ -179,17 +179,10 @@ Bereits gespeicherte Secrets werden übersprungen. HOTP- und nicht unterstützte
 
 ## So funktioniert es
 
-```
-Base32-Secret oder otpauth://-Link eingeben
-       ↓
-Web Crypto API berechnet HMAC (standardmäßig SHA-1)
-       ↓
-TOTP-Code mit 6–8 Stellen (RFC 6238)
-       ↓
-Countdown mit automatischer Aktualisierung
-       ↓
-Ein-Klick-Kopieren in die Zwischenablage
-```
+1. Gib ein Base32-Secret oder einen `otpauth://`-Link ein.
+2. Der Code wird auf deinem Gerät mit der eingebauten Kryptografie des Browsers erzeugt.
+3. Ein 6–8-stelliger Code erscheint mit Countdown und aktualisiert sich von selbst.
+4. Ein Klick kopiert ihn in die Zwischenablage.
 
 Alle Berechnungen laufen lokal über die Web Crypto API des Browsers. Das Generieren eines Codes löst keine Netzwerkanfrage aus. Gespeicherte Daten verlassen das Gerät nur, wenn du die verschlüsselte geräteübergreifende Synchronisierung ausdrücklich einschaltest.
 

@@ -44,7 +44,7 @@
 ## 界面预览
 
 <p align="center">
-  <img src="../images/A02.png" alt="LocalBox2FA 界面预览">
+  <img src="../screenshots/A02.png" alt="LocalBox2FA 界面预览">
 </p>
 
 ---
@@ -59,14 +59,14 @@
 
 ---
 
-## 安装方法
+## 安装
 
-1. 打开浏览器扩展页面：
-   - **Chrome**：`chrome://extensions/`
-   - **Edge**：`edge://extensions/`
-2. 开启右上角的**开发者模式**
-3. 点击**加载已解压的扩展程序**，选择 `LocalBox2FA` 文件夹
-4. 点击工具栏中的 🔐 LocalBox2FA 图标即可开始使用
+| 商店 | 链接 |
+|---|---|
+| Chrome 应用商店 | [在 Chrome 中安装](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
+| Microsoft Edge 加载项 | [在 Edge 中安装](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+
+> 请只通过上方官方商店安装，避免使用第三方下载站。
 
 ---
 
@@ -179,17 +179,10 @@
 
 ## 工作原理
 
-```
-输入 Base32 密钥或 otpauth:// 链接
-       ↓
-Web Crypto API 计算 HMAC（默认 SHA-1）
-       ↓
-生成 6–8 位 TOTP 验证码（RFC 6238）
-       ↓
-倒计时 + 自动刷新
-       ↓
-一键复制到剪贴板
-```
+1. 输入密钥，或粘贴一个 otpauth:// 链接。
+2. 验证码用浏览器内置的加密能力在你的设备上算出。
+3. 生成 6–8 位验证码并倒计时，到期自动刷新。
+4. 点一下即可复制到剪贴板。
 
 所有计算都在本地通过浏览器的 Web Crypto API 完成，生成验证码不会发起任何网络请求。只有在你明确开启加密跨设备同步后，已保存的数据才会离开设备。
 

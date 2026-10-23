@@ -44,7 +44,7 @@ TOTP 方式の二段階認証コードを生成する軽量ブラウザ拡張機
 ## プレビュー
 
 <p align="center">
-  <img src="../images/A02.png" alt="LocalBox2FA のプレビュー">
+  <img src="../screenshots/A02.png" alt="LocalBox2FA のプレビュー">
 </p>
 
 ---
@@ -61,12 +61,12 @@ TOTP 方式の二段階認証コードを生成する軽量ブラウザ拡張機
 
 ## インストール
 
-1. ブラウザの拡張機能ページを開きます：
-   - **Chrome**: `chrome://extensions/`
-   - **Edge**: `edge://extensions/`
-2. 右上の**デベロッパーモード**を有効にします
-3. **パッケージ化されていない拡張機能を読み込む**を押し、`LocalBox2FA` フォルダを選びます
-4. ツールバーの 🔐 LocalBox2FA アイコンを押すと使えます
+| ストア | リンク |
+|---|---|
+| Chrome ウェブストア | [Chrome に追加](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
+| Microsoft Edge アドオン | [Edge に追加](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+
+> 上記の公式ストアからのみインストールしてください。第三者サイトの利用は避けてください。
 
 ---
 
@@ -179,17 +179,10 @@ Base32 の秘密鍵だけを貼り付けた場合は既定値（6 桁・30 秒�
 
 ## 動作の仕組み
 
-```
-Base32 の秘密鍵、または otpauth:// リンクを入力
-       ↓
-Web Crypto API で HMAC を計算（既定は SHA-1）
-       ↓
-6〜8 桁の TOTP コードを生成（RFC 6238）
-       ↓
-カウントダウンと自動更新
-       ↓
-ワンクリックでクリップボードへ
-```
+1. 設定キー（Base32 の秘密鍵）を入力するか、otpauth:// リンクを貼り付けます。
+2. コードはブラウザ内蔵の暗号機能を使って端末上で生成されます。
+3. 6〜8 桁のコードが表示され、カウントダウンに応じて自動で更新されます。
+4. ワンクリックでクリップボードにコピーされます。
 
 計算はすべてブラウザの Web Crypto API を使ってローカルで行われます。コード生成でネットワーク通信が発生することはありません。保存データが端末の外に出るのは、暗号化されたクロスデバイス同期を明示的に有効にしたときだけです。
 

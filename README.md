@@ -44,7 +44,7 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 ## Preview
 
 <p align="center">
-  <img src="images/A02.png" alt="LocalBox2FA Preview">
+  <img src="screenshots/A02.png" alt="LocalBox2FA Preview">
 </p>
 
 ---
@@ -61,12 +61,12 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 
 ## Installation
 
-1. Open your browser's extension page:
-   - **Chrome**: `chrome://extensions/`
-   - **Edge**: `edge://extensions/`
-2. Enable **Developer mode** (top-right toggle)
-3. Click **Load unpacked** and select the `LocalBox2FA` folder
-4. Click the 🔐 LocalBox2FA icon in the toolbar
+| Store | Link |
+|---|---|
+| Chrome Web Store | [Install for Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
+| Microsoft Edge Add-ons | [Install for Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+
+> Install only from the official stores above — avoid third-party download sites.
 
 ---
 
@@ -179,17 +179,10 @@ Already-saved secrets are skipped. HOTP or unsupported entries are skipped and c
 
 ## How it works
 
-```
-Enter a Base32 secret or an otpauth:// link
-       ↓
-Web Crypto API computes HMAC (SHA-1 by default)
-       ↓
-6–8 digit TOTP code (RFC 6238)
-       ↓
-Countdown with automatic refresh
-       ↓
-One-click copy to clipboard
-```
+1. Enter a setup key or paste an otpauth:// link.
+2. The code is generated on your device using the browser's built-in cryptography.
+3. A 6–8 digit code appears and counts down, refreshing on its own.
+4. One click copies it to your clipboard.
 
 All computation happens locally with the browser's Web Crypto API. Generating a code never makes a network request. Saved data leaves the device only when you explicitly turn on encrypted cross-device sync.
 

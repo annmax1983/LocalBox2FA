@@ -44,7 +44,7 @@ Una extensión ligera para el navegador que genera códigos TOTP de doble factor
 ## Vista previa
 
 <p align="center">
-  <img src="../images/A02.png" alt="Vista previa de LocalBox2FA">
+  <img src="../screenshots/A02.png" alt="Vista previa de LocalBox2FA">
 </p>
 
 ---
@@ -61,12 +61,12 @@ Una extensión ligera para el navegador que genera códigos TOTP de doble factor
 
 ## Instalación
 
-1. Abre la página de extensiones de tu navegador:
-   - **Chrome**: `chrome://extensions/`
-   - **Edge**: `edge://extensions/`
-2. Activa el **modo de desarrollador** (interruptor arriba a la derecha)
-3. Pulsa **Cargar descomprimida** y elige la carpeta `LocalBox2FA`
-4. Pulsa el icono 🔐 de LocalBox2FA en la barra de herramientas
+| Tienda | Enlace |
+|---|---|
+| Chrome Web Store | [Instalar en Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
+| Complementos de Microsoft Edge | [Instalar en Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+
+> Instale solo desde las tiendas oficiales de arriba; evite sitios de descarga de terceros.
 
 ---
 
@@ -179,17 +179,10 @@ Los secretos ya guardados se omiten. Las entradas HOTP o no compatibles se omite
 
 ## Cómo funciona
 
-```
-Introduce un secreto Base32 o un enlace otpauth://
-       ↓
-Web Crypto API calcula el HMAC (SHA-1 por defecto)
-       ↓
-Código TOTP de 6–8 dígitos (RFC 6238)
-       ↓
-Cuenta atrás con renovación automática
-       ↓
-Copia al portapapeles con un clic
-```
+1. Introduce una clave de configuración o pega un enlace otpauth://.
+2. El código se genera en tu dispositivo con la criptografía integrada del navegador.
+3. Aparece un código de 6–8 dígitos con su cuenta atrás, que se renueva solo.
+4. Un clic lo copia al portapapeles.
 
 Todo el cálculo ocurre en local con la Web Crypto API del navegador. Generar un código nunca hace una petición de red. Los datos guardados solo salen del dispositivo cuando activas expresamente la sincronización cifrada.
 
