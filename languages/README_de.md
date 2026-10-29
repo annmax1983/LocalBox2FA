@@ -4,7 +4,7 @@
 
 Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Faktor-Authentifizierung erzeugt. Secrets werden auf deinem Gerät erzeugt und genutzt — kein Erweiterungskonto, keine Handy-App, kein Server von uns. Wenn du dieselben Konten auf einem anderen Rechner brauchst, kann eine optionale verschlüsselte Synchronisierung sie über das Browser-Konto transportieren, das du bereits nutzt.
 
-> Chromium-basiert · Manifest V3 · Lokale Verarbeitung · Datenschutz zuerst
+> Chrome / Edge / Firefox · Manifest V3 · Lokale Verarbeitung · Datenschutz zuerst
 
 ---
 
@@ -55,7 +55,10 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 |---------|--------|
 | Google Chrome | ✅ Vollständig unterstützt |
 | Microsoft Edge | ✅ Vollständig unterstützt |
+| Mozilla Firefox | ✅ Vollständig unterstützt |
 | Andere Chromium-basierte Browser | ✅ Sollten funktionieren |
+
+> **Firefox-Hinweis:** Die geräteübergreifende Synchronisierung läuft über Firefox Sync (Mozilla-Konto). Die übrigen Funktionen verhalten sich wie unter Chrome / Edge.
 
 ---
 
@@ -65,6 +68,7 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 |---|---|
 | Chrome Web Store | [In Chrome installieren](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Microsoft Edge Add-ons | [In Edge installieren](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+| Firefox-Add-ons (AMO) | 🔜 In Prüfung – Link folgt nach der Freigabe |
 
 > Installieren Sie nur über die offiziellen Stores oben – meiden Sie Download-Seiten Dritter.
 
@@ -127,7 +131,7 @@ Die Synchronisierung überträgt gespeicherte Konten zwischen Computern, die im 
 
 1. Öffne **Einstellungen (⚙) → Geräteübergreifende Synchronisierung** und klicke auf **Synchronisierung einschalten**
 2. Prüfe den Zustimmungsdialog — er zeigt, wie viele Konten hochgeladen werden und was der Browser-Anbieter sehen kann
-3. Bestätige. Die Datensätze werden versiegelt und in `chrome.storage.sync` geschrieben
+3. Bestätige. Die Datensätze werden versiegelt und in `storage.sync` geschrieben
 
 **Zweites Gerät**
 
@@ -190,9 +194,9 @@ Alle Berechnungen laufen lokal über die Web Crypto API des Browsers. Das Generi
 
 ## Datenschutz und Berechtigungen
 
-- **Standardmäßig lokal** — gespeicherte Secrets liegen in `chrome.storage.local` und verlassen das Gerät nicht, solange du die Synchronisierung nicht einschaltest
+- **Standardmäßig lokal** — gespeicherte Secrets liegen in `storage.local` und verlassen das Gerät nicht, solange du die Synchronisierung nicht einschaltest
 - **Optionale Verschlüsselung** — ohne Master-Passwort sind gespeicherte Secrets Klartext. Nach dem Aktivieren wird jedes Secret mit AES-GCM 256 versiegelt; der Schlüssel wird aus deinem Passwort abgeleitet (PBKDF2-SHA256, 600k Iterationen) und nur im Speicher gehalten
-- **Synchronisierung nur nach Zustimmung** — versiegelte Datensätze, Kontonamen, TOTP-Einstellungen sowie Salt/Iterationen/Prüfwert des Vaults werden in `chrome.storage.sync` geschrieben und vom Browser-Konto transportiert. Master-Passwort und Lizenzschlüssel sind nie enthalten
+- **Synchronisierung nur nach Zustimmung** — versiegelte Datensätze, Kontonamen, TOTP-Einstellungen sowie Salt/Iterationen/Prüfwert des Vaults werden in `storage.sync` geschrieben und vom Browser-Konto transportiert. Master-Passwort und Lizenzschlüssel sind nie enthalten
 - **Keine Analyse** — kein Tracking, keine Telemetrie, keine Cookies, keine Skripte Dritter
 - **Kein Seitenzugriff** — keine Content-Scripts, kein Zugriff auf Verlauf, Tabs oder Lesezeichen
 - **Minimale Netzwerknutzung** — ohne Lizenz macht die Erweiterung keine Netzwerkanfrage, außer dem erneuten Versuch einer Freigabe, die offline eingereiht wurde. Mit Lizenz kontaktiert sie `api.annmax1983.com` zum Aktivieren, zum erneuten Prüfen (beim Öffnen des Popups höchstens alle 2 Stunden) und zum Freigeben der Lizenz. Diese Anfragen enthalten den Lizenzschlüssel, eine zufällige Installations-ID und Browser-Metadaten (Browser-Name/-Version, Sprachen, Zeitzone, User-Agent); Secrets und generierte Codes sind nie enthalten
@@ -223,7 +227,7 @@ LocalBox2FA implementiert RFC 6238 TOTP und akzeptiert Secrets von Google Authen
 
 ## Quellcode-Hinweis
 
-> ⚠️ **Dieses Repository veröffentlicht keinen Quellcode.** Es enthält ausschließlich Nutzungsdokumentation, Versionshinweise und Support-Ressourcen. Die Erweiterung wird ausschließlich über den Chrome Web Store verteilt; es gibt kein Offline-Installationspaket und keinen Endnutzer-Quellcode.
+> ⚠️ **Dieses Repository veröffentlicht keinen Quellcode.** Es enthält ausschließlich Nutzungsdokumentation, Versionshinweise und Support-Ressourcen. Die Erweiterung wird ausschließlich über den Chrome Web Store, Microsoft Edge Add-ons und Firefox-Add-ons (AMO) verteilt; es gibt kein Offline-Installationspaket und keinen Endnutzer-Quellcode.
 
 ---
 

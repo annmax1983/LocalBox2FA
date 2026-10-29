@@ -4,7 +4,7 @@
 
 Une extension légère qui génère des codes TOTP de double authentification. Vos secrets sont créés et utilisés sur votre appareil — aucun compte pour l'extension, aucune application mobile, aucun serveur de notre part. Si vous voulez les mêmes comptes sur un autre ordinateur, une synchronisation chiffrée facultative peut les transporter via le compte de navigateur que vous utilisez déjà.
 
-> Basée sur Chromium · Manifest V3 · Traitement local · Confidentialité avant tout
+> Chrome / Edge / Firefox · Manifest V3 · Traitement local · Confidentialité avant tout
 
 ---
 
@@ -55,7 +55,10 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 |-----------|------|
 | Google Chrome | ✅ Entièrement pris en charge |
 | Microsoft Edge | ✅ Entièrement pris en charge |
+| Mozilla Firefox | ✅ Entièrement pris en charge |
 | Autres navigateurs basés sur Chromium | ✅ Devraient fonctionner |
+
+> **Note Firefox :** La synchronisation entre appareils passe par Firefox Sync (compte Mozilla). Le reste des fonctions se comporte comme sous Chrome / Edge.
 
 ---
 
@@ -65,6 +68,7 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 |---|---|
 | Chrome Web Store | [Installer dans Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Microsoft Edge Add-ons | [Installer dans Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+| Modules complémentaires Firefox (AMO) | 🔜 En cours d’examen — le lien sera ajouté après publication |
 
 > Installez uniquement depuis les boutiques officielles ci-dessus — évitez les sites de téléchargement tiers.
 
@@ -127,7 +131,7 @@ La synchronisation transporte les comptes enregistrés entre ordinateurs connect
 
 1. Ouvrez **Paramètres (⚙) → Synchronisation entre appareils** et cliquez sur **Activer la synchronisation**
 2. Consultez l'écran de consentement : il indique combien de comptes seront envoyés et ce que le fournisseur du navigateur peut voir
-3. Confirmez. Les enregistrements sont scellés et écrits dans `chrome.storage.sync`
+3. Confirmez. Les enregistrements sont scellés et écrits dans `storage.sync`
 
 **Second appareil**
 
@@ -190,9 +194,9 @@ Tous les calculs sont effectués localement via l'API Web Crypto du navigateur. 
 
 ## Confidentialité et autorisations
 
-- **Local par défaut** — les secrets enregistrés résident dans `chrome.storage.local` et ne quittent pas l'appareil sauf si vous activez la synchronisation
+- **Local par défaut** — les secrets enregistrés résident dans `storage.local` et ne quittent pas l'appareil sauf si vous activez la synchronisation
 - **Chiffrement facultatif** — sans mot de passe maître, les secrets sont en clair. Une fois activé, chaque secret est scellé en AES-GCM 256 ; la clé est dérivée de votre mot de passe (PBKDF2-SHA256, 600k itérations) et conservée uniquement en mémoire
-- **Synchronisation sur consentement** — les enregistrements scellés, les noms de compte, les réglages TOTP et le sel/itérations/vérificateur du coffre sont écrits dans `chrome.storage.sync` et transportés par votre compte de navigateur. Le mot de passe maître et la clé de licence n'y figurent jamais
+- **Synchronisation sur consentement** — les enregistrements scellés, les noms de compte, les réglages TOTP et le sel/itérations/vérificateur du coffre sont écrits dans `storage.sync` et transportés par votre compte de navigateur. Le mot de passe maître et la clé de licence n'y figurent jamais
 - **Aucune analyse** — pas de pistage, de télémétrie, de cookies ni de scripts tiers
 - **Aucun accès aux pages** — pas de content scripts, pas d'accès à l'historique, aux onglets ou aux favoris
 - **Réseau minimal** — sans licence, l'extension n'effectue aucune requête réseau, hormis la nouvelle tentative de libération d'une licence mise en file hors ligne. Avec une licence, elle contacte `api.annmax1983.com` pour l'activer, la revérifier (au plus une fois toutes les 2 heures à l'ouverture de la fenêtre) et la libérer. Ces requêtes contiennent la clé de licence, un identifiant d'installation aléatoire et des métadonnées de navigateur (nom/version, langues, fuseau horaire, User-Agent) ; les secrets et les codes générés n'y figurent jamais
@@ -223,7 +227,7 @@ LocalBox2FA implémente RFC 6238 TOTP et accepte les secrets générés par Goog
 
 ## Avis sur le code source
 
-> ⚠️ **Ce dépôt ne publie pas de code source.** Il contient uniquement la documentation d'utilisation, les notes de version et les ressources de support. L'extension est distribuée exclusivement via le Chrome Web Store ; aucun paquet d'installation hors ligne ni code source utilisateur n'est fourni.
+> ⚠️ **Ce dépôt ne publie pas de code source.** Il contient uniquement la documentation d'utilisation, les notes de version et les ressources de support. L'extension est distribuée exclusivement via le Chrome Web Store, Microsoft Edge Add-ons et Firefox Add-ons (AMO) ; aucun paquet d'installation hors ligne ni code source utilisateur n'est fourni.
 
 ---
 

@@ -4,7 +4,7 @@
 
 Una extensión ligera para el navegador que genera códigos TOTP de doble factor. Los secretos se crean y se usan en tu dispositivo: sin cuenta de la extensión, sin app en el móvil y sin servidores nuestros. Si quieres las mismas cuentas en otro ordenador, la sincronización cifrada opcional puede llevarlas a través de la cuenta de navegador que ya usas.
 
-> Basada en Chromium · Manifest V3 · Procesamiento local · Privacidad ante todo
+> Chrome / Edge / Firefox · Manifest V3 · Procesamiento local · Privacidad ante todo
 
 ---
 
@@ -55,7 +55,10 @@ Una extensión ligera para el navegador que genera códigos TOTP de doble factor
 |-----------|--------|
 | Google Chrome | ✅ Totalmente compatible |
 | Microsoft Edge | ✅ Totalmente compatible |
+| Mozilla Firefox | ✅ Totalmente compatible |
 | Otros navegadores basados en Chromium | ✅ Deberían funcionar |
+
+> **Nota sobre Firefox:** La sincronización entre dispositivos usa Firefox Sync (cuenta de Mozilla). El resto de funciones se comporta igual que en Chrome / Edge.
 
 ---
 
@@ -65,6 +68,7 @@ Una extensión ligera para el navegador que genera códigos TOTP de doble factor
 |---|---|
 | Chrome Web Store | [Instalar en Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Complementos de Microsoft Edge | [Instalar en Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+| Complementos de Firefox (AMO) | 🔜 En revisión: el enlace se añadirá al publicarse |
 
 > Instale solo desde las tiendas oficiales de arriba; evite sitios de descarga de terceros.
 
@@ -127,7 +131,7 @@ La sincronización lleva las cuentas guardadas entre ordenadores con la misma cu
 
 1. Abre **Ajustes (⚙) → Sincronización entre dispositivos** y pulsa **Activar sincronización**
 2. Revisa la pantalla de consentimiento: muestra cuántas cuentas se subirán y qué puede ver el proveedor del navegador
-3. Confirma. Los registros se sellan y se escriben en `chrome.storage.sync`
+3. Confirma. Los registros se sellan y se escriben en `storage.sync`
 
 **Segundo dispositivo**
 
@@ -190,9 +194,9 @@ Todo el cálculo ocurre en local con la Web Crypto API del navegador. Generar un
 
 ## Privacidad y permisos
 
-- **Local por defecto** — los secretos guardados viven en `chrome.storage.local` y no salen del dispositivo salvo que actives la sincronización
+- **Local por defecto** — los secretos guardados viven en `storage.local` y no salen del dispositivo salvo que actives la sincronización
 - **Cifrado opcional** — sin contraseña maestra los secretos están en texto plano. Al activarlo, cada secreto se sella con AES-GCM 256; la clave se deriva de tu contraseña (PBKDF2-SHA256, 600k iteraciones) y solo se guarda en memoria
-- **Sincronización opcional** — los registros sellados, los nombres de cuenta, los ajustes TOTP y la sal/iteraciones/verificador de la bóveda se escriben en `chrome.storage.sync` y los transporta tu cuenta de navegador. La contraseña maestra y la clave de licencia nunca se incluyen
+- **Sincronización opcional** — los registros sellados, los nombres de cuenta, los ajustes TOTP y la sal/iteraciones/verificador de la bóveda se escriben en `storage.sync` y los transporta tu cuenta de navegador. La contraseña maestra y la clave de licencia nunca se incluyen
 - **Sin analítica** — sin rastreo, telemetría, cookies ni scripts de terceros
 - **Sin acceso a páginas** — sin content scripts, sin acceso al historial, pestañas o marcadores
 - **Red mínima** — sin licencia, la extensión no hace ninguna petición de red, salvo reintentar una liberación de licencia que quedó en cola sin conexión. Con licencia contacta con `api.annmax1983.com` para activar, reverificar (como máximo cada 2 horas al abrir la ventana) y liberar la licencia. Esas peticiones llevan la clave de licencia, un identificador de instalación aleatorio y metadatos del navegador (nombre/versión, idiomas, zona horaria, User-Agent); los secretos y los códigos generados nunca se incluyen
@@ -223,7 +227,7 @@ LocalBox2FA implementa RFC 6238 TOTP y acepta secretos generados por Google Auth
 
 ## Aviso sobre el código fuente
 
-> ⚠️ **Este repositorio no publica código fuente.** Solo contiene documentación de uso, notas de versión y recursos de soporte. La extensión se distribuye exclusivamente a través de Chrome Web Store; no se ofrece paquete de instalación offline ni código fuente para el usuario final.
+> ⚠️ **Este repositorio no publica código fuente.** Solo contiene documentación de uso, notas de versión y recursos de soporte. La extensión se distribuye exclusivamente a través de Chrome Web Store, Microsoft Edge Add-ons y Firefox Add-ons (AMO); no se ofrece paquete de instalación offline ni código fuente para el usuario final.
 
 ---
 

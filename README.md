@@ -4,7 +4,7 @@ English | [中文](languages/README_zh.md) | [Español](languages/README_es.md) 
 
 A lightweight browser extension that generates TOTP two-factor authentication codes. Secrets are created and used on your device — no extension account, no phone app, and no server of ours stores your secrets. If you want the same accounts on another computer, optional encrypted sync can carry them through the browser account you already use.
 
-> Chromium-based · Manifest V3 · Local processing · Privacy first
+> Chrome · Edge · Firefox · Manifest V3 · Local processing · Privacy first
 
 ---
 
@@ -51,11 +51,14 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 
 ## Supported browsers
 
-| Browser | Status |
-|---------|--------|
-| Google Chrome | ✅ Fully supported |
-| Microsoft Edge | ✅ Fully supported |
-| Other Chromium-based browsers | ✅ Expected to work |
+| Browser | Status | Notes |
+|---------|--------|-------|
+| Google Chrome | ✅ Fully supported | Manifest V3 |
+| Microsoft Edge | ✅ Fully supported | Manifest V3 |
+| Mozilla Firefox | ✅ Fully supported | Manifest V3, Firefox 140+ (desktop) |
+| Other Chromium-based browsers | ✅ Expected to work | Manifest V3 |
+
+> **Firefox note:** everything works the same way, including the master password, exports and imports. Optional cross-device sync uses **Firefox Sync** instead of Chrome / Edge Sync — sign in to your Mozilla account and the sealed records travel through it. Firefox's sync quotas are the same order of magnitude (about 100 KB in total, 8 KB per item).
 
 ---
 
@@ -65,6 +68,7 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 |---|---|
 | Chrome Web Store | [Install for Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Microsoft Edge Add-ons | [Install for Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
+| Firefox Add-ons (AMO) | 🔜 Under review — link will be added once the listing is live |
 
 > Install only from the official stores above — avoid third-party download sites.
 
@@ -127,7 +131,7 @@ Sync carries saved accounts between computers signed into the same browser accou
 
 1. Open **Settings (⚙) → Cross-device sync** and click **Turn on sync**
 2. Review the consent screen — it shows how many accounts will be uploaded and what the browser vendor can see
-3. Confirm. Records are sealed and written to `chrome.storage.sync`
+3. Confirm. Records are sealed and written to the browser's sync storage (`storage.sync`)
 
 **Second device**
 
@@ -153,7 +157,7 @@ The extension never syncs the password or a derived key. The second device recei
 - Turning sync off keeps the cloud copy for your other devices. Use **Delete synced data** in the same panel to remove it from the browser account; other devices keep their local accounts and switch sync off once they notice the cloud copy is gone
 - Encryption cannot be turned off while sync is on, because plaintext records are never uploaded
 - The license key is not synced; each device activates separately
-- The browser account's sync service (Google or Microsoft, depending on the browser) transports the data. Account names and TOTP settings are readable by that service; secrets are sealed with AES-GCM and your master password. If you want the transport itself encrypted end-to-end, enable your browser's sync passphrase (Chrome: *Sync and Google services → Encryption options*)
+- The browser account's sync service (Google on Chrome, Microsoft on Edge, Mozilla on Firefox) transports the data. Account names and TOTP settings are readable by that service; secrets are sealed with AES-GCM and your master password. If you want the transport itself encrypted end-to-end, enable your browser's sync passphrase (Chrome: *Sync and Google services → Encryption options*) or Firefox Sync's own encrypted transport
 - Browser sync quotas apply (roughly 100 KB total, 8 KB per item); the extension reports a quota error instead of silently dropping records
 
 ### Export and import
@@ -190,9 +194,9 @@ All computation happens locally with the browser's Web Crypto API. Generating a 
 
 ## Privacy and permissions
 
-- **Local by default** — saved secrets live in `chrome.storage.local` and never leave the device unless you turn on sync
+- **Local by default** — saved secrets live in the extension's local storage (`storage.local`) and never leave the device unless you turn on sync
 - **Optional encryption** — without a master password, saved secrets are plaintext. Once enabled, every secret is sealed with AES-GCM 256; the key is derived from your password (PBKDF2-SHA256, 600k iterations) and kept in memory only
-- **Opt-in sync** — sealed records, account names, TOTP settings and the vault's salt/iterations/verifier are written to `chrome.storage.sync` and carried by your browser account. The master password and the license key are never included
+- **Opt-in sync** — sealed records, account names, TOTP settings and the vault's salt/iterations/verifier are written to the browser's sync storage (`storage.sync`) and carried by your browser account. The master password and the license key are never included
 - **No analytics** — no tracking, telemetry, cookies or third-party scripts
 - **No page access** — no content scripts, no access to history, tabs, bookmarks or page content
 - **Minimal networking** — without a license the extension makes no network request, apart from retrying a license release that was queued while offline. With a license it contacts `api.annmax1983.com` to activate, to re-verify (at most once every 2 hours when the popup opens) and to release the license. Those requests carry the license key, a random install identifier and browser metadata (browser name/version, languages, time zone, User-Agent); secrets and generated codes are never included
@@ -223,7 +227,7 @@ LocalBox2FA implements RFC 6238 TOTP and accepts secrets generated by Google Aut
 
 ## Source code notice
 
-> ⚠️ **This repository does not publish source code.** It contains usage documentation, release notes and support resources only. The extension is distributed exclusively through the Chrome Web Store; no offline installation package or end-user source code is provided.
+> ⚠️ **This repository does not publish source code.** It contains usage documentation, release notes and support resources only. The extension is distributed exclusively through the Chrome Web Store, Microsoft Edge Add-ons and Firefox Add-ons (AMO); no offline installation package or end-user source code is provided.
 
 ---
 
