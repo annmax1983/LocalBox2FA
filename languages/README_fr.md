@@ -14,7 +14,9 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 
 | Fonction | Description |
 |----------|-------------|
-| 🔐 **Codes TOTP** | RFC 6238. Collez un secret Base32 ou un lien `otpauth://totp/...` complet. Prend en charge 6 à 8 chiffres, une période personnalisée et SHA-1 / SHA-256 / SHA-512 (par défaut : 6 chiffres, 30 s, SHA-1). HOTP n'est pas pris en charge. |
+| 🔐 **Codes TOTP** | RFC 6238. Collez un secret Base32 ou un lien `otpauth://totp/...` complet. Prend en charge 6 à 8 chiffres, une période personnalisée et SHA-1 / SHA-256 / SHA-512 (par défaut : 6 chiffres, 30 s, SHA-1). |
+| 🔢 **HOTP et Steam Guard** | Codes à compteur RFC 4226 (`otpauth://hotp/...&counter=N`) et codes à 5 caractères de Steam (`otpauth://steam/...` ; un secret Steam collé est reconnu automatiquement). Les codes HOTP ne sont générés que sur demande, pour ne jamais consommer un compteur par accident, et le compteur est enregistré puis synchronisé avec le compte. |
+| ⌨️ **Remplissage automatique** | Si l'onglet courant contient un champ de code à usage unique, une barre apparaît en haut de la fenêtre : choisissez le compte (celui qui correspond au domaine est présélectionné) puis cliquez sur **Remplir**. Fonctionne avec un champ unique comme avec six cases d'un chiffre. |
 | ⏱️ **Compte à rebours en direct** | Chaque compte enregistré affiche son code et son compte à rebours, recalculés à chaque changement de période |
 | 📋 **Copie en un clic** | Cliquez sur une ligne ou sur « Copier » pour placer le code courant dans le presse-papiers. Le presse-papiers est vidé 30 secondes après la copie tant que la fenêtre reste ouverte, ou immédiatement lorsque le verrouillage automatique s'active |
 | 💾 **Enregistrer et gérer** | Donnez un nom à l'enregistrement, recherchez dans la liste, renommez ou supprimez une entrée |
@@ -37,7 +39,7 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 |----------|-------------|
 | 🔄 **Synchronisation entre appareils** | Synchronisation facultative des comptes enregistrés entre appareils connectés au même compte de navigateur. Les secrets voyagent scellés avec votre mot de passe maître ; la synchronisation s'exécute tant que la fenêtre est ouverte et seuls les vrais conflits vous demandent de choisir. Un panneau d'état affiche l'heure de la dernière synchronisation, le nombre de comptes locaux et synchronisés, l'utilisation du stockage, les conflits en attente et tout état en pause |
 
-> Achat unique, licence à vie — 2 activations par extension. Chaque environnement de navigateur compte pour une ; désactivez à tout moment pour libérer une place. [Obtenir une licence →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
+> Achat unique, licence à vie — 2 activations par extension. Chaque environnement de navigateur compte pour une ; désactivez à tout moment pour libérer une place. [Obtenir une licence →](https://annmax1983.com/checkout?plugin=localbox2fa)
 
 ---
 
@@ -68,7 +70,7 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 |---|---|
 | Chrome Web Store | [Installer dans Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Microsoft Edge Add-ons | [Installer dans Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
-| Modules complémentaires Firefox (AMO) | 🔜 En cours d’examen — le lien sera ajouté après publication |
+| Modules complémentaires Firefox (AMO) | [Installer pour Firefox](https://addons.mozilla.org/firefox/addon/localbox2fa-local-2fa/) |
 
 > Installez uniquement depuis les boutiques officielles ci-dessus — évitez les sites de téléchargement tiers.
 
@@ -97,6 +99,16 @@ Un secret Base32 seul utilise les valeurs par défaut (6 chiffres, 30 s, SHA-1).
 - Utilisez le champ de recherche pour filtrer une longue liste
 - L'icône crayon renomme, l'icône ✕ supprime après confirmation
 - **Tout effacer**, en bas, supprime tous les enregistrements
+
+### Remplir le code sans quitter la page
+
+1. Ouvrez la fenêtre pendant que le champ de code du site est affiché
+2. Une barre apparaît en haut avec vos comptes (la meilleure correspondance avec le domaine est sélectionnée)
+3. Cliquez sur **Remplir** : le code est saisi directement dans le champ
+
+La page n'est inspectée que pendant que la fenêtre est ouverte ; l'autorisation prend fin à la navigation ou à la fermeture de l'onglet. Aucun script de contenu n'est installé : rien ne s'exécute sur une page que vous ne faites que consulter, et la page ne reçoit qu'un code déjà généré, jamais un secret enregistré. Si aucun champ n'est trouvé, la barre reste masquée et vous pouvez copier le code comme avant.
+
+Les comptes HOTP font exception : leur ligne affiche `······` et un compteur (`⟳12`) au lieu du compte à rebours. Le code suivant n'est généré qu'en cliquant sur la ligne ou en remplissant la page, et le compteur avance : ce code est consommé, il faut en redemander un pour l'usage suivant.
 
 ### Transférer un compte sur mobile
 
@@ -177,7 +189,7 @@ Cliquez sur **Importer** et choisissez l'une des sources suivantes :
 - une sauvegarde `.lb2fa` chiffrée — l'extension détecte le format et demande le mot de passe de sauvegarde ;
 - un fichier ou une image contenant un QR code `otpauth://`, un QR code de migration Google Authenticator (`otpauth-migration://offline?data=…`), ou une ligne de texte avec un secret Base32 ou un lien `otpauth://`.
 
-Les secrets déjà enregistrés sont ignorés. Les entrées HOTP ou non prises en charge sont ignorées et comptées. Pour une exportation Google Authenticator en plusieurs parties, importez chaque image QR séparément ; les comptes déjà importés sont ignorés.
+Les secrets déjà enregistrés sont ignorés. Les entrées MD5 ou non prises en charge sont ignorées et comptées, tandis que les entrées HOTP sont importées avec leur compteur. Pour une exportation Google Authenticator en plusieurs parties, importez chaque image QR séparément ; les comptes déjà importés sont ignorés.
 
 ---
 
@@ -200,7 +212,7 @@ Tous les calculs sont effectués localement via l'API Web Crypto du navigateur. 
 - **Aucune analyse** — pas de pistage, de télémétrie, de cookies ni de scripts tiers
 - **Aucun accès aux pages** — pas de content scripts, pas d'accès à l'historique, aux onglets ou aux favoris
 - **Réseau minimal** — sans licence, l'extension n'effectue aucune requête réseau, hormis la nouvelle tentative de libération d'une licence mise en file hors ligne. Avec une licence, elle contacte `api.annmax1983.com` pour l'activer, la revérifier (au plus une fois toutes les 2 heures à l'ouverture de la fenêtre) et la libérer. Ces requêtes contiennent la clé de licence, un identifiant d'installation aléatoire et des métadonnées de navigateur (nom/version, langues, fuseau horaire, User-Agent) ; les secrets et les codes générés n'y figurent jamais
-- **Autorisations minimales** — `storage` et `clipboardWrite`, plus l'accès au domaine du serveur de licences. `clipboardWrite` permet à la fenêtre de copier un code puis de l'effacer ; elle ne peut pas lire le presse-papiers et n'obtient aucun accès aux pages. La synchronisation n'ajoute aucune autorisation et n'utilise aucun serveur de notre part
+- **Autorisations minimales** — `storage`, `clipboardWrite`, `scripting` et `activeTab`, plus l'accès au domaine du serveur de licences. `clipboardWrite` permet à la fenêtre de copier un code puis de l'effacer ; elle ne peut pas lire le presse-papiers. `scripting` + `activeTab` rendent le remplissage possible sans accès permanent aux pages : la fenêtre exécute une petite fonction dans l'onglet que vous venez d'ouvrir, qui ne reçoit qu'un code déjà généré et ne peut jamais lire un secret enregistré. La synchronisation n'ajoute aucune autorisation et n'utilise aucun serveur de notre part
 
 Le détail champ par champ figure dans [privacy-policy.html](../privacy-policy.html).
 
@@ -221,7 +233,7 @@ Le détail champ par champ figure dans [privacy-policy.html](../privacy-policy.h
 
 ## Compatibilité
 
-LocalBox2FA implémente RFC 6238 TOTP et accepte les secrets générés par Google Authenticator, Authy et d'autres outils 2FA courants. C'est un outil indépendant, sans affiliation officielle avec ces marques.
+LocalBox2FA implémente RFC 6238 (TOTP), RFC 4226 (HOTP) et Steam Guard, et accepte les secrets générés par Google Authenticator, Authy, Steam et d'autres outils 2FA courants. C'est un outil indépendant, sans affiliation officielle avec ces marques.
 
 ---
 
@@ -242,3 +254,13 @@ Copyright © 2026 LocalBox2FA. Tous droits réservés.
 Si LocalBox2FA vous est utile, vous pouvez soutenir le projet !
 
 **[👉 Soutenir LocalBox2FA](https://annmax1983.github.io/LocalBox2FA/)**
+
+---
+
+## Liens
+
+- **Site officiel:** https://annmax1983.com/
+- **Cette extension:** https://annmax1983.com/extensions/localbox2fa
+- **Confidentialité:** https://annmax1983.com/privacy
+- **Contact:** support@annmax1983.com
+- **☕ Soutenir le projet (Ko-fi):** https://ko-fi.com/annmax?ref=localbox2fa

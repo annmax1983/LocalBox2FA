@@ -14,7 +14,9 @@
 
 | 功能 | 说明 |
 |------|------|
-| 🔐 **TOTP 验证码** | 兼容 RFC 6238。可粘贴 Base32 密钥，也可粘贴完整的 `otpauth://totp/...` 链接。支持 6–8 位数字、自定义周期，以及 SHA-1 / SHA-256 / SHA-512（默认 6 位、30 秒、SHA-1）。不支持 HOTP。 |
+| 🔐 **TOTP 验证码** | 兼容 RFC 6238。可粘贴 Base32 密钥，也可粘贴完整的 `otpauth://totp/...` 链接。支持 6–8 位数字、自定义周期，以及 SHA-1 / SHA-256 / SHA-512（默认 6 位、30 秒、SHA-1）。 |
+| 🔢 **HOTP 与 Steam Guard** | 兼容 RFC 4226 的计数器验证码（`otpauth://hotp/...&counter=N`）与 Steam 的 5 位验证码（`otpauth://steam/...`，直接粘贴 Steam 密钥也会自动识别）。HOTP 只在你主动点击时生成，不会白白消耗计数器；计数器随账号一起保存并同步。 |
+| ⌨️ **一键填充** | 当前标签页存在验证码输入框时，弹窗顶部会出现填充条：选好账号（按域名自动选中匹配项）点「填充」即可。单个输入框和一格一位的六个输入框都支持。 |
 | ⏱️ **实时倒计时** | 每个账号单独显示验证码与倒计时，周期结束后自动刷新 |
 | 📋 **一键复制** | 点击列表中的账号或"复制"按钮，即可把当前验证码写入剪贴板。弹窗保持打开时，复制后 30 秒自动清空；触发自动锁定时也会立即清空 |
 | 💾 **保存与管理** | 保存时自定义名称，可搜索、重命名、删除单个账号 |
@@ -37,7 +39,7 @@
 |------|------|
 | 🔄 **跨设备同步** | 在同一浏览器账号登录的设备之间同步已保存的账号。密钥经主密码封存后上传；弹窗打开期间自动同步，只有真正的冲突才会让你选择。状态面板会显示上次同步时间、本地与云端账号数、存储用量、待处理冲突以及暂停状态 |
 
-> 一次购买，终身授权：每插件 2 次激活。每个浏览器环境算 1 次，可随时在插件内解绑本机释放名额。[获取授权 →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
+> 一次购买，终身授权：每插件 2 次激活。每个浏览器环境算 1 次，可随时在插件内解绑本机释放名额。[获取授权 →](https://annmax1983.com/checkout?plugin=localbox2fa)
 
 ---
 
@@ -68,7 +70,7 @@
 |---|---|
 | Chrome 应用商店 | [在 Chrome 中安装](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Microsoft Edge 加载项 | [在 Edge 中安装](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
-| Firefox 附加组件（AMO） | 🔜 审核中，上架后补充链接 |
+| Firefox 附加组件（AMO） | [安装 Firefox 版](https://addons.mozilla.org/firefox/addon/localbox2fa-local-2fa/) |
 
 > 请只通过上方官方商店安装，避免使用第三方下载站。
 
@@ -97,6 +99,16 @@
 - 列表较长时用搜索框筛选
 - 铅笔图标重命名，✕ 图标确认后删除
 - 底部的**清空全部**会删除所有已保存记录
+
+### 填充到当前页面
+
+1. 在网站的验证码输入框显示时打开弹窗
+2. 顶部出现填充条，下拉框里是已保存的账号（域名最匹配的那条会被自动选中）
+3. 点「填充」，验证码直接写入输入框
+
+只有在弹窗打开期间才会检查当前页面，所用授权随标签页关闭或跳转立即失效；扩展没有内容脚本，你单纯浏览网页时它不会运行，页面也只会收到一个已经生成的验证码，永远拿不到保存的密钥。若页面上没有找到输入框，填充条不会出现，仍可照常复制验证码。
+
+HOTP 账号是例外：列表里显示 `······` 和计数器（`⟳12`）而不是倒计时。点击该行或填充到页面时才会生成下一个验证码并推进计数器——用掉即失效，需要下一个请再点一次。
 
 ### 把账号转移到手机
 
@@ -177,7 +189,7 @@
 - 加密 `.lb2fa` 备份 —— 扩展会自动识别格式并询问备份密码；
 - 包含 `otpauth://` 二维码、Google Authenticator 迁移二维码（`otpauth-migration://offline?data=…`）的图片或文件，或包含 Base32 密钥 / `otpauth://` 链接的文本。
 
-已保存过的密钥会被跳过；HOTP 或不支持的条目会被跳过并计数。Google Authenticator 的多段导出请逐张图片导入；已导入的账号会自动跳过。
+已保存过的密钥会被跳过；MD5 或不支持的条目会被跳过并计数，HOTP 条目会连同计数器一起导入。Google Authenticator 的多段导出请逐张图片导入；已导入的账号会自动跳过。
 
 ---
 
@@ -200,7 +212,7 @@
 - **无分析追踪** — 不使用 Cookie、追踪、遥测或第三方脚本
 - **无页面访问权限** — 没有内容脚本，不访问历史记录、标签页、书签或页面内容
 - **最小化联网** — 未持有授权时，扩展不发起任何网络请求（唯一例外是重试此前在离线状态下排队的解绑）。持有授权时，扩展会联系 `api.annmax1983.com` 完成激活、复验（打开弹窗时每 2 小时最多一次）和解绑；这些请求携带授权密钥、随机生成的安装标识和浏览器元数据（浏览器名称/版本、语言列表、时区、User-Agent），绝不包含密钥或生成的验证码
-- **最小权限** — 仅申请 `storage` 和 `clipboardWrite`，以及访问授权服务器域名的权限。`clipboardWrite` 用于复制验证码并在之后清空剪贴板，无法读取剪贴板内容，也不授予任何页面访问权限。同步不会新增权限，也不经过我们的服务器
+- **最小权限** — 仅申请 `storage`、`clipboardWrite`、`scripting` 与 `activeTab`，以及访问授权服务器域名的权限。`clipboardWrite` 用于复制验证码并在之后清空剪贴板，无法读取剪贴板内容。`scripting` + `activeTab` 让填充功能无需常驻页面权限：弹窗在你刚打开的那个标签页里执行一次小函数，它只接收一个已生成的验证码，无法读取保存的密钥。同步不会新增权限，也不经过我们的服务器
 
 逐字段的说明见 [privacy-policy.html](../privacy-policy.html)。
 
@@ -221,7 +233,7 @@
 
 ## 兼容性说明
 
-本扩展实现 RFC 6238 TOTP，支持 Google Authenticator、Authy 等主流 2FA 工具生成的密钥。本扩展为独立工具，与上述品牌无官方关联。
+本扩展实现 RFC 6238 TOTP、RFC 4226 HOTP 与 Steam Guard，支持 Google Authenticator、Authy、Steam 等主流 2FA 工具生成的密钥。本扩展为独立工具，与上述品牌无官方关联。
 
 ---
 
@@ -242,3 +254,13 @@ Copyright © 2026 LocalBox2FA. 保留所有权利。
 如果你觉得 LocalBox2FA 有用，欢迎支持项目！
 
 **[👉 支持 LocalBox2FA](https://annmax1983.github.io/LocalBox2FA/)**
+
+---
+
+## 链接
+
+- **官方网站:** https://annmax1983.com/
+- **本插件:** https://annmax1983.com/extensions/localbox2fa
+- **隐私政策:** https://annmax1983.com/privacy
+- **联系:** support@annmax1983.com
+- **☕ 支持这个项目（Ko-fi）:** https://ko-fi.com/annmax?ref=localbox2fa

@@ -14,7 +14,9 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 
 | Feature | Description |
 |---------|-------------|
-| 🔐 **TOTP codes** | RFC 6238. Paste a Base32 secret or a complete `otpauth://totp/...` link. Supports 6–8 digits, a custom period and SHA-1 / SHA-256 / SHA-512 (defaults: 6 digits, 30 s, SHA-1). HOTP is not supported. |
+| 🔐 **TOTP codes** | RFC 6238. Paste a Base32 secret or a complete `otpauth://totp/...` link. Supports 6–8 digits, a custom period and SHA-1 / SHA-256 / SHA-512 (defaults: 6 digits, 30 s, SHA-1) |
+| 🔢 **HOTP & Steam Guard** | RFC 4226 counter-based codes (`otpauth://hotp/...&counter=N`) and Steam's 5-character codes (`otpauth://steam/...`, or paste a Steam shared secret and it is recognised). HOTP codes are only generated when you ask for one, so a counter is never spent by accident, and the counter is stored and synced with the account |
+| ⌨️ **Autofill** | When the page in the current tab has a one-time-code field, a fill bar appears at the top of the popup: pick the account (the matching one is preselected by hostname) and click **Fill**. Works with a single input or a row of one-box-per-digit inputs |
 | ⏱️ **Live countdown** | Every saved account shows its own code and countdown, refreshed when the period rolls over |
 | 📋 **One-click copy** | Click a row, or the Copy button, to put the current code on the clipboard. The clipboard is cleared 30 seconds after copying while the popup stays open, or immediately when auto-lock engages |
 | 💾 **Save & manage** | Name an account when saving, search the list, rename or delete an entry |
@@ -37,7 +39,7 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 |---------|-------------|
 | 🔄 **Cross-device sync** | Optional sync of saved accounts between devices signed into the same browser account. Secrets travel sealed with your master password; sync runs while the popup is open, and only genuine conflicts ask you to choose. A status panel shows the last sync time, local and synced account counts, storage usage, pending conflicts and any paused state |
 
-> One-time purchase, lifetime license — 2 activations per plugin. Each browser environment counts as one; deactivate anytime to free a slot. [Get a license →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
+> One-time purchase, lifetime license — 2 activations per plugin. Each browser environment counts as one; deactivate anytime to free a slot. [Get a license →](https://annmax1983.com/checkout?plugin=localbox2fa)
 
 ---
 
@@ -68,7 +70,7 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 |---|---|
 | Chrome Web Store | [Install for Chrome](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Microsoft Edge Add-ons | [Install for Edge](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
-| Firefox Add-ons (AMO) | 🔜 Under review — link will be added once the listing is live |
+| Firefox Add-ons (AMO) | [Install for Firefox](https://addons.mozilla.org/firefox/addon/localbox2fa-local-2fa/) |
 
 > Install only from the official stores above — avoid third-party download sites.
 
@@ -97,6 +99,16 @@ A bare Base32 secret uses the defaults (6 digits, 30 s, SHA-1). A full `otpauth:
 - Use the search box to filter a long list
 - The pencil icon renames an account; the ✕ icon deletes it after confirmation
 - **Clear all** in the footer erases every saved record
+
+HOTP accounts are the exception: their row shows `······` and a counter (`⟳12`) instead of a countdown. Clicking the row, or filling it into a page, generates the next code and advances the counter — that code is spent, so ask again for the following one.
+
+### Fill a code without leaving the page
+
+1. Open the popup while the site's one-time-code field is on screen
+2. A bar at the top appears when a code field is found, with your accounts in the dropdown (the best hostname match is preselected)
+3. Click **Fill** — the code goes straight into the field
+
+The page is inspected only while the popup is open, through a permission that dies with the tab. There is no content script, so nothing runs on a page you are merely visiting, and the page only ever receives one finished code — never a stored secret. If no field is found, the bar simply stays hidden and you can still copy the code as usual.
 
 ### Move an account to a phone
 
@@ -177,7 +189,7 @@ Click **Import** and pick any of the following:
 - an encrypted `.lb2fa` backup — the extension detects the format and asks for the backup password;
 - a file or image containing an `otpauth://` QR code, a Google Authenticator migration QR code (`otpauth-migration://offline?data=…`), or a line of text with a Base32 secret or `otpauth://` link.
 
-Already-saved secrets are skipped. HOTP or unsupported entries are skipped and counted. For a multi-part Google Authenticator export, import each QR image separately; accounts already imported are skipped.
+Already-saved secrets are skipped. MD5 or unsupported entries are skipped and counted, while HOTP entries are imported together with their counter. For a multi-part Google Authenticator export, import each QR image separately; accounts already imported are skipped.
 
 ---
 
@@ -198,9 +210,9 @@ All computation happens locally with the browser's Web Crypto API. Generating a 
 - **Optional encryption** — without a master password, saved secrets are plaintext. Once enabled, every secret is sealed with AES-GCM 256; the key is derived from your password (PBKDF2-SHA256, 600k iterations) and kept in memory only
 - **Opt-in sync** — sealed records, account names, TOTP settings and the vault's salt/iterations/verifier are written to the browser's sync storage (`storage.sync`) and carried by your browser account. The master password and the license key are never included
 - **No analytics** — no tracking, telemetry, cookies or third-party scripts
-- **No page access** — no content scripts, no access to history, tabs, bookmarks or page content
+- **No standing page access** — no content scripts are registered, and there is no access to history, bookmarks or page content. The current tab is inspected only after you click the toolbar icon, and only to find the one-time-code field; that temporary grant (`activeTab`) ends when the tab navigates or closes
 - **Minimal networking** — without a license the extension makes no network request, apart from retrying a license release that was queued while offline. With a license it contacts `api.annmax1983.com` to activate, to re-verify (at most once every 2 hours when the popup opens) and to release the license. Those requests carry the license key, a random install identifier and browser metadata (browser name/version, languages, time zone, User-Agent); secrets and generated codes are never included
-- **Minimal permissions** — `storage` and `clipboardWrite`, plus access to the license server domain. `clipboardWrite` lets the popup copy a code and clear it again; it cannot read the clipboard, and it grants no page access. Sync adds no permission and uses no server of ours
+- **Minimal permissions** — `storage`, `clipboardWrite`, `scripting` and `activeTab`, plus access to the license server domain. `clipboardWrite` lets the popup copy a code and clear it again; it cannot read the clipboard. `scripting` + `activeTab` are what makes autofill possible without any standing access: the popup runs one small function in the tab you just opened, it receives only a finished code, and it cannot read a stored secret. Sync adds no permission and uses no server of ours
 
 See [privacy-policy.html](privacy-policy.html) for the field-by-field breakdown.
 
@@ -221,7 +233,7 @@ See [privacy-policy.html](privacy-policy.html) for the field-by-field breakdown.
 
 ## Compatibility
 
-LocalBox2FA implements RFC 6238 TOTP and accepts secrets generated by Google Authenticator, Authy and other mainstream 2FA tools. It is an independent tool and has no official affiliation with those brands.
+LocalBox2FA implements RFC 6238 (TOTP), RFC 4226 (HOTP) and Steam Guard, and accepts secrets generated by Google Authenticator, Authy, Steam and other mainstream 2FA tools. It is an independent tool and has no official affiliation with those brands.
 
 ---
 
@@ -242,3 +254,13 @@ Copyright © 2026 LocalBox2FA. All rights reserved.
 If you find LocalBox2FA helpful, consider supporting the project!
 
 **[👉 Support LocalBox2FA](https://annmax1983.github.io/LocalBox2FA/)**
+
+---
+
+## Links
+
+- **Official website:** https://annmax1983.com/
+- **This extension:** https://annmax1983.com/extensions/localbox2fa
+- **Privacy policy:** https://annmax1983.com/privacy
+- **Contact:** support@annmax1983.com
+- **☕ Support this project (Ko-fi):** https://ko-fi.com/annmax?ref=localbox2fa

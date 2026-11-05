@@ -14,7 +14,9 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 
 | Funktion | Beschreibung |
 |----------|--------------|
-| 🔐 **TOTP-Codes** | RFC 6238. Füge ein Base32-Secret oder einen vollständigen `otpauth://totp/...`-Link ein. Unterstützt 6–8 Stellen, eine eigene Periode sowie SHA-1 / SHA-256 / SHA-512 (Standard: 6 Stellen, 30 s, SHA-1). HOTP wird nicht unterstützt. |
+| 🔐 **TOTP-Codes** | RFC 6238. Füge ein Base32-Secret oder einen vollständigen `otpauth://totp/...`-Link ein. Unterstützt 6–8 Stellen, eine eigene Periode sowie SHA-1 / SHA-256 / SHA-512 (Standard: 6 Stellen, 30 s, SHA-1). |
+| 🔢 **HOTP & Steam Guard** | Zählerbasierte Codes nach RFC 4226 (`otpauth://hotp/...&counter=N`) und die 5-stelligen Codes von Steam (`otpauth://steam/...`; ein eingefügtes Steam-Secret wird automatisch erkannt). HOTP-Codes entstehen nur auf Anforderung, damit kein Zähler versehentlich verbraucht wird; der Zähler wird mit dem Konto gespeichert und synchronisiert. |
+| ⌨️ **Autofill** | Hat die aktuelle Seite ein Einmalcode-Feld, erscheint oben im Popup eine Eingabeleiste: Konto wählen (die passende Domain ist vorausgewählt) und **Einfügen** klicken. Funktioniert mit einem einzelnen Feld wie mit sechs Einzelfeldern. |
 | ⏱️ **Live-Countdown** | Jedes gespeicherte Konto zeigt seinen eigenen Code und Countdown, der beim Periodenwechsel neu berechnet wird |
 | 📋 **Ein-Klick-Kopieren** | Klicke auf eine Zeile oder auf „Kopieren“, um den aktuellen Code in die Zwischenablage zu legen. Die Zwischenablage wird 30 Sekunden nach dem Kopieren geleert, solange das Popup geöffnet bleibt, und sofort beim automatischen Sperren |
 | 💾 **Speichern & Verwalten** | Beim Speichern einen Namen vergeben, die Liste durchsuchen, Einträge umbenennen oder löschen |
@@ -37,7 +39,7 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 |----------|--------------|
 | 🔄 **Geräteübergreifende Synchronisierung** | Optionale Synchronisierung gespeicherter Konten zwischen Geräten, die im selben Browser-Konto angemeldet sind. Secrets werden mit deinem Master-Passwort versiegelt übertragen; die Synchronisierung läuft, solange das Popup offen ist, und nur echte Konflikte verlangen eine Entscheidung. Ein Statusbereich zeigt den letzten Sync-Zeitpunkt, die Anzahl lokaler und synchronisierter Konten, die Speichernutzung, ausstehende Konflikte und einen pausierten Zustand |
 
-> Einmaliger Kauf, lebenslange Lizenz — 2 Aktivierungen pro Plugin. Jede Browser-Umgebung zählt als eine; jederzeit deaktivierbar, um einen Platz freizugeben. [Lizenz holen →](https://www.annmax1983.com/checkout.html?plugin=localbox2fa)
+> Einmaliger Kauf, lebenslange Lizenz — 2 Aktivierungen pro Plugin. Jede Browser-Umgebung zählt als eine; jederzeit deaktivierbar, um einen Platz freizugeben. [Lizenz holen →](https://annmax1983.com/checkout?plugin=localbox2fa)
 
 ---
 
@@ -68,7 +70,7 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 |---|---|
 | Chrome Web Store | [In Chrome installieren](https://chromewebstore.google.com/detail/hhhfdioecpkgnplkcdbcdabjodjpimem) |
 | Microsoft Edge Add-ons | [In Edge installieren](https://microsoftedge.microsoft.com/addons/detail/mgmcahbcekbibbldnmgpeajnkphlnpin) |
-| Firefox-Add-ons (AMO) | 🔜 In Prüfung – Link folgt nach der Freigabe |
+| Firefox-Add-ons (AMO) | [Für Firefox installieren](https://addons.mozilla.org/firefox/addon/localbox2fa-local-2fa/) |
 
 > Installieren Sie nur über die offiziellen Stores oben – meiden Sie Download-Seiten Dritter.
 
@@ -97,6 +99,16 @@ Ein reines Base32-Secret nutzt die Standardwerte (6 Stellen, 30 s, SHA-1). Ein v
 - Nutze das Suchfeld, um eine lange Liste zu filtern
 - Das Stift-Symbol benennt ein Konto um, das ✕-Symbol löscht es nach Bestätigung
 - **Alles löschen** am unteren Rand entfernt alle gespeicherten Einträge
+
+### Code direkt auf der Seite einfügen
+
+1. Popup öffnen, während das Einmalcode-Feld der Website sichtbar ist
+2. Oben erscheint eine Leiste mit den gespeicherten Konten (die beste Übereinstimmung zum Hostnamen ist vorausgewählt)
+3. **Einfügen** klicken — der Code landet direkt im Feld
+
+Die Seite wird nur geprüft, solange das Popup offen ist; die Berechtigung endet beim Navigieren oder Schließen des Tabs. Es gibt keine Content-Scripts, auf einer nur besuchten Seite läuft also nichts, und die Seite erhält ausschließlich einen fertigen Code — nie ein gespeichertes Geheimnis. Wird kein Feld gefunden, bleibt die Leiste verborgen und du kannst den Code wie gewohnt kopieren.
+
+HOTP-Konten sind die Ausnahme: Ihre Zeile zeigt `······` und einen Zähler (`⟳12`) statt eines Countdowns. Erst ein Klick auf die Zeile oder das Einfügen erzeugt den nächsten Code und erhöht den Zähler — dieser Code ist verbraucht, für den folgenden also erneut auslösen.
 
 ### Ein Konto aufs Handy übertragen
 
@@ -177,7 +189,7 @@ Klicke auf **Import** und wähle eine der folgenden Quellen:
 - eine verschlüsselte Sicherung `.lb2fa` — die Erweiterung erkennt das Format und fragt nach dem Sicherungspasswort;
 - eine Datei oder ein Bild mit einem `otpauth://`-QR-Code, einem Google-Authenticator-Migrations-QR-Code (`otpauth-migration://offline?data=…`) oder eine Textzeile mit einem Base32-Secret oder `otpauth://`-Link.
 
-Bereits gespeicherte Secrets werden übersprungen. HOTP- und nicht unterstützte Einträge werden übersprungen und gezählt. Bei einem mehrteiligen Google-Authenticator-Export importiere jedes QR-Bild einzeln; bereits importierte Konten werden übersprungen.
+Bereits gespeicherte Secrets werden übersprungen. MD5- und nicht unterstützte Einträge werden übersprungen und gezählt, HOTP-Einträge werden samt Zähler importiert. Bei einem mehrteiligen Google-Authenticator-Export importiere jedes QR-Bild einzeln; bereits importierte Konten werden übersprungen.
 
 ---
 
@@ -200,7 +212,7 @@ Alle Berechnungen laufen lokal über die Web Crypto API des Browsers. Das Generi
 - **Keine Analyse** — kein Tracking, keine Telemetrie, keine Cookies, keine Skripte Dritter
 - **Kein Seitenzugriff** — keine Content-Scripts, kein Zugriff auf Verlauf, Tabs oder Lesezeichen
 - **Minimale Netzwerknutzung** — ohne Lizenz macht die Erweiterung keine Netzwerkanfrage, außer dem erneuten Versuch einer Freigabe, die offline eingereiht wurde. Mit Lizenz kontaktiert sie `api.annmax1983.com` zum Aktivieren, zum erneuten Prüfen (beim Öffnen des Popups höchstens alle 2 Stunden) und zum Freigeben der Lizenz. Diese Anfragen enthalten den Lizenzschlüssel, eine zufällige Installations-ID und Browser-Metadaten (Browser-Name/-Version, Sprachen, Zeitzone, User-Agent); Secrets und generierte Codes sind nie enthalten
-- **Minimale Berechtigungen** — `storage` und `clipboardWrite` sowie Zugriff auf die Domain des Lizenzservers. `clipboardWrite` ermöglicht dem Popup, einen Code zu kopieren und ihn wieder zu löschen; es kann die Zwischenablage nicht lesen und gewährt keinen Seitenzugriff. Die Synchronisierung fügt keine Berechtigung hinzu und nutzt keinen Server von uns
+- **Minimale Berechtigungen** — `storage`, `clipboardWrite`, `scripting` und `activeTab` sowie Zugriff auf die Domain des Lizenzservers. `clipboardWrite` ermöglicht dem Popup, einen Code zu kopieren und ihn wieder zu löschen; es kann die Zwischenablage nicht lesen. `scripting` + `activeTab` machen das Einfügen ohne dauerhaften Seitenzugriff möglich: Das Popup führt eine kleine Funktion im gerade geöffneten Tab aus, die nur einen fertigen Code erhält und kein gespeichertes Geheimnis lesen kann. Die Synchronisierung fügt keine Berechtigung hinzu und nutzt keinen Server von uns
 
 Die feldgenaue Aufstellung steht in [privacy-policy.html](../privacy-policy.html).
 
@@ -221,7 +233,7 @@ Die feldgenaue Aufstellung steht in [privacy-policy.html](../privacy-policy.html
 
 ## Kompatibilität
 
-LocalBox2FA implementiert RFC 6238 TOTP und akzeptiert Secrets von Google Authenticator, Authy und anderen gängigen 2FA-Tools. Es ist ein unabhängiges Werkzeug und steht in keiner offiziellen Verbindung zu diesen Marken.
+LocalBox2FA implementiert RFC 6238 (TOTP), RFC 4226 (HOTP) und Steam Guard und akzeptiert Secrets von Google Authenticator, Authy, Steam und anderen gängigen 2FA-Tools. Es ist ein unabhängiges Werkzeug und steht in keiner offiziellen Verbindung zu diesen Marken.
 
 ---
 
@@ -242,3 +254,13 @@ Copyright © 2026 LocalBox2FA. Alle Rechte vorbehalten.
 Wenn dir LocalBox2FA hilft, kannst du das Projekt unterstützen!
 
 **[👉 LocalBox2FA unterstützen](https://annmax1983.github.io/LocalBox2FA/)**
+
+---
+
+## Links
+
+- **Offizielle Website:** https://annmax1983.com/
+- **Diese Erweiterung:** https://annmax1983.com/extensions/localbox2fa
+- **Datenschutz:** https://annmax1983.com/privacy
+- **Kontakt:** support@annmax1983.com
+- **☕ Projekt unterstützen (Ko-fi):** https://ko-fi.com/annmax?ref=localbox2fa
