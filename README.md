@@ -237,15 +237,19 @@ LocalBox2FA implements RFC 6238 (TOTP), RFC 4226 (HOTP) and Steam Guard, and acc
 
 ---
 
-## Source code notice
+## Source Code Notice
 
-> ⚠️ **This repository does not publish source code.** It contains usage documentation, release notes and support resources only. The extension is distributed exclusively through the Chrome Web Store, Microsoft Edge Add-ons and Firefox Add-ons (AMO); no offline installation package or end-user source code is provided.
+> ⚠️ **This repository is for project showcase only — the full source code is not published here.** It contains the user documentation, release notes and support information for the extension.
+
+> 📥 **Download and install only from the official browser stores:** Chrome Web Store · Microsoft Edge Add-ons · Firefox Add-ons (AMO). No offline installation package is distributed from this repository.
 
 ---
 
 ## License
 
 Copyright © 2026 LocalBox2FA. All rights reserved.
+
+This software is proprietary and closed-source. Without prior written authorization from the author, decompiling, reverse-engineering, cracking, modifying, repackaging, redistributing or reselling the program (in whole or in part) is strictly prohibited.
 
 ---
 
