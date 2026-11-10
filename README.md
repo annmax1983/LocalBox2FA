@@ -33,7 +33,7 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 
 > Export (plaintext or encrypted), import, clear-all and QR display are free. Backing up, restoring, erasing and transferring your own secrets is data hygiene, not a paid feature.
 
-### Premium (license required)
+### Pro (license required)
 
 | Feature | Description |
 |---------|-------------|
@@ -135,7 +135,7 @@ Notes:
 
 Open **Settings (⚙) → Master password → Change master password**, enter the current password, then the new one twice. Every saved secret is re-encrypted on this device; accounts are kept. If sync is on, the synced copy is re-keyed as well. Other devices then report a vault mismatch: they can adopt the cloud copy by entering the new password, which erases their local accounts first, or replace the cloud copy with their own vault under the old password. Neither choice happens automatically. The change is refused while a sync conflict exists or a re-key is still pending. An interrupted re-key is retried on a later sync, and another password change is blocked until it completes.
 
-### Sync across devices (Premium)
+### Sync across devices (Pro)
 
 Sync carries saved accounts between computers signed into the same browser account. It stays **off until you turn it on**, requires a master password, and requires an active license.
 

@@ -33,7 +33,7 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 
 > Export (Klartext oder verschlüsselt), Import, „Alles löschen“ und die QR-Anzeige sind kostenlos. Sichern, Wiederherstellen, Löschen und Übertragen der eigenen Secrets ist Datenpflege, kein Bezahlfeature.
 
-### ⭐ Premium (Lizenz erforderlich)
+### ⭐ Pro (Lizenz erforderlich)
 
 | Funktion | Beschreibung |
 |----------|--------------|
@@ -135,7 +135,7 @@ Hinweise:
 
 Öffne **Einstellungen (⚙) → Master-Passwort → Master-Passwort ändern**, gib das aktuelle Passwort und danach zweimal das neue ein. Alle gespeicherten Secrets werden auf diesem Gerät neu verschlüsselt; die Konten bleiben erhalten. Bei aktiver Synchronisierung wird auch die Cloud-Kopie neu verschlüsselt. Andere Geräte melden danach eine Vault-Abweichung: Sie können die Cloud-Kopie übernehmen, indem sie das neue Passwort eingeben (ihre lokalen Konten werden vorher gelöscht), oder die Cloud-Kopie durch ihren eigenen Vault mit dem alten Passwort ersetzen. Beides geschieht nie automatisch. Die Änderung wird abgelehnt, solange ein Sync-Konflikt besteht oder eine Neuverschlüsselung noch aussteht. Eine unterbrochene Neuverschlüsselung wird bei einer späteren Synchronisierung erneut versucht; bis sie abgeschlossen ist, ist keine weitere Passwortänderung möglich.
 
-### Zwischen Geräten synchronisieren (Premium)
+### Zwischen Geräten synchronisieren (Pro)
 
 Die Synchronisierung überträgt gespeicherte Konten zwischen Computern, die im selben Browser-Konto angemeldet sind. Sie bleibt **aus, bis du sie einschaltest**, benötigt ein Master-Passwort und eine aktive Lizenz.
 

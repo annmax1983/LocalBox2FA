@@ -33,7 +33,7 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 
 > Exporter (en clair ou chiffré), importer, tout effacer et afficher le QR code sont gratuits. Sauvegarder, restaurer, effacer et transférer ses propres secrets relève de la gestion de données, pas d'une fonction payante.
 
-### ⭐ Premium (licence requise)
+### ⭐ Pro (licence requise)
 
 | Fonction | Description |
 |----------|-------------|
@@ -135,7 +135,7 @@ Remarques :
 
 Ouvrez **Paramètres (⚙) → Mot de passe maître → Changer le mot de passe maître**, saisissez le mot de passe actuel, puis deux fois le nouveau. Tous les secrets enregistrés sont re-chiffrés sur cet appareil ; les comptes sont conservés. Si la synchronisation est active, la copie cloud est également re-scellée. Les autres appareils signalent alors une incohérence de coffre : ils peuvent adopter la copie cloud en saisissant le nouveau mot de passe (leurs comptes locaux sont d'abord effacés) ou remplacer la copie cloud par leur propre coffre avec l'ancien mot de passe. Aucun des deux choix ne se fait automatiquement. Le changement est refusé tant qu'un conflit de synchronisation existe ou qu'un re-scellement est encore en attente. Un re-scellement interrompu est retenté lors d'une synchronisation ultérieure ; tant qu'il n'est pas terminé, aucun autre changement de mot de passe n'est possible.
 
-### Synchroniser entre appareils (Premium)
+### Synchroniser entre appareils (Pro)
 
 La synchronisation transporte les comptes enregistrés entre ordinateurs connectés au même compte de navigateur. Elle reste **désactivée tant que vous ne l'activez pas**, exige un mot de passe maître et une licence active.
 

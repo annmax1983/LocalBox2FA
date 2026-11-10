@@ -33,7 +33,7 @@ Una extensión ligera para el navegador que genera códigos TOTP de doble factor
 
 > Exportar (en texto plano o cifrado), importar, borrar todo y mostrar el QR son gratuitos. Respaldar, restaurar, borrar y transferir tus propios secretos es higiene de datos, no una función de pago.
 
-### ⭐ Premium (requiere licencia)
+### ⭐ Pro (requiere licencia)
 
 | Función | Descripción |
 |---------|-------------|
@@ -135,7 +135,7 @@ Notas:
 
 Abre **Ajustes (⚙) → Contraseña maestra → Cambiar contraseña maestra**, introduce la contraseña actual y luego la nueva dos veces. Todos los secretos guardados se vuelven a cifrar en este dispositivo y las cuentas se conservan. Si la sincronización está activa, la copia en la nube también se vuelve a sellar. Los demás dispositivos informan entonces de un desajuste de bóveda: pueden adoptar la copia en la nube introduciendo la nueva contraseña (sus cuentas locales se borran primero) o reemplazar la copia en la nube con su propia bóveda usando la contraseña antigua. Ninguna de las dos opciones ocurre automáticamente. El cambio se rechaza mientras haya un conflicto de sincronización o un resellado pendiente. Un resellado interrumpido se reintenta en una sincronización posterior; hasta que termine, no se puede cambiar la contraseña de nuevo.
 
-### Sincronizar entre dispositivos (Premium)
+### Sincronizar entre dispositivos (Pro)
 
 La sincronización lleva las cuentas guardadas entre ordenadores con la misma cuenta de navegador. Permanece **desactivada hasta que la actives**, requiere contraseña maestra y una licencia activa.
 
