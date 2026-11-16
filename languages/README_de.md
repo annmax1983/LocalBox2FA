@@ -16,7 +16,6 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 |----------|--------------|
 | 🔐 **TOTP-Codes** | RFC 6238. Füge ein Base32-Secret oder einen vollständigen `otpauth://totp/...`-Link ein. Unterstützt 6–8 Stellen, eine eigene Periode sowie SHA-1 / SHA-256 / SHA-512 (Standard: 6 Stellen, 30 s, SHA-1). |
 | 🔢 **HOTP & Steam Guard** | Zählerbasierte Codes nach RFC 4226 (`otpauth://hotp/...&counter=N`) und die 5-stelligen Codes von Steam (`otpauth://steam/...`; ein eingefügtes Steam-Secret wird automatisch erkannt). HOTP-Codes entstehen nur auf Anforderung, damit kein Zähler versehentlich verbraucht wird; der Zähler wird mit dem Konto gespeichert und synchronisiert. |
-| ⌨️ **Autofill** | Hat die aktuelle Seite ein Einmalcode-Feld, erscheint oben im Popup eine Eingabeleiste: Konto wählen (die passende Domain ist vorausgewählt) und **Einfügen** klicken. Funktioniert mit einem einzelnen Feld wie mit sechs Einzelfeldern. |
 | ⏱️ **Live-Countdown** | Jedes gespeicherte Konto zeigt seinen eigenen Code und Countdown, der beim Periodenwechsel neu berechnet wird |
 | 📋 **Ein-Klick-Kopieren** | Klicke auf eine Zeile oder auf „Kopieren“, um den aktuellen Code in die Zwischenablage zu legen. Die Zwischenablage wird 30 Sekunden nach dem Kopieren geleert, solange das Popup geöffnet bleibt, und sofort beim automatischen Sperren |
 | 💾 **Speichern & Verwalten** | Beim Speichern einen Namen vergeben, die Liste durchsuchen, Einträge umbenennen oder löschen |
@@ -37,6 +36,7 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 
 | Funktion | Beschreibung |
 |----------|--------------|
+| ⌨️ **Autofill** | Hat die aktuelle Seite ein Einmalcode-Feld, erscheint oben im Popup eine Eingabeleiste: Konto wählen (die passende Domain ist vorausgewählt) und **Einfügen** klicken. Funktioniert mit einem einzelnen Feld wie mit sechs Einzelfeldern. Ohne Lizenz bleibt die Leiste gesperrt und ihre Schaltfläche öffnet die Einstellungen; Codes kopieren bleibt kostenlos |
 | 🔄 **Geräteübergreifende Synchronisierung** | Optionale Synchronisierung gespeicherter Konten zwischen Geräten, die im selben Browser-Konto angemeldet sind. Secrets werden mit deinem Master-Passwort versiegelt übertragen; die Synchronisierung läuft, solange das Popup offen ist, und nur echte Konflikte verlangen eine Entscheidung. Ein Statusbereich zeigt den letzten Sync-Zeitpunkt, die Anzahl lokaler und synchronisierter Konten, die Speichernutzung, ausstehende Konflikte und einen pausierten Zustand |
 
 > Einmaliger Kauf, lebenslange Lizenz — 2 Aktivierungen pro Plugin. Jede Browser-Umgebung zählt als eine; jederzeit deaktivierbar, um einen Platz freizugeben. [Lizenz holen →](https://annmax1983.com/checkout?plugin=localbox2fa)
@@ -101,6 +101,8 @@ Ein reines Base32-Secret nutzt die Standardwerte (6 Stellen, 30 s, SHA-1). Ein v
 - **Alles löschen** am unteren Rand entfernt alle gespeicherten Einträge
 
 ### Code direkt auf der Seite einfügen
+
+Autofill ist eine Pro-Funktion. Ohne Lizenz zeigt die Leiste eine gesperrte 🔒 Pro-Schaltfläche, die die Einstellungen öffnet; Codes lassen sich weiterhin wie gewohnt kopieren.
 
 1. Popup öffnen, während das Einmalcode-Feld der Website sichtbar ist
 2. Oben erscheint eine Leiste mit den gespeicherten Konten (die beste Übereinstimmung zum Hostnamen ist vorausgewählt)

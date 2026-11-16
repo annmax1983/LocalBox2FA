@@ -16,7 +16,6 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 |---------|-------------|
 | 🔐 **TOTP codes** | RFC 6238. Paste a Base32 secret or a complete `otpauth://totp/...` link. Supports 6–8 digits, a custom period and SHA-1 / SHA-256 / SHA-512 (defaults: 6 digits, 30 s, SHA-1) |
 | 🔢 **HOTP & Steam Guard** | RFC 4226 counter-based codes (`otpauth://hotp/...&counter=N`) and Steam's 5-character codes (`otpauth://steam/...`, or paste a Steam shared secret and it is recognised). HOTP codes are only generated when you ask for one, so a counter is never spent by accident, and the counter is stored and synced with the account |
-| ⌨️ **Autofill** | When the page in the current tab has a one-time-code field, a fill bar appears at the top of the popup: pick the account (the matching one is preselected by hostname) and click **Fill**. Works with a single input or a row of one-box-per-digit inputs |
 | ⏱️ **Live countdown** | Every saved account shows its own code and countdown, refreshed when the period rolls over |
 | 📋 **One-click copy** | Click a row, or the Copy button, to put the current code on the clipboard. The clipboard is cleared 30 seconds after copying while the popup stays open, or immediately when auto-lock engages |
 | 💾 **Save & manage** | Name an account when saving, search the list, rename or delete an entry |
@@ -37,6 +36,7 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 
 | Feature | Description |
 |---------|-------------|
+| ⌨️ **Autofill** | When the page in the current tab has a one-time-code field, a fill bar appears at the top of the popup: pick the account (the matching one is preselected by hostname) and click **Fill**. Works with a single input or a row of one-box-per-digit inputs. Without a licence the bar stays locked and its button opens Settings; copying codes remains free |
 | 🔄 **Cross-device sync** | Optional sync of saved accounts between devices signed into the same browser account. Secrets travel sealed with your master password; sync runs while the popup is open, and only genuine conflicts ask you to choose. A status panel shows the last sync time, local and synced account counts, storage usage, pending conflicts and any paused state |
 
 > One-time purchase, lifetime license — 2 activations per plugin. Each browser environment counts as one; deactivate anytime to free a slot. [Get a license →](https://annmax1983.com/checkout?plugin=localbox2fa)
@@ -103,6 +103,8 @@ A bare Base32 secret uses the defaults (6 digits, 30 s, SHA-1). A full `otpauth:
 HOTP accounts are the exception: their row shows `······` and a counter (`⟳12`) instead of a countdown. Clicking the row, or filling it into a page, generates the next code and advances the counter — that code is spent, so ask again for the following one.
 
 ### Fill a code without leaving the page
+
+Autofill is a Pro feature. Without a licence the bar appears with a locked 🔒 Pro button that opens Settings; you can still copy the code as usual.
 
 1. Open the popup while the site's one-time-code field is on screen
 2. A bar at the top appears when a code field is found, with your accounts in the dropdown (the best hostname match is preselected)
