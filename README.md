@@ -36,7 +36,7 @@ A lightweight browser extension that generates TOTP two-factor authentication co
 
 | Feature | Description |
 |---------|-------------|
-| ⌨️ **Autofill** | When the page in the current tab has a one-time-code field, a fill bar appears at the top of the popup: pick the account (the matching one is preselected by hostname) and click **Fill**. Works with a single input or a row of one-box-per-digit inputs. Without a licence the bar stays locked and its button opens Settings; copying codes remains free |
+| ⌨️ **Autofill** | When the page in the current tab has a one-time-code field, a fill bar appears at the top of the popup: pick the account (the matching one is preselected by hostname) and click **Fill**. Works with a single input or a row of one-box-per-digit inputs. Requires a licence; without one no fill bar is shown and the feature is only described in Settings. Copying codes remains free |
 | 🔄 **Cross-device sync** | Optional sync of saved accounts between devices signed into the same browser account. Secrets travel sealed with your master password; sync runs while the popup is open, and only genuine conflicts ask you to choose. A status panel shows the last sync time, local and synced account counts, storage usage, pending conflicts and any paused state |
 
 > One-time purchase, lifetime license — 2 activations per plugin. Each browser environment counts as one; deactivate anytime to free a slot. [Get a license →](https://annmax1983.com/checkout?plugin=localbox2fa)
@@ -104,7 +104,7 @@ HOTP accounts are the exception: their row shows `······` and a counter (`
 
 ### Fill a code without leaving the page
 
-Autofill is a Pro feature. Without a licence the bar appears with a locked 🔒 Pro button that opens Settings; you can still copy the code as usual.
+Autofill is a Pro feature. Without a licence no fill bar appears — the option is only described in Settings. You can still copy the code as usual.
 
 1. Open the popup while the site's one-time-code field is on screen
 2. A bar at the top appears when a code field is found, with your accounts in the dropdown (the best hostname match is preselected)

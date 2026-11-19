@@ -36,7 +36,7 @@ Une extension légère qui génère des codes TOTP de double authentification. V
 
 | Fonction | Description |
 |----------|-------------|
-| ⌨️ **Remplissage automatique** | Si l'onglet courant contient un champ de code à usage unique, une barre apparaît en haut de la fenêtre : choisissez le compte (celui qui correspond au domaine est présélectionné) puis cliquez sur **Remplir**. Fonctionne avec un champ unique comme avec six cases d'un chiffre. Sans licence, la barre reste verrouillée et son bouton ouvre les réglages ; copier les codes reste gratuit |
+| ⌨️ **Remplissage automatique** | Si l'onglet courant contient un champ de code à usage unique, une barre apparaît en haut de la fenêtre : choisissez le compte (celui qui correspond au domaine est présélectionné) puis cliquez sur **Remplir**. Fonctionne avec un champ unique comme avec six cases d'un chiffre. Nécessite une licence ; sans licence, aucune barre n'apparaît et la fonction est simplement décrite dans les réglages. Copier les codes reste gratuit |
 | 🔄 **Synchronisation entre appareils** | Synchronisation facultative des comptes enregistrés entre appareils connectés au même compte de navigateur. Les secrets voyagent scellés avec votre mot de passe maître ; la synchronisation s'exécute tant que la fenêtre est ouverte et seuls les vrais conflits vous demandent de choisir. Un panneau d'état affiche l'heure de la dernière synchronisation, le nombre de comptes locaux et synchronisés, l'utilisation du stockage, les conflits en attente et tout état en pause |
 
 > Achat unique, licence à vie — 2 activations par extension. Chaque environnement de navigateur compte pour une ; désactivez à tout moment pour libérer une place. [Obtenir une licence →](https://annmax1983.com/checkout?plugin=localbox2fa)
@@ -102,7 +102,7 @@ Un secret Base32 seul utilise les valeurs par défaut (6 chiffres, 30 s, SHA-1).
 
 ### Remplir le code sans quitter la page
 
-Le remplissage automatique est une fonction Pro. Sans licence, la barre affiche un bouton 🔒 Pro verrouillé qui ouvre les réglages ; vous pouvez toujours copier le code comme d'habitude.
+Le remplissage automatique est une fonction Pro. Sans licence, aucune barre n'apparaît ; la fonction est simplement décrite dans les réglages. Vous pouvez toujours copier le code comme d'habitude.
 
 1. Ouvrez la fenêtre pendant que le champ de code du site est affiché
 2. Une barre apparaît en haut avec vos comptes (la meilleure correspondance avec le domaine est sélectionnée)

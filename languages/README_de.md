@@ -36,7 +36,7 @@ Eine schlanke Browser-Erweiterung, die TOTP-Bestätigungscodes für die Zwei-Fak
 
 | Funktion | Beschreibung |
 |----------|--------------|
-| ⌨️ **Autofill** | Hat die aktuelle Seite ein Einmalcode-Feld, erscheint oben im Popup eine Eingabeleiste: Konto wählen (die passende Domain ist vorausgewählt) und **Einfügen** klicken. Funktioniert mit einem einzelnen Feld wie mit sechs Einzelfeldern. Ohne Lizenz bleibt die Leiste gesperrt und ihre Schaltfläche öffnet die Einstellungen; Codes kopieren bleibt kostenlos |
+| ⌨️ **Autofill** | Hat die aktuelle Seite ein Einmalcode-Feld, erscheint oben im Popup eine Eingabeleiste: Konto wählen (die passende Domain ist vorausgewählt) und **Einfügen** klicken. Funktioniert mit einem einzelnen Feld wie mit sechs Einzelfeldern. Erfordert eine Lizenz; ohne Lizenz erscheint keine Leiste, die Funktion wird nur in den Einstellungen beschrieben. Codes kopieren bleibt kostenlos |
 | 🔄 **Geräteübergreifende Synchronisierung** | Optionale Synchronisierung gespeicherter Konten zwischen Geräten, die im selben Browser-Konto angemeldet sind. Secrets werden mit deinem Master-Passwort versiegelt übertragen; die Synchronisierung läuft, solange das Popup offen ist, und nur echte Konflikte verlangen eine Entscheidung. Ein Statusbereich zeigt den letzten Sync-Zeitpunkt, die Anzahl lokaler und synchronisierter Konten, die Speichernutzung, ausstehende Konflikte und einen pausierten Zustand |
 
 > Einmaliger Kauf, lebenslange Lizenz — 2 Aktivierungen pro Plugin. Jede Browser-Umgebung zählt als eine; jederzeit deaktivierbar, um einen Platz freizugeben. [Lizenz holen →](https://annmax1983.com/checkout?plugin=localbox2fa)
@@ -102,7 +102,7 @@ Ein reines Base32-Secret nutzt die Standardwerte (6 Stellen, 30 s, SHA-1). Ein v
 
 ### Code direkt auf der Seite einfügen
 
-Autofill ist eine Pro-Funktion. Ohne Lizenz zeigt die Leiste eine gesperrte 🔒 Pro-Schaltfläche, die die Einstellungen öffnet; Codes lassen sich weiterhin wie gewohnt kopieren.
+Autofill ist eine Pro-Funktion. Ohne Lizenz erscheint keine Leiste — die Funktion wird lediglich in den Einstellungen beschrieben. Codes lassen sich weiterhin wie gewohnt kopieren.
 
 1. Popup öffnen, während das Einmalcode-Feld der Website sichtbar ist
 2. Oben erscheint eine Leiste mit den gespeicherten Konten (die beste Übereinstimmung zum Hostnamen ist vorausgewählt)

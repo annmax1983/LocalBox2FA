@@ -36,7 +36,7 @@ Una extensión ligera para el navegador que genera códigos TOTP de doble factor
 
 | Función | Descripción |
 |---------|-------------|
-| ⌨️ **Rellenado automático** | Si la pestaña actual tiene un campo de código de un solo uso, aparece una barra arriba en la ventana: elige la cuenta (la que coincide con el dominio se preselecciona) y pulsa **Rellenar**. Funciona con un solo campo o con seis casillas de un dígito. Sin licencia la barra queda bloqueada y su botón abre los Ajustes; copiar códigos sigue siendo gratis |
+| ⌨️ **Rellenado automático** | Si la pestaña actual tiene un campo de código de un solo uso, aparece una barra arriba en la ventana: elige la cuenta (la que coincide con el dominio se preselecciona) y pulsa **Rellenar**. Funciona con un solo campo o con seis casillas de un dígito. Requiere licencia; sin ella no aparece ninguna barra y la función solo se describe en los Ajustes. Copiar códigos sigue siendo gratis |
 | 🔄 **Sincronización entre dispositivos** | Sincronización opcional de las cuentas guardadas entre dispositivos con la misma cuenta de navegador. Los secretos viajan sellados con tu contraseña maestra; la sincronización se ejecuta mientras la ventana está abierta y solo los conflictos reales te piden elegir. Un panel de estado muestra la hora del último sync, el número de cuentas locales y sincronizadas, el uso de almacenamiento, los conflictos pendientes y cualquier estado en pausa |
 
 > Compra única, licencia de por vida: 2 activaciones por plugin. Cada entorno de navegador cuenta como una; puedes desactivar cuando quieras para liberar una plaza. [Obtener licencia →](https://annmax1983.com/checkout?plugin=localbox2fa)
@@ -102,7 +102,7 @@ Un secreto Base32 usa los valores por defecto (6 dígitos, 30 s, SHA-1). Un enla
 
 ### Rellenar el código sin salir de la página
 
-El rellenado automático es una función Pro. Sin licencia, la barra muestra un botón 🔒 Pro bloqueado que abre los Ajustes; aún puedes copiar el código como siempre.
+El rellenado automático es una función Pro. Sin licencia no aparece ninguna barra; la función solo se describe en los Ajustes. Aún puedes copiar el código como siempre.
 
 1. Abre la ventana mientras el campo de código del sitio está en pantalla
 2. Arriba aparece una barra con tus cuentas (la mejor coincidencia con el dominio queda seleccionada)
